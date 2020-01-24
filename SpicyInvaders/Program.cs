@@ -1,13 +1,9 @@
-﻿//Auteur : JMY
-//Date   : 03.09.2018
-//Lieu   : ETML
-//Description : Squelette pour SpaceInvaders en console
+﻿//Authors       : HBN, KBY & SGG
+//Date          : 17.01.2020
+//Location      : ETML
+//Description   : Main Class of Spicy Invaders
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpicyInvaders
 {
@@ -16,10 +12,13 @@ namespace SpicyInvaders
         //Graphisme avancé du vaisseau
         const string ship = "H";
         const int shipY = 21;//position verticale du vaisseau
+
         static void Main(string[] args)
         {
-            int shipX = 50;
+            GameManager gameManager = new GameManager();
+            gameManager.Start();
 
+            int shipX = 50;
             int missileX = -1;
             int missileY = -1;
 
