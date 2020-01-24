@@ -3,6 +3,7 @@
 //Location      : ETML
 //Description   : GameManager Class of Spicy Invaders
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -69,7 +70,10 @@ namespace SpicyInvaders
                 // todo update player
 
                 stopWatch.Stop();
-                if ((int)stopWatch.ElapsedMilliseconds > DELTA_TIME) Thread.Sleep(DELTA_TIME - (int)stopWatch.ElapsedMilliseconds);
+                if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) > DELTA_TIME)
+                {
+                    Thread.Sleep(DELTA_TIME - Convert.ToInt32(stopWatch.ElapsedMilliseconds));
+                }
             }
         }
     }
