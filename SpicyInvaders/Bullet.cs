@@ -5,7 +5,10 @@
 
 namespace SpicyInvaders
 {
-    class Bullet
+    public class Bullet
     {
+        private System.ConsoleColor _color;
+        private Direction _direction;
+        private int _speed;
     }
 }

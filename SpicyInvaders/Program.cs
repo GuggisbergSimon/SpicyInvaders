@@ -1,4 +1,4 @@
-﻿//Authors       : HBN, KBY & SGG
+//Authors       : HBN, KBY & SGG
 //Date          : 17.01.2020
 //Location      : ETML
 //Description   : Main Class of Spicy Invaders
