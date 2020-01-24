@@ -44,7 +44,7 @@ namespace SpicyInvaders
                 menuButtons[i] = new MenuButton
                 {
                     X = 2 * _WINDOW_X / 3,
-                    Y = _WINDOW_Y / 3 + (5 * i),
+                    Y = _WINDOW_Y / 4 + (5 * i),
                     Name = menuNames[i].ToUpper()
                 };
             }
@@ -56,8 +56,6 @@ namespace SpicyInvaders
         public void Refresh(bool isUp)
         {
             // Remove old arrow
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(menuButtons[SelectedIndex].X - 2, menuButtons[SelectedIndex].Y);
             Console.Write("\b \b");
 
@@ -80,25 +78,24 @@ namespace SpicyInvaders
             }
 
             // Draw title
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(_WINDOW_X / 2 - _TITLE.Length / 2, 10);
+            Console.SetCursorPosition(_WINDOW_X / 2 - _TITLE.Length / 2, 5);
             Console.Write(_TITLE);
 
 
             // Draw each option
             for (int j = 0; j < menuButtons.Length; j++)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.BackgroundColor = ConsoleColor.Black;
+
                 // If the option is selected, draw an arrow in front of it
                 if (j == SelectedIndex)
                 {
                     // Write the arrow in front of the button
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.BackgroundColor = ConsoleColor.Black;
                     Console.SetCursorPosition(menuButtons[j].X - 3, menuButtons[j].Y);
                     Console.Write((char)62);
 
-                    // Draw the menu option with normal design
+                    // Draw the menu option with selected design
                     Console.SetCursorPosition(menuButtons[j].X, menuButtons[j].Y);
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = ConsoleColor.Green;
@@ -108,11 +105,13 @@ namespace SpicyInvaders
                 {
                     // Draw the menu option with normal design
                     Console.SetCursorPosition(menuButtons[j].X, menuButtons[j].Y);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.BackgroundColor = ConsoleColor.Black;
                     Console.Write(menuButtons[j].Name);
                 }
             }
+
+            // reset the color of the cursor
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
 
