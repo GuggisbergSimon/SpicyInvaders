@@ -1,5 +1,9 @@
+//Authors       : HBN, KBY & SGG
+//Date          : 17.01.2020
+//Location      : ETML
+//Description   : Main Class of Spicy Invaders
+
 ﻿using System;
-using System.Threading;
 
 namespace SpicyInvaders
 {
@@ -7,6 +11,9 @@ namespace SpicyInvaders
     {
         static void Main(string[] args)
         {
+            GameManager gameManager = new GameManager();
+            //gameManager.Start();
+
             Console.CursorVisible = false;
             Player Ship = new Player(35, 20);
 
@@ -17,10 +24,10 @@ namespace SpicyInvaders
                 switch(key.Key)
                 {
                     case ConsoleKey.LeftArrow:
-                        Ship.Move(Directions.Left);
+                        Ship.Move(Direction.Left);
                         break;
                     case ConsoleKey.RightArrow:
-                        Ship.Move(Directions.Right);
+                        Ship.Move(Direction.Right);
                         break;
                 }
             }

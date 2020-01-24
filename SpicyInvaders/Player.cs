@@ -1,7 +1,7 @@
-﻿//  ETML
-//  Auteur : SGG, KBY, HGN, YFA
-//  Date : 24.01.20
-//  Description : Classe concernant tout ce qui touche au joueur (vaisseau).
+﻿//Authors       : HBN, KBY & SGG
+//Date          : 17.01.2020
+//Location      : ETML
+//Description   : Player Class of Spicy Invaders
 
 using System;
 using System.Threading;
