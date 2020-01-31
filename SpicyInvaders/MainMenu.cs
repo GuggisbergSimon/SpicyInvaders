@@ -1,18 +1,15 @@
-﻿// Auteur : HDN
-// Date   : 24.01.2020
-// Lieu   : ETML
-// Description : Classe du menu principal
-
+﻿//Authors       : HDN, YFA, KBY & SGG
+//Date          : 17.01.2020
+//Location      : ETML
+//Description   : MainMenu Class of Spicy Invaders
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpicyInvaders
 {
-    // Main menu class. Manage the menu selection and interactions
+    /// <summary>
+    /// Main menu class. Manage the menu selection and interactions
+    /// </summary>
     public class MainMenu
     {
         // Title of the game on the screen
@@ -38,7 +35,7 @@ namespace SpicyInvaders
         /// </summary>
         public MainMenu()
         {
-            // Creation of the 5 menu option throughout the custom constructor
+            // Creation of the 5 menu options throughout the custom constructor
             for (int i = 0; i < 5; i++)
             {
                 menuButtons[i] = new MenuButton
