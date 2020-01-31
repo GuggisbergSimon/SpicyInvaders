@@ -1,7 +1,7 @@
-﻿//Auteur : JMY
-//Date   : 03.09.2018
-//Lieu   : ETML
-//Description : Squelette pour SpaceInvaders en console
+//Authors       : HBN, KBY & SGG
+//Date          : 17.01.2020
+//Location      : ETML
+//Description   : Main Class of Spicy Invaders
 
 using System;
 
