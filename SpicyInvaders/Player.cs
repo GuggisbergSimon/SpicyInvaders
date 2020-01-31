@@ -1,4 +1,4 @@
-﻿//Authors       : HBN, KBY & SGG
+﻿//Authors       : HDN, KBY, YFA & SGG
 //Date          : 17.01.2020
 //Location      : ETML
 //Description   : Player Class of Spicy Invaders
@@ -8,14 +8,6 @@ using System.Threading;
 
 namespace SpicyInvaders
 {
-    public enum Direction
-    {
-        Left,
-        Right,
-        Top,
-        Down
-    }
-
     public class Player
     {
         //Representation of the player.
@@ -25,6 +17,19 @@ namespace SpicyInvaders
         private int _playerX;
         private int _playerY;
 
+
+        //Getters-Setters
+        public int PlayerX
+        {
+            get { return _playerX; }
+            set { _playerX = value; }
+        }
+
+        public int PlayerY
+        {
+            get { return _playerY; }
+            set { _playerY = value; }
+        }
 
         /// <summary>
         /// Constructor of the class "Player"
@@ -58,20 +63,6 @@ namespace SpicyInvaders
 
             Console.SetCursorPosition(PlayerX, PlayerY);
             Console.Write(PLAYER_CHR);
-        }
-
-        //Getter-Setters
-        
-        public int PlayerX
-        {
-            get { return _playerX; }
-            set { _playerX = value; }
-        }
-
-        public int PlayerY
-        {
-            get { return _playerY; }
-            set { _playerY = value; }
         }
     }
 }
