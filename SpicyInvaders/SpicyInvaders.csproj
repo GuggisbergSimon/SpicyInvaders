@@ -46,6 +46,8 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="MainMenu.cs" />
+    <Compile Include="MenuButton.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

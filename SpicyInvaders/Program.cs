@@ -3,7 +3,7 @@
 //Location      : ETML
 //Description   : Main Class of Spicy Invaders
 
-﻿using System;
+using System;
 
 namespace SpicyInvaders
 {
@@ -11,23 +11,25 @@ namespace SpicyInvaders
     {
         static void Main(string[] args)
         {
-            GameManager gameManager = new GameManager();
-            //gameManager.Start();
-
             Console.CursorVisible = false;
-            Player Ship = new Player(35, 20);
+            Console.SetWindowSize(100, 50);
+
+            MainMenu menu = new MainMenu();
+            menu.Refresh(true);
 
             while (true)
             {
-                ConsoleKeyInfo key = Console.ReadKey(true);
+                ConsoleKeyInfo key = Console.ReadKey();
 
-                switch(key.Key)
+                switch (key.Key)
                 {
-                    case ConsoleKey.LeftArrow:
-                        Ship.Move(Direction.Left);
+                    case ConsoleKey.DownArrow:
+                        menu.Refresh(false);
                         break;
-                    case ConsoleKey.RightArrow:
-                        Ship.Move(Direction.Right);
+                    case ConsoleKey.UpArrow:
+                        menu.Refresh(true);
+                        break;
+                    default:
                         break;
                 }
             }
