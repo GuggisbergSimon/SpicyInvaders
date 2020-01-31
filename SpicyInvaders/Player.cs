@@ -30,28 +30,27 @@ namespace SpicyInvaders
         /// </summary>
         /// <param name="aPlayerX"></param>
         /// <param name="aPlayerY"></param>
-        public Player(int aPlayerX, int aPlayerY)
+        public Player(int playerX, int playerY)
         {
-            _playerX = aPlayerX;
-            _playerY = aPlayerY;
+            _playerX = playerX;
+            _playerY = playerY;
             Console.SetCursorPosition(PlayerX, PlayerY);
             Console.Write(PLAYER_CHR);
         }
 
         /// <summary>
-        /// You can move the player using this method.
+        /// You can update the position of the player using this method.
         /// </summary>
         /// <param name="direction"></param>
-        public void Update()
+        public void Update(Direction direction)
         {
             Console.Write("\b ");
-            ConsoleKeyInfo key = Console.ReadKey(true);
 
-            if (key.Key == ConsoleKey.LeftArrow)
+            if (direction == Direction.Left)
             {
                 PlayerX--;
             }
-            else if(key.Key == ConsoleKey.RightArrow)
+            else if(direction == Direction.Right)
             {
                 PlayerX++;
             }

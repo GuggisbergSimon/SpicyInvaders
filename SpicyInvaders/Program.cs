@@ -12,6 +12,7 @@ namespace SpicyInvaders
         static void Main(string[] args)
         {
             GameManager gameManager = new GameManager();
+            Console.CursorVisible = false;
             gameManager.Start();
 
             Console.CursorVisible = false;

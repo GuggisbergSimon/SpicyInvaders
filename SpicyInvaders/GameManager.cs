@@ -20,6 +20,7 @@ namespace SpicyInvaders
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
         private const int DELTA_TIME = 10;
+        private Random _random = new Random();
 
         /// <summary>
         /// Gets the player
@@ -70,7 +71,27 @@ namespace SpicyInvaders
                 }
 
                 // todo update player
-                _player.Update();
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo input = Console.ReadKey(true);
+
+                    switch (input.Key)
+                    {
+                        case ConsoleKey.LeftArrow:
+                            _player.Update(Direction.Left);
+                            break;
+                        case ConsoleKey.RightArrow:
+                            _player.Update(Direction.Right);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                // todo remove
+                Console.SetCursorPosition(10, 10);
+                Console.WriteLine(_random.Next(0,101));
+                Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
 
                 stopWatch.Stop();
                 if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
