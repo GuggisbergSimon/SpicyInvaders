@@ -25,7 +25,6 @@ namespace SpicyInvaders
         private int _playerX;
         private int _playerY;
 
-
         /// <summary>
         /// Constructor of the class "Player"
         /// </summary>
@@ -43,15 +42,16 @@ namespace SpicyInvaders
         /// You can move the player using this method.
         /// </summary>
         /// <param name="direction"></param>
-        public void Move(Direction direction)
+        public void Update()
         {
             Console.Write("\b ");
+            ConsoleKeyInfo key = Console.ReadKey(true);
 
-            if(direction == Direction.Left)
+            if (key.Key == ConsoleKey.LeftArrow)
             {
                 PlayerX--;
             }
-            else if(direction == Direction.Right)
+            else if(key.Key == ConsoleKey.RightArrow)
             {
                 PlayerX++;
             }

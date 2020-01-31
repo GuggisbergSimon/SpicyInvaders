@@ -47,6 +47,8 @@ namespace SpicyInvaders
             {
                 Instance = this;
             }
+
+            _player = new Player(1, 1);
         }
 
         /// <summary>
@@ -68,9 +70,10 @@ namespace SpicyInvaders
                 }
 
                 // todo update player
+                _player.Update();
 
                 stopWatch.Stop();
-                if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) > DELTA_TIME)
+                if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
                 {
                     Thread.Sleep(DELTA_TIME - Convert.ToInt32(stopWatch.ElapsedMilliseconds));
                 }
