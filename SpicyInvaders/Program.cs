@@ -1,9 +1,9 @@
-//Authors       : HBN, KBY & SGG
+//Authors       : HDN, KBY, YFA & SGG
 //Date          : 17.01.2020
 //Location      : ETML
 //Description   : Main Class of Spicy Invaders
 
-﻿using System;
+using System;
 
 namespace SpicyInvaders
 {
