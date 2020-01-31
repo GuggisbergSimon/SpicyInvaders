@@ -11,6 +11,10 @@ namespace SpicyInvaders
     {
         static void Main(string[] args)
         {
+            GameManager gameManager = new GameManager();
+            Console.CursorVisible = false;
+            gameManager.Start();
+
             Console.CursorVisible = false;
             Console.SetWindowSize(100, 50);
 
@@ -19,19 +23,7 @@ namespace SpicyInvaders
 
             while (true)
             {
-                ConsoleKeyInfo key = Console.ReadKey();
 
-                switch (key.Key)
-                {
-                    case ConsoleKey.DownArrow:
-                        menu.Refresh(false);
-                        break;
-                    case ConsoleKey.UpArrow:
-                        menu.Refresh(true);
-                        break;
-                    default:
-                        break;
-                }
             }
         }
     }
