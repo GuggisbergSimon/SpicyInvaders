@@ -20,7 +20,8 @@ namespace SpicyInvaders
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
         private const int DELTA_TIME = 10;
-        private MainMenu _menu;
+        private Menu _menu;
+        private Menu _settingsMenu;
 
         /// <summary>
         /// Gets the player
@@ -56,10 +57,12 @@ namespace SpicyInvaders
         public void Start()
         {
             Console.CursorVisible = false;
-            Console.SetWindowSize(100, 50);
+            Console.SetWindowSize(200, 60);
 
-            // Create the main menu
-            _menu = new MainMenu();
+            // Create the main menu object
+            string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            _menu = new Menu(stringMenuNames);
+            Menu.listMenus.Add(_menu);
         }
 
         /// <summary>
@@ -95,57 +98,14 @@ namespace SpicyInvaders
         /// </summary>
         public void MainMenu()
         {
-            // Display the menu
-            _menu.Refresh(true);
+            Console.Clear();
 
-            bool selectOption = false;
-
-            // Loop for the selection of an option by pressing enter
-            while (!selectOption)
-            {
-                ConsoleKeyInfo key = Console.ReadKey();
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.DownArrow:
-                        // false = move down
-                        _menu.Refresh(false);
-                        break;
-                    case ConsoleKey.UpArrow:
-                        // true = move up
-                        _menu.Refresh(true);
-                        break;
-                    case ConsoleKey.Enter:
-                        // leave the loop
-                        selectOption = true;
-
-                        // What button is selected
-                        switch (_menu.SelectedIndex)
-                        {
-                            case 0:
-                                // do nothing just go on to the next loop
-                                break;
-                            case 1:
-                                // TODO : SETTINGS PAGE
-                                break;
-                            case 2:
-                                // TODO : HIGHSCORE PAGE
-                                break;
-                            case 3:
-                                // TODO : ABOUT PAGE
-                                break;
-                            case 4:
-                                Environment.Exit(0);
-                                break;
-                            default:
-                                break;
-                        }
-
-                        break;
-                    default:
-                        break;
-                }
-            }
+            // Display the default menu
+            _menu.DrawTitle();
+            // Display all the option buttons
+            _menu.DrawOptions();
+            // Enable the key manager of the menu
+            _menu.KeyManager();
         }
     }
 }
