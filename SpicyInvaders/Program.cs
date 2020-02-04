@@ -12,19 +12,9 @@ namespace SpicyInvaders
         static void Main(string[] args)
         {
             GameManager gameManager = new GameManager();
-            Console.CursorVisible = false;
+
             gameManager.Start();
-
-            Console.CursorVisible = false;
-            Console.SetWindowSize(100, 50);
-
-            MainMenu menu = new MainMenu();
-            menu.Refresh(true);
-
-            while (true)
-            {
-
-            }
+            gameManager.MainMenu();
         }
     }
 }

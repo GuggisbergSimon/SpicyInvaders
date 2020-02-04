@@ -12,7 +12,7 @@ namespace SpicyInvaders
     /// <summary>
     /// Manager handling the correct execution of the game
     /// </summary>
-    class GameManager
+    public class GameManager
     {
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
@@ -20,6 +20,8 @@ namespace SpicyInvaders
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
         private const int DELTA_TIME = 10;
+        private Menu _menu;
+        private Menu _settingsMenu;
         private Random _random = new Random();
 
         /// <summary>
@@ -56,6 +58,20 @@ namespace SpicyInvaders
         /// Starts the game and runs it
         /// </summary>
         public void Start()
+        {
+            Console.CursorVisible = false;
+            Console.SetWindowSize(200, 60);
+
+            // Create the main menu object
+            string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            _menu = new Menu(stringMenuNames);
+            Menu.listMenus.Add(_menu);
+        }
+
+        /// <summary>
+        /// Load the game
+        /// </summary>
+        public void MainGame()
         {
             while (true)
             {
@@ -99,6 +115,21 @@ namespace SpicyInvaders
                     Thread.Sleep(DELTA_TIME - Convert.ToInt32(stopWatch.ElapsedMilliseconds));
                 }
             }
+        }
+
+        /// <summary>
+        /// Load the main menu
+        /// </summary>
+        public void MainMenu()
+        {
+            Console.Clear();
+
+            // Display the default menu
+            _menu.DrawTitle();
+            // Display all the option buttons
+            _menu.DrawOptions();
+            // Enable the key manager of the menu
+            _menu.KeyManager();
         }
     }
 }

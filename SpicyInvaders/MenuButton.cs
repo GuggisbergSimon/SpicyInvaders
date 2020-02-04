@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//Authors       : HDN, YFA, KBY & SGG
+//Date          : 17.01.2020
+//Location      : ETML
+//Description   : MenuButton Class of Spicy Invaders
 
 namespace SpicyInvaders
 {
-    class MenuButton
+    /// <summary>
+    /// Each button of the main menu
+    /// </summary>
+    public class MenuButton
     {
         // X position of the button
         private int _x;
