@@ -5,7 +5,7 @@
 
 namespace SpicyInvaders
 {
-    class Enemy
+    public class Enemy
     {
     }
 }
