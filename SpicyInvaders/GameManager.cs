@@ -1,4 +1,4 @@
-﻿//Authors       : HDN, YFA, KBY & SGG
+﻿//Authors       : HDN, KBY, YFA & SGG
 //Date          : 17.01.2020
 //Location      : ETML
 //Description   : GameManager Class of Spicy Invaders
@@ -22,6 +22,7 @@ namespace SpicyInvaders
         private const int DELTA_TIME = 10;
         private Menu _menu;
         private Menu _settingsMenu;
+        private Random _random = new Random();
 
         /// <summary>
         /// Gets the player
@@ -49,6 +50,8 @@ namespace SpicyInvaders
             {
                 Instance = this;
             }
+
+            _player = new Player(1, 1);
         }
 
         /// <summary>
@@ -84,9 +87,30 @@ namespace SpicyInvaders
                 }
 
                 // todo update player
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo input = Console.ReadKey(true);
+
+                    switch (input.Key)
+                    {
+                        case ConsoleKey.LeftArrow:
+                            _player.Update(Direction.Left);
+                            break;
+                        case ConsoleKey.RightArrow:
+                            _player.Update(Direction.Right);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                // todo remove
+                Console.SetCursorPosition(10, 10);
+                Console.WriteLine(_random.Next(0,101));
+                Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
 
                 stopWatch.Stop();
-                if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) > DELTA_TIME)
+                if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
                 {
                     Thread.Sleep(DELTA_TIME - Convert.ToInt32(stopWatch.ElapsedMilliseconds));
                 }
