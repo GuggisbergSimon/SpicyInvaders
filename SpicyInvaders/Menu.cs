@@ -205,7 +205,7 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// Draw the settings page
+        /// Draw the page
         /// </summary>
         public void DrawPage(string title)
         {
@@ -263,6 +263,10 @@ namespace SpicyInvaders
                                 Menu.listMenus[0].DrawOptions();
                                 Menu.listMenus[0].KeyManager();
                                 break;
+                            }
+                            else if (_menuButtons[i].Name == "PLAY")
+                            {
+                                // TO DO : GameManager.MainGame()
                             }
 
                             // Draw the page button in function of the selected button

@@ -73,6 +73,8 @@ namespace SpicyInvaders
         /// </summary>
         public void MainGame()
         {
+            Console.Clear();
+
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
