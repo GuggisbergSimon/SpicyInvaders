@@ -14,33 +14,41 @@ namespace SpicyInvaders
         private const char PLAYER_CHR = 'A';
 
         //Coordinates of the player in the Console.
-        private int _playerX;
-        private int _playerY;
+        private int _X;
+        private int _Y;
 
 
-        //Getters-Setters
-        public int PlayerX
+        //Properties
+        public int X
         {
-            get { return _playerX; }
-            set { _playerX = value; }
+            get { return _X; }
+            set { _X = value; }
         }
 
-        public int PlayerY
+        public int Y
         {
-            get { return _playerY; }
-            set { _playerY = value; }
+            get { return _Y; }
+            set { _Y = value; }
         }
 
         /// <summary>
-        /// Constructor of the class "Player"
+        /// Default constructor of the class
         /// </summary>
-        /// <param name="aPlayerX"></param>
-        /// <param name="aPlayerY"></param>
-        public Player(int playerX, int playerY)
+        public Player()
         {
-            _playerX = playerX;
-            _playerY = playerY;
-            Console.SetCursorPosition(PlayerX, PlayerY);
+
+        }
+
+        /// <summary>
+        /// Custom Constructor of the class "Player"
+        /// </summary>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        public Player(int X, int Y)
+        {
+            _X = X;
+            _Y = Y;
+            Console.SetCursorPosition(X, Y);
             Console.Write(PLAYER_CHR);
         }
 
@@ -54,14 +62,14 @@ namespace SpicyInvaders
 
             if (direction == Direction.Left)
             {
-                PlayerX--;
+                X--;
             }
             else if(direction == Direction.Right)
             {
-                PlayerX++;
+                X++;
             }
 
-            Console.SetCursorPosition(PlayerX, PlayerY);
+            Console.SetCursorPosition(X, Y);
             Console.Write(PLAYER_CHR);
         }
     }

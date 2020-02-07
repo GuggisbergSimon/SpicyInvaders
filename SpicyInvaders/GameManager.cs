@@ -19,6 +19,7 @@ namespace SpicyInvaders
         private List<Enemy> _enemies = new List<Enemy>();
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
+        private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
         private Menu _menu;
         private Menu _settingsMenu;
@@ -46,12 +47,12 @@ namespace SpicyInvaders
         public GameManager()
         {
             //singleton setup
-            if (Instance != null && Instance != this)
+            if (Instance == null && Instance != this)
             {
                 Instance = this;
             }
 
-            _player = new Player(1, 1);
+            _player = new Player(50, 35);
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace SpicyInvaders
         public void Start()
         {
             Console.CursorVisible = false;
-            Console.SetWindowSize(200, 60);
+            Console.SetWindowSize(100, 50);
 
             // Create the main menu object
             string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
@@ -73,14 +74,14 @@ namespace SpicyInvaders
         /// </summary>
         public void MainGame()
         {
+            _grpEnemies = new GroupEnemies();
+            _grpEnemies.SpawnEnemies();
+
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
                 // main loop of the game
-                foreach (var enemy in _enemies)
-                {
-                    // todo update here
-                }
+
                 foreach (var bullet in _bullets)
                 {
                     // todo update here
@@ -105,9 +106,9 @@ namespace SpicyInvaders
                 }
 
                 // todo remove
-                Console.SetCursorPosition(10, 10);
-                Console.WriteLine(_random.Next(0,101));
-                Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
+                Console.SetCursorPosition(80, 10);
+                Console.WriteLine(_random.Next(0,1001));
+                Console.SetCursorPosition(_player.X + 1, _player.Y);
 
                 stopWatch.Stop();
                 if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
