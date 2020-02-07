@@ -111,7 +111,7 @@ namespace SpicyInvaders
             Console.CursorVisible = false;
             Console.SetWindowSize(windowSize.X, windowSize.Y);
 
-            // Create the main menu object
+            // Create all the menu objects
             string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
             Menus.Add(new Menu(stringMenuNames, ""));
             string[] stringMenuNames1 = { "Sound", "Mute", "Back" };
@@ -119,6 +119,7 @@ namespace SpicyInvaders
             string[] stringMenuNames2 = { "Back" };
             Menus.Add(new Menu(stringMenuNames2, "Highscore"));
             Menus.Add(new Menu(stringMenuNames2, "About"));
+
             _currentMenu = Menus[0];
         }
 
