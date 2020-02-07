@@ -1,9 +1,9 @@
-//Authors       : HBN, KBY & SGG
+//Authors       : HDN, KBY, YFA & SGG
 //Date          : 17.01.2020
 //Location      : ETML
 //Description   : Main Class of Spicy Invaders
 
-﻿using System;
+using System;
 
 namespace SpicyInvaders
 {
@@ -12,16 +12,9 @@ namespace SpicyInvaders
         static void Main(string[] args)
         {
             GameManager gameManager = new GameManager();
-            Console.CursorVisible = false;
+
             gameManager.Start();
-
-            Console.CursorVisible = false;
-            Player Ship = new Player(35, 20);
-
-            while (true)
-            {
-
-            }
+            gameManager.MainMenu();
         }
     }
 }
