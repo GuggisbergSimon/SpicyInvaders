@@ -34,8 +34,7 @@ namespace SpicyInvaders
                                             "  `Y8b. 88~~~      88    8b         88         88    88 V8o88 `8b  d8' 88~~~88 88   88 88~~~~~ 88`8b     `Y8b.",
                                             "db   8D 88        .88.   Y8b  d8    88        .88.   88  V888  `8bd8'  88   88 88  .8D 88.     88 `88. db   8D",
                                             "`8888Y' 88      Y888888P  `Y88P'    YP      Y888888P VP   V8P    YP    YP   YP Y8888D' Y88888P 88   YD `8888Y'" };
-        private const int _WINDOW_X = 150;
-        private const int _WINDOW_Y = 60;
+
 
         // Array containing each menu options as objects of the class MenuButton
         private readonly List<MenuButton> _menuButtons = new List<MenuButton>();
@@ -86,8 +85,8 @@ namespace SpicyInvaders
                 // Creation of the menu options throughout the custom constructor of the MenuButton class
                 MenuButton newBtn = new MenuButton
                 {
-                    X = 2 * _WINDOW_X / 3,
-                    Y = _WINDOW_Y / 4 + (5 * i),
+                    X = 2 * GameManager.Instance.WindowSize.X / 3,
+                    Y = GameManager.Instance.WindowSize.Y / 4 + (5 * i),
                     Name = name.ToUpper()
                 };
 
@@ -208,14 +207,14 @@ namespace SpicyInvaders
             foreach(string line in _TITLE)
             {
                 j++;
-                Console.SetCursorPosition(_WINDOW_X / 2 - _TITLE[0].Length / 2, 2 + j);
+                Console.SetCursorPosition(GameManager.Instance.WindowSize.X / 2 - _TITLE[0].Length / 2, 2 + j);
                 Console.Write(line);
             }
             Console.Write("\n\n\n");
             
 
             // Write a line under the title
-            for (int i = 0; i < _WINDOW_X; i++)
+            for (int i = 0; i < GameManager.Instance.WindowSize.X; i++)
             {
                 Console.Write("_");
             }
@@ -231,7 +230,7 @@ namespace SpicyInvaders
             DrawTitle();
             // Draw the subtitle of the page
             Console.Write("\n");
-            Console.CursorLeft = _WINDOW_X / 2 - pageTitle.Length / 2;
+            Console.CursorLeft = GameManager.Instance.WindowSize.X / 2 - pageTitle.Length / 2;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(pageTitle);
             Console.Write("\n\n");

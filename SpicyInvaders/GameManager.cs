@@ -150,7 +150,7 @@ namespace SpicyInvaders
                 {
                     case GameManagerState.MainMenu:
                     {
-                        MainMenu();
+                        LoadMenu();
                         break;
                     }
                     case GameManagerState.MainGame:
