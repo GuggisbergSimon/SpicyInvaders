@@ -27,7 +27,8 @@ namespace SpicyInvaders
         public static List<Menu> listMenus = new List<Menu>();
 
         // Title of the game on the screen (generate with https://www.kammerl.de/ascii/AsciiSignature.php)
-        private const string _TITLE = @".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.
+        private const string _TITLE =
+            @".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.
                                         88'  YP 88  `8D   `88'   d8P  Y8 `8b  d8'     `88'   888o  88 88    88 d8' `8b 88  `8D 88'     88  `8D 88'  YP
                                         `8bo.   88oodD'    88    8P       `8bd8'       88    88V8o 88 Y8    8P 88ooo88 88   88 88ooooo 88oobY' `8bo.
                                           `Y8b. 88~~~      88    8b         88         88    88 V8o88 `8b  d8' 88~~~88 88   88 88~~~~~ 88`8b     `Y8b.
@@ -40,6 +41,7 @@ namespace SpicyInvaders
 
         // Array containing each menu options as objects of the class MenuButton
         private readonly List<MenuButton> _menuButtons = new List<MenuButton>();
+
         // Index of the selected button on the menu (0 to 4)
         private int _selectedIndex = 0;
 
@@ -90,7 +92,7 @@ namespace SpicyInvaders
                 {
                     // Write the arrow in front of the button
                     Console.SetCursorPosition(_menuButtons[j].X - 3, _menuButtons[j].Y);
-                    Console.Write((char)62);
+                    Console.Write((char) 62);
 
                     // Draw the menu option with selected design
                     Console.SetCursorPosition(_menuButtons[j].X, _menuButtons[j].Y);
@@ -149,7 +151,7 @@ namespace SpicyInvaders
                 {
                     // Write the arrow in front of the button
                     Console.SetCursorPosition(_menuButtons[j].X - 3, _menuButtons[j].Y);
-                    Console.Write((char)62);
+                    Console.Write((char) 62);
 
                     // Draw the menu option with selected design
                     Console.SetCursorPosition(_menuButtons[j].X, _menuButtons[j].Y);
@@ -213,73 +215,66 @@ namespace SpicyInvaders
             SelectedIndex = 0;
             DrawTitle(title);
             DrawOptions();
-            KeyManager();
+            Update();
         }
 
         /// <summary>
         /// Manage which key
         /// </summary>
-        public void KeyManager()
+        public void Update()
         {
             bool selectOption = false;
 
-            // Loop for the selection of an option by pressing enter
-            while (!selectOption)
+            switch (GameManager.Instance.Input.Key)
             {
-                ConsoleKeyInfo key = Console.ReadKey();
+                case ConsoleKey.DownArrow:
+                    // false = move down
+                    MoveCursor(ArrowDirection.Down);
+                    break;
+                case ConsoleKey.UpArrow:
+                    // true = move up
+                    MoveCursor(ArrowDirection.Up);
+                    break;
+                case ConsoleKey.Escape:
+                    Console.Clear();
+                    Menu.listMenus[0].DrawTitle();
+                    Menu.listMenus[0].DrawOptions();
+                    Menu.listMenus[0].Update();
+                    break;
+                case ConsoleKey.Enter:
+                    // leave the loop
+                    selectOption = true;
 
-                switch (key.Key)
-                {
-                    case ConsoleKey.DownArrow:
-                        // false = move down
-                        MoveCursor(ArrowDirection.Down);
-                        break;
-                    case ConsoleKey.UpArrow:
-                        // true = move up
-                        MoveCursor(ArrowDirection.Up);
-                        break;
-                    case ConsoleKey.Escape:
-                        Console.Clear();
-                        Menu.listMenus[0].DrawTitle();
-                        Menu.listMenus[0].DrawOptions();
-                        Menu.listMenus[0].KeyManager();
-                        break;
-                    case ConsoleKey.Enter:
-                        // leave the loop
-                        selectOption = true;
-
-                        // Which button is selected
-                        for (int i = 0; i < _menuButtons.Count; i++)
+                    // Which button is selected
+                    for (int i = 0; i < _menuButtons.Count; i++)
+                    {
+                        // The last button is always the quit button
+                        if (_menuButtons[i].Name == "QUIT")
                         {
-                            // The last button is always the quit button
-                            if (_menuButtons[i].Name == "QUIT")
-                            {
-                                Environment.Exit(0);
-                            }
-                            else if (_menuButtons[i].Name == "BACK")
-                            {
-                                Console.Clear();
-                                Menu.listMenus[0].DrawTitle();
-                                Menu.listMenus[0].DrawOptions();
-                                Menu.listMenus[0].KeyManager();
-                                break;
-                            }
-
-                            // Draw the page button in function of the selected button
-                            if (SelectedIndex == i)
-                            {
-                                string[] stringName = { "Sound", "Mute", "Back" };
-                                Menu.listMenus.Add(new Menu(stringName));
-                                Menu.listMenus[1].DrawPage(_menuButtons[i].Name.ToUpper());
-                            }
+                            Environment.Exit(0);
+                        }
+                        else if (_menuButtons[i].Name == "BACK")
+                        {
+                            Console.Clear();
+                            Menu.listMenus[0].DrawTitle();
+                            Menu.listMenus[0].DrawOptions();
+                            Menu.listMenus[0].Update();
+                            break;
                         }
 
-                        break;
-                    default:
-                        break;
-                }
+                        // Draw the page button in function of the selected button
+                        if (SelectedIndex == i)
+                        {
+                            string[] stringName = {"Sound", "Mute", "Back"};
+                            Menu.listMenus.Add(new Menu(stringName));
+                            Menu.listMenus[1].DrawPage(_menuButtons[i].Name.ToUpper());
+                        }
+                    }
+
+                    break;
+                default:
+                    break;
             }
         }
-
     }
 }

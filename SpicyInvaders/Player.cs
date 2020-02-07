@@ -48,17 +48,26 @@ namespace SpicyInvaders
         /// You can update the position of the player using this method.
         /// </summary>
         /// <param name="direction"></param>
-        public void Update(Direction direction)
+        public void Update()
         {
             Console.Write("\b ");
 
-            if (direction == Direction.Left)
+            switch (GameManager.Instance.Input.Key)
             {
-                PlayerX--;
-            }
-            else if(direction == Direction.Right)
-            {
-                PlayerX++;
+                case ConsoleKey.LeftArrow:
+                {
+                    PlayerX--;
+                    break;
+                }
+                case ConsoleKey.RightArrow:
+                {
+                    PlayerX++;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
             }
 
             Console.SetCursorPosition(PlayerX, PlayerY);
