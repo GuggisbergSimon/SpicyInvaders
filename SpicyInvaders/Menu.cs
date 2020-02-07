@@ -23,33 +23,39 @@ namespace SpicyInvaders
     /// </summary>
     public class Menu
     {
-        // List of all the menus available in Spicy Invaders
-        public static List<Menu> listMenus = new List<Menu>();
-
         // Title of the game on the screen (generate with https://www.kammerl.de/ascii/AsciiSignature.php)
-        private const string _TITLE =
-            @".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.
+        private const string _TITLE = @".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.
                                         88'  YP 88  `8D   `88'   d8P  Y8 `8b  d8'     `88'   888o  88 88    88 d8' `8b 88  `8D 88'     88  `8D 88'  YP
                                         `8bo.   88oodD'    88    8P       `8bd8'       88    88V8o 88 Y8    8P 88ooo88 88   88 88ooooo 88oobY' `8bo.
                                           `Y8b. 88~~~      88    8b         88         88    88 V8o88 `8b  d8' 88~~~88 88   88 88~~~~~ 88`8b     `Y8b.
                                         db   8D 88        .88.   Y8b  d8    88        .88.   88  V888  `8bd8'  88   88 88  .8D 88.     88 `88. db   8D
                                         `8888Y' 88      Y888888P  `Y88P'    YP      Y888888P VP   V8P    YP    YP   YP Y8888D' Y88888P 88   YD `8888Y'";
-
-        private readonly List<string> _menuNames = new List<string>();
         private const int _WINDOW_X = 200;
         private const int _WINDOW_Y = 60;
 
         // Array containing each menu options as objects of the class MenuButton
         private readonly List<MenuButton> _menuButtons = new List<MenuButton>();
-
+        // List of all option names of the menu
+        private readonly List<string> _menuNames = new List<string>();
         // Index of the selected button on the menu (0 to 4)
         private int _selectedIndex = 0;
+        private bool _redraw = true;
 
-        // Property of the selected index
+        // Properties
         public int SelectedIndex
         {
             get { return _selectedIndex; }
             set { _selectedIndex = value; }
+        }
+
+        public List<MenuButton> MenuButtons
+        {
+            get { return _menuButtons; }
+        }
+
+        public List<string> MenuNames
+        {
+            get { return _menuNames; }
         }
 
         /// <summary>
@@ -87,12 +93,12 @@ namespace SpicyInvaders
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.BackgroundColor = ConsoleColor.Black;
 
-                // If the option is selected, draw an arrow in front of it
+                // If the option is selected
                 if (j == SelectedIndex)
                 {
                     // Write the arrow in front of the button
                     Console.SetCursorPosition(_menuButtons[j].X - 3, _menuButtons[j].Y);
-                    Console.Write((char) 62);
+                    Console.Write((char)62);
 
                     // Draw the menu option with selected design
                     Console.SetCursorPosition(_menuButtons[j].X, _menuButtons[j].Y);
@@ -151,7 +157,7 @@ namespace SpicyInvaders
                 {
                     // Write the arrow in front of the button
                     Console.SetCursorPosition(_menuButtons[j].X - 3, _menuButtons[j].Y);
-                    Console.Write((char) 62);
+                    Console.Write((char)62);
 
                     // Draw the menu option with selected design
                     Console.SetCursorPosition(_menuButtons[j].X, _menuButtons[j].Y);
@@ -200,81 +206,97 @@ namespace SpicyInvaders
             // Draw the subtitle of the page
             Console.Write("\n");
             Console.CursorLeft = _WINDOW_X / 2 - pageTitle.Length / 2;
-
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(pageTitle);
             Console.Write("\n\n");
         }
 
         /// <summary>
-        /// Draw the settings page
+        /// Draw a full page
         /// </summary>
-        public void DrawPage(string title)
+        public void LoadPage(string title)
         {
-            Console.Clear();
-            SelectedIndex = 0;
-            DrawTitle(title);
-            DrawOptions();
-            Update();
+            if (_redraw)
+            {
+                Console.Clear();
+                DrawTitle(title);
+                DrawOptions();
+                _redraw = false;
+            }
+            KeyManager();
         }
 
         /// <summary>
-        /// Manage which key
+        /// Manage which key is pressed
         /// </summary>
-        public void Update()
+        public void KeyManager()
         {
-            bool selectOption = false;
 
+            // Loop for the selection of an option by pressing enter
             switch (GameManager.Instance.Input.Key)
             {
                 case ConsoleKey.DownArrow:
-                    // false = move down
-                    MoveCursor(ArrowDirection.Down);
-                    break;
-                case ConsoleKey.UpArrow:
-                    // true = move up
-                    MoveCursor(ArrowDirection.Up);
-                    break;
-                case ConsoleKey.Escape:
-                    Console.Clear();
-                    Menu.listMenus[0].DrawTitle();
-                    Menu.listMenus[0].DrawOptions();
-                    Menu.listMenus[0].Update();
-                    break;
-                case ConsoleKey.Enter:
-                    // leave the loop
-                    selectOption = true;
-
-                    // Which button is selected
-                    for (int i = 0; i < _menuButtons.Count; i++)
                     {
-                        // The last button is always the quit button
-                        if (_menuButtons[i].Name == "QUIT")
-                        {
-                            Environment.Exit(0);
-                        }
-                        else if (_menuButtons[i].Name == "BACK")
-                        {
-                            Console.Clear();
-                            Menu.listMenus[0].DrawTitle();
-                            Menu.listMenus[0].DrawOptions();
-                            Menu.listMenus[0].Update();
-                            break;
-                        }
-
-                        // Draw the page button in function of the selected button
-                        if (SelectedIndex == i)
-                        {
-                            string[] stringName = {"Sound", "Mute", "Back"};
-                            Menu.listMenus.Add(new Menu(stringName));
-                            Menu.listMenus[1].DrawPage(_menuButtons[i].Name.ToUpper());
-                        }
+                        MoveCursor(ArrowDirection.Down);
+                        _redraw = true;
+                        break;
                     }
+                case ConsoleKey.UpArrow:
+                    {
+                        MoveCursor(ArrowDirection.Up);
+                        _redraw = true;
+                        break;
+                    }
+                case ConsoleKey.Escape:
+                    {
+                        // Back to the main game menu
+                        GameManager.Instance.Run();
+                        _redraw = true;
+                        break;
+                    }
+                case ConsoleKey.Enter:
+                    {
 
-                    break;
+                        // Which button is selected
+                        for (int i = 0; i < _menuButtons.Count; i++)
+                        {
+                            // The last button is always the quit button
+                            switch (_menuButtons[i].Name)
+                            {
+                                case "QUIT":
+                                    {
+                                        Environment.Exit(0);
+                                        break;
+                                    }
+                                case "BACK":
+                                    {
+                                        // Load the main menu
+                                        GameManager.Instance.Run();
+                                        break;
+                                    }
+                                case "PLAY":
+                                    {
+                                        // Run the game
+                                        GameManager.Instance.Run();
+                                        break;
+                                    }
+                            }
+
+                            // Draw the page button in function of the selected button
+                            if (SelectedIndex == i)
+                            {
+
+                            }
+                        }
+                        _redraw = true;
+                        break;
+                    }
                 default:
-                    break;
+                    {
+                        break;
+                    }
             }
         }
+
     }
 }
