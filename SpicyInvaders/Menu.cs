@@ -226,9 +226,7 @@ namespace SpicyInvaders
             // Loop for the selection of an option by pressing enter
             while (!selectOption)
             {
-                ConsoleKeyInfo key = Console.ReadKey();
-
-                switch (key.Key)
+                switch (GameManager.Instance.Input.Key)
                 {
                     case ConsoleKey.DownArrow:
                         // false = move down
