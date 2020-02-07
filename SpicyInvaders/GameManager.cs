@@ -20,7 +20,8 @@ namespace SpicyInvaders
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
         private const int DELTA_TIME = 10;
-        private Menu _menu;
+        // List of all the menus available in Spicy Invaders
+        private List<Menu> _menus = new List<Menu>();
         private Menu _settingsMenu;
         private Random _random = new Random();
         private ConsoleKeyInfo _input = new ConsoleKeyInfo();
@@ -40,6 +41,13 @@ namespace SpicyInvaders
         {
             get { return _enemies; }
         }
+        
+        public List<Menu> Menus
+        {
+            get { return _menus; }
+            set { _menus = value; }
+        }
+
 
         /// <summary>
         /// Gets the current input
@@ -72,9 +80,8 @@ namespace SpicyInvaders
             Console.SetWindowSize(200, 60);
 
             // Create the main menu object
-            string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};
-            _menu = new Menu(stringMenuNames);
-            Menu.listMenus.Add(_menu);
+            string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            Menus.Add(new Menu(stringMenuNames));
         }
 
         /// <summary>
@@ -82,6 +89,8 @@ namespace SpicyInvaders
         /// </summary>
         public void Run()
         {
+            Console.Clear();
+
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
@@ -89,6 +98,10 @@ namespace SpicyInvaders
                 if (Console.KeyAvailable)
                 {
                     _input = Console.ReadKey(true);
+                }
+                else
+                {
+                    _input = new ConsoleKeyInfo();
                 }
 
                 // todo remove 3 next lines
@@ -129,14 +142,8 @@ namespace SpicyInvaders
         /// </summary>
         private void MainMenu()
         {
-            Console.Clear();
-
-            // Display the default menu
-            _menu.DrawTitle();
-            // Display all the option buttons
-            _menu.DrawOptions();
-            // Enable the key manager of the menu
-            _menu.Update();
+            // Draw the main menu without title
+            Menus[0].LoadPage("");
         }
     }
 }
