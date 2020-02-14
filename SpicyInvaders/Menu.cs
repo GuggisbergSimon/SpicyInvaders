@@ -154,12 +154,12 @@ namespace SpicyInvaders
             int counter = 0;
 
             // Draw the white title
-            Console.CursorLeft = GameManager.Instance.WindowSize.X / 5;
+            Console.CursorLeft = Console.WindowWidth / 5;
             Console.CursorTop += 3;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write(title + "\n\n");
 
-            Console.CursorLeft = GameManager.Instance.WindowSize.X / 5;
+            Console.CursorLeft = Console.WindowWidth / 5;
 
             // Draw the green paragraph
             Console.ForegroundColor = ConsoleColor.Green;
@@ -170,7 +170,7 @@ namespace SpicyInvaders
                 {
                     // line break
                     Console.Write("\n");
-                    Console.CursorLeft = GameManager.Instance.WindowSize.X / 5;
+                    Console.CursorLeft = Console.WindowWidth / 5;
                 }
                 else
                 {
