@@ -16,10 +16,8 @@ namespace SpicyInvaders
         private bool canShoot = true;
 
         /// <summary>
-        /// Constructor of the class "Player"
+        /// Constructor of the class
         /// </summary>
-        /// <param name="aPlayerX"></param>
-        /// <param name="aPlayerY"></param>
         public Player(int playerX, int playerY)
         {
             _position.X = playerX;

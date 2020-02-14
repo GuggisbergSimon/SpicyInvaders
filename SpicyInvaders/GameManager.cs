@@ -31,7 +31,11 @@ namespace SpicyInvaders
         private List<Enemy> _enemies = new List<Enemy>();
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
+        private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
+        private long tick = 1;
+        private Menu _menu;
+        private Menu _settingsMenu;
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
@@ -104,14 +108,18 @@ namespace SpicyInvaders
             Console.CursorVisible = false;
             Console.SetWindowSize(windowSize.X, windowSize.Y);
 
-            // Create the main menu object
+            // Create all the menu objects
             string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            // Name of the buttons and the name of the menu
             Menus.Add(new Menu(stringMenuNames, ""));
+
             string[] stringMenuNames1 = { "Sound", "Mute", "Back" };
             Menus.Add(new Menu(stringMenuNames1, "Settings"));
+
             string[] stringMenuNames2 = { "Back" };
             Menus.Add(new Menu(stringMenuNames2, "Highscore"));
             Menus.Add(new Menu(stringMenuNames2, "About"));
+
             _currentMenu = Menus[0];
             _player = new Player(1, 1);
         }
@@ -121,6 +129,10 @@ namespace SpicyInvaders
         /// </summary>
         public void Run()
         {
+            Console.Clear();
+            _grpEnemies = new GroupEnemies(5,5);
+            _grpEnemies.SpawnEnemies();
+
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
