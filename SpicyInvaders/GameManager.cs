@@ -113,9 +113,12 @@ namespace SpicyInvaders
 
             // Create all the menu objects
             string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            // Name of the buttons and the name of the menu
             Menus.Add(new Menu(stringMenuNames, ""));
+
             string[] stringMenuNames1 = { "Sound", "Mute", "Back" };
             Menus.Add(new Menu(stringMenuNames1, "Settings"));
+
             string[] stringMenuNames2 = { "Back" };
             Menus.Add(new Menu(stringMenuNames2, "Highscore"));
             Menus.Add(new Menu(stringMenuNames2, "About"));

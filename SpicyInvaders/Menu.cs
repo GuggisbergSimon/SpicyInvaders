@@ -50,6 +50,7 @@ namespace SpicyInvaders
         // Index of the selected button on the menu (0 to 4)
         private int _selectedIndex = 0;
         private readonly string _name;
+        // If true, the program refresh the page automatically
         private bool _redraw = true;
 
         /// <summary>
@@ -346,9 +347,8 @@ namespace SpicyInvaders
                                         }
                                     case "PLAY":
                                         {
-                                            GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             // Run the game
-                                            // TODO : switch to MainGame()
+                                            GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             break;
                                         }
                                     case "BACK":
@@ -394,6 +394,5 @@ namespace SpicyInvaders
                     }
             }
         }
-
     }
 }
