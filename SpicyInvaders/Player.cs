@@ -8,28 +8,12 @@ using System.Threading;
 
 namespace SpicyInvaders
 {
-    public class Player
+    public class Player : SimpleObject
     {
         //Representation of the player.
         private const char PLAYER_CHR = 'A';
 
-        //Coordinates of the player in the Console.
-        private int _playerX;
-        private int _playerY;
-
-
-        //Getters-Setters
-        public int PlayerX
-        {
-            get { return _playerX; }
-            set { _playerX = value; }
-        }
-
-        public int PlayerY
-        {
-            get { return _playerY; }
-            set { _playerY = value; }
-        }
+        private bool canShoot = true;
 
         /// <summary>
         /// Constructor of the class "Player"
@@ -38,9 +22,9 @@ namespace SpicyInvaders
         /// <param name="aPlayerY"></param>
         public Player(int playerX, int playerY)
         {
-            _playerX = playerX;
-            _playerY = playerY;
-            Console.SetCursorPosition(PlayerX, PlayerY);
+            _position.X = playerX;
+            _position.Y = playerY;
+            Console.SetCursorPosition(playerX, playerY);
             Console.Write(PLAYER_CHR);
         }
 
@@ -48,20 +32,35 @@ namespace SpicyInvaders
         /// You can update the position of the player using this method.
         /// </summary>
         /// <param name="direction"></param>
-        public void Update()
+        public override void Update()
         {
-            Console.Write("\b ");
-
             switch (GameManager.Instance.Input.Key)
             {
                 case ConsoleKey.LeftArrow:
                 {
-                    PlayerX--;
+                    if (_position.X > 0)
+                    {
+                        UpdatePos(-1);
+                    }
+
                     break;
                 }
                 case ConsoleKey.RightArrow:
                 {
-                    PlayerX++;
+                    if (_position.X < Console.WindowWidth - 1)
+                    {
+                        UpdatePos(1);
+                    }
+
+                    break;
+                }
+                case ConsoleKey.Spacebar:
+                {
+                    if (canShoot)
+                    {
+                        //todo shoot a bullet
+                    }
+
                     break;
                 }
                 default:
@@ -69,8 +68,14 @@ namespace SpicyInvaders
                     break;
                 }
             }
+        }
 
-            Console.SetCursorPosition(PlayerX, PlayerY);
+        private void UpdatePos(int move)
+        {
+            Console.SetCursorPosition(_position.X, _position.Y);
+            Console.Write(" ");
+            _position.X += move;
+            Console.SetCursorPosition(_position.X, _position.Y);
             Console.Write(PLAYER_CHR);
         }
     }

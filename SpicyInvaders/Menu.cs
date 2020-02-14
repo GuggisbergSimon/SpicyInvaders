@@ -93,8 +93,8 @@ namespace SpicyInvaders
                 // Creation of the menu options throughout the custom constructor of the MenuButton class
                 MenuButton newBtn = new MenuButton
                 {
-                    X = 2 * GameManager.Instance.WindowSize.X / 3,
-                    Y = GameManager.Instance.WindowSize.Y / 4 + (5 * i),
+                    X = 2 * Console.WindowWidth / 3,
+                    Y = Console.WindowHeight / 4 + (5 * i),
                     Name = name.ToUpper()
                 };
 
@@ -256,14 +256,14 @@ namespace SpicyInvaders
             foreach(string line in _TITLE)
             {
                 j++;
-                Console.SetCursorPosition(GameManager.Instance.WindowSize.X / 2 - _TITLE[0].Length / 2, 2 + j);
+                Console.SetCursorPosition(Console.WindowWidth / 2 - _TITLE[0].Length / 2, 2 + j);
                 Console.Write(line);
             }
             Console.Write("\n\n\n");
             
 
             // Write a line under the title
-            for (int i = 0; i < GameManager.Instance.WindowSize.X; i++)
+            for (int i = 0; i < Console.WindowWidth; i++)
             {
                 Console.Write("_");
             }
@@ -279,7 +279,7 @@ namespace SpicyInvaders
             DrawTitle();
             // Draw the subtitle of the page
             Console.Write("\n");
-            Console.CursorLeft = GameManager.Instance.WindowSize.X / 2 - pageTitle.Length / 2;
+            Console.CursorLeft = Console.WindowWidth / 2 - pageTitle.Length / 2;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(pageTitle);
             Console.Write("\n\n");
