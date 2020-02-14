@@ -13,7 +13,7 @@ namespace SpicyInvaders
         {
             GameManager gameManager = new GameManager();
             gameManager.Start();
-            gameManager.MainGame();
+            gameManager.Run();
         }
     }
 }

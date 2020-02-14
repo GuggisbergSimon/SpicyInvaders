@@ -14,6 +14,18 @@ namespace SpicyInvaders
     /// </summary>
     public class GameManager
     {
+        public enum GameManagerState
+        {
+            MainMenu,
+            MainGame,
+            Pause,
+            Score
+        }
+
+        /// <summary>
+        /// ATTRIBUTES
+        /// </summary>
+
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
         private List<Enemy> _enemies = new List<Enemy>();
@@ -25,21 +37,55 @@ namespace SpicyInvaders
         private Menu _menu;
         private Menu _settingsMenu;
         private Random _random = new Random();
+        private ConsoleKeyInfo _input;
+        private GameManagerState _state = GameManagerState.MainMenu;
+        private readonly Vector2D windowSize = new Vector2D(200, 60);
+        private List<Menu> _menus = new List<Menu>();
+        private Menu _currentMenu;
 
         /// <summary>
-        /// Gets the player
+        /// PROPERTIES
         /// </summary>
         public Player Player
         {
             get { return _player; }
         }
 
-        /// <summary>
-        /// Gets the list of enemies
-        /// </summary>
         public List<Enemy> Enemies
         {
             get { return _enemies; }
+        }
+
+        public List<Bullet> Bullets
+        {
+            get { return _bullets; }
+            set { _bullets = value; }
+        }
+
+        public List<Menu> Menus
+        {
+            get { return _menus; }
+            set { _menus = value; }
+        }
+
+        public Menu CurrentMenu
+        {
+            get { return _currentMenu; }
+            set { _currentMenu = value; }
+        }
+
+        public ConsoleKeyInfo Input
+        {
+            get { return _input; }
+        }
+
+        /// <summary>
+        /// Gets-Sets the state of the GameManager
+        /// </summary>
+        public GameManagerState State
+        {
+            get { return _state; }
+            set { _state = value; }
         }
 
         /// <summary>
@@ -52,71 +98,85 @@ namespace SpicyInvaders
             {
                 Instance = this;
             }
-
-            _player = new Player(50, 35);
         }
 
         /// <summary>
-        /// Starts the game and runs it
+        /// Setups the game
         /// </summary>
         public void Start()
         {
             Console.CursorVisible = false;
-            Console.SetWindowSize(100, 50);
+            Console.SetWindowSize(windowSize.X, windowSize.Y);
 
-            // Create the main menu object
+            // Create all the menu objects
             string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
-            _menu = new Menu(stringMenuNames);
-            Menu.listMenus.Add(_menu);
+            // Name of the buttons and the name of the menu
+            Menus.Add(new Menu(stringMenuNames, ""));
+
+            string[] stringMenuNames1 = { "Sound", "Mute", "Back" };
+            Menus.Add(new Menu(stringMenuNames1, "Settings"));
+
+            string[] stringMenuNames2 = { "Back" };
+            Menus.Add(new Menu(stringMenuNames2, "Highscore"));
+            Menus.Add(new Menu(stringMenuNames2, "About"));
+
+            _currentMenu = Menus[0];
+            _player = new Player(1, 1);
         }
 
         /// <summary>
-        /// Load the game
+        /// Runs the game
         /// </summary>
-        public void MainGame()
+        public void Run()
         {
+            Console.Clear();
             _grpEnemies = new GroupEnemies(5,5);
             _grpEnemies.SpawnEnemies();
 
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
-                // main loop of the game
 
-                //if(tick % 100 == 0)
-                //{
-                //    _grpEnemies.Update();
-                //}
-
-                foreach (var bullet in _bullets)
-                {
-                    // todo update here
-                }
-
-                // todo update player
                 if (Console.KeyAvailable)
                 {
-                    ConsoleKeyInfo input = Console.ReadKey(true);
-
-                    switch (input.Key)
-                    {
-                        case ConsoleKey.LeftArrow:
-                            _player.Update(Direction.Left);
-                            break;
-                        case ConsoleKey.RightArrow:
-                            _player.Update(Direction.Right);
-                            break;
-                        default:
-                            break;
-                    }
+                    _input = Console.ReadKey(true);
+                }
+                else
+                {
+                    _input = new ConsoleKeyInfo();
                 }
 
-                // todo remove
-                Console.SetCursorPosition(80, 40);
-                Console.WriteLine(_random.Next(0,1001));
-                Console.SetCursorPosition(80, 41);
-                Console.WriteLine(tick += 1);
-                Console.SetCursorPosition(_player.X + 1, _player.Y);
+                // todo remove 3 next lines (test for fps purposes
+                // Console.SetCursorPosition(10, 10);
+                // Console.WriteLine(_random.Next(0,101));
+                // Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
+                switch (_state)
+                {
+                    case GameManagerState.MainMenu:
+                    {
+                        LoadMenu();
+                        break;
+                    }
+                    case GameManagerState.MainGame:
+                    {
+                        MainGame();
+                        break;
+                    }
+                    case GameManagerState.Pause:
+                    {
+                        // todo pause menu here
+                        break;
+                    }
+                    case GameManagerState.Score:
+                    {
+                        // todo score menu here
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
 
                 stopWatch.Stop();
                 if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
@@ -127,18 +187,30 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// Load the main menu
+        /// loop of the game
         /// </summary>
-        public void MainMenu()
+        private void MainGame()
         {
-            Console.Clear();
+            foreach (var enemy in _enemies)
+            {
+                // todo update here
+            }
 
-            // Display the default menu
-            _menu.DrawTitle();
-            // Display all the option buttons
-            _menu.DrawOptions();
-            // Enable the key manager of the menu
-            _menu.KeyManager();
+            foreach (var bullet in _bullets)
+            {
+                // todo update here
+            }
+
+            _player.Update();
+        }
+
+        /// <summary>
+        /// Load a menu
+        /// </summary>
+        private void LoadMenu()
+        {
+            // Draw the main menu with his title
+            _currentMenu.LoadPage(_currentMenu.Name.ToUpper());
         }
     }
 }

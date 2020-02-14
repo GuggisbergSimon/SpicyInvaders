@@ -8,47 +8,21 @@ using System.Threading;
 
 namespace SpicyInvaders
 {
-    public class Player
+    public class Player : SimpleObject
     {
         //Representation of the player.
         private const char PLAYER_CHR = 'A';
 
-        //Coordinates of the player in the Console.
-        private int _X;
-        private int _Y;
-
-
-        //Properties
-        public int X
-        {
-            get { return _X; }
-            set { _X = value; }
-        }
-
-        public int Y
-        {
-            get { return _Y; }
-            set { _Y = value; }
-        }
+        private bool canShoot = true;
 
         /// <summary>
-        /// Default constructor of the class
+        /// Constructor of the class
         /// </summary>
-        public Player()
+        public Player(int playerX, int playerY)
         {
-
-        }
-
-        /// <summary>
-        /// Custom Constructor of the class "Player"
-        /// </summary>
-        /// <param name="X"></param>
-        /// <param name="Y"></param>
-        public Player(int X, int Y)
-        {
-            _X = X;
-            _Y = Y;
-            Console.SetCursorPosition(X, Y);
+            _position.X = playerX;
+            _position.Y = playerY;
+            Console.SetCursorPosition(playerX, playerY);
             Console.Write(PLAYER_CHR);
         }
 
@@ -56,20 +30,50 @@ namespace SpicyInvaders
         /// You can update the position of the player using this method.
         /// </summary>
         /// <param name="direction"></param>
-        public void Update(Direction direction)
+        public override void Update()
         {
-            Console.Write("\b ");
-
-            if (direction == Direction.Left)
+            switch (GameManager.Instance.Input.Key)
             {
-                X--;
-            }
-            else if(direction == Direction.Right)
-            {
-                X++;
-            }
+                case ConsoleKey.LeftArrow:
+                {
+                    if (_position.X > 0)
+                    {
+                        UpdatePos(-1);
+                    }
 
-            Console.SetCursorPosition(X, Y);
+                    break;
+                }
+                case ConsoleKey.RightArrow:
+                {
+                    if (_position.X < Console.WindowWidth - 1)
+                    {
+                        UpdatePos(1);
+                    }
+
+                    break;
+                }
+                case ConsoleKey.Spacebar:
+                {
+                    if (canShoot)
+                    {
+                        //todo shoot a bullet
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+        }
+
+        private void UpdatePos(int move)
+        {
+            Console.SetCursorPosition(_position.X, _position.Y);
+            Console.Write(" ");
+            _position.X += move;
+            Console.SetCursorPosition(_position.X, _position.Y);
             Console.Write(PLAYER_CHR);
         }
     }
