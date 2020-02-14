@@ -34,7 +34,14 @@ namespace SpicyInvaders
                                             "  `Y8b. 88~~~      88    8b         88         88    88 V8o88 `8b  d8' 88~~~88 88   88 88~~~~~ 88`8b     `Y8b.",
                                             "db   8D 88        .88.   Y8b  d8    88        .88.   88  V888  `8bd8'  88   88 88  .8D 88.     88 `88. db   8D",
                                             "`8888Y' 88      Y888888P  `Y88P'    YP      Y888888P VP   V8P    YP    YP   YP Y8888D' Y88888P 88   YD `8888Y'" };
-
+        private const string _ABOUT_TITLE_1 = "Spicy Invaders";
+        private const string _ABOUT_1 = "The project Spicy Invaders is a true copy of the famous game Space Invaders. The goal wasn't to steal the concept, " +
+                                        "because we're not gonna sell this game, but rather to create an entire oriented object game by ourself.";
+        private const string _ABOUT_TITLE_2 = "About us";
+        private const string _ABOUT_2 = "We are a team of four young developers. Simon Guggisberg, Ylli Fazlija, Hugo Ducommun and Karim Boraley. This project " +
+                                        "has been produced during our education in computer science. The goal was to know how to work in groups with different " +
+                                        "levels of coding. It grows our teamwork sense! We are pretty proud of our game even if it’s not perfect but we hope " +
+                                        "you enjoy the game :)";
 
         // Array containing each menu options as objects of the class MenuButton
         private readonly List<MenuButton> _menuButtons = new List<MenuButton>();
@@ -43,6 +50,7 @@ namespace SpicyInvaders
         // Index of the selected button on the menu (0 to 4)
         private int _selectedIndex = 0;
         private readonly string _name;
+        // If true, the program refresh the page automatically
         private bool _redraw = true;
 
         /// <summary>
@@ -99,10 +107,11 @@ namespace SpicyInvaders
         /// </summary>
         public void DrawOptions()
         {
-            // Draw something if it's necessary
-            if (this == GameManager.Instance.Menus[2] || this == GameManager.Instance.Menus[3])
+            // Draw something if it's necessary (about or highscore)
+            if (this == GameManager.Instance.Menus[3])
             {
-                // TODO : Write something above the buttons
+                DrawText(_ABOUT_TITLE_1, _ABOUT_1);
+                DrawText(_ABOUT_TITLE_2, _ABOUT_2);
             }
 
             // Draw each option button
@@ -135,6 +144,46 @@ namespace SpicyInvaders
             // reset the color of the cursor
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        /// <summary>
+        /// Draw something on the left of the window
+        /// </summary>
+        public void DrawText(string title, string paragraph)
+        {
+            int counter = 0;
+
+            // Draw the white title
+            Console.CursorLeft = GameManager.Instance.WindowSize.X / 5;
+            Console.CursorTop += 3;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(title + "\n\n");
+
+            Console.CursorLeft = GameManager.Instance.WindowSize.X / 5;
+
+            // Draw the green paragraph
+            Console.ForegroundColor = ConsoleColor.Green;
+            foreach (char chara in paragraph)
+            {
+                // test at each space if it's at the end of the paragraph
+                if (Console.CursorLeft + 20 >= _menuButtons[0].X && chara == (char)32)
+                {
+                    // line break
+                    Console.Write("\n");
+                    Console.CursorLeft = GameManager.Instance.WindowSize.X / 5;
+                }
+                else
+                {
+                    Console.Write(chara);
+                    counter++;
+                }
+
+                // quit the foreach if the string is completed
+                if (counter >= paragraph.Length)
+                {
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -243,7 +292,6 @@ namespace SpicyInvaders
         {
             if (_redraw)
             {
-                Console.Clear();
                 DrawTitle(title);
                 DrawOptions();
                 _redraw = false;
@@ -274,6 +322,7 @@ namespace SpicyInvaders
                     }
                 case ConsoleKey.Escape:
                     {
+                        Console.Clear();
                         // Get back to the main menu
                         GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[0];
                         _redraw = true;
@@ -281,6 +330,7 @@ namespace SpicyInvaders
                     }
                 case ConsoleKey.Enter:
                     {
+                        Console.Clear();
                         // Which button is selected
                         for (int i = 0; i < _menuButtons.Count; i++)
                         {
@@ -298,7 +348,7 @@ namespace SpicyInvaders
                                     case "PLAY":
                                         {
                                             // Run the game
-                                            // TODO : switch to MainGame()
+                                            GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             break;
                                         }
                                     case "BACK":
@@ -344,6 +394,5 @@ namespace SpicyInvaders
                     }
             }
         }
-
     }
 }

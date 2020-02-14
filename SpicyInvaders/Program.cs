@@ -14,7 +14,6 @@ namespace SpicyInvaders
             GameManager gameManager = new GameManager();
             gameManager.Start();
             gameManager.Run();
-            // gameManager.MainMenu();
         }
     }
 }
