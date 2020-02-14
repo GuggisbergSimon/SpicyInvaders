@@ -129,6 +129,7 @@ namespace SpicyInvaders
         /// </summary>
         public void Run()
         {
+            Console.Clear();
             _grpEnemies = new GroupEnemies(5,5);
             _grpEnemies.SpawnEnemies();
 

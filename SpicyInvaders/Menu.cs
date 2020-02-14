@@ -348,6 +348,7 @@ namespace SpicyInvaders
                                     case "PLAY":
                                         {
                                             // Run the game
+                                            // todo resize window
                                             GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             break;
                                         }
