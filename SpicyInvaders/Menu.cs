@@ -346,6 +346,7 @@ namespace SpicyInvaders
                                         }
                                     case "PLAY":
                                         {
+                                            GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             // Run the game
                                             // TODO : switch to MainGame()
                                             break;
