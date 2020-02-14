@@ -31,7 +31,11 @@ namespace SpicyInvaders
         private List<Enemy> _enemies = new List<Enemy>();
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
+        private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
+        private long tick = 1;
+        private Menu _menu;
+        private Menu _settingsMenu;
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
@@ -125,6 +129,9 @@ namespace SpicyInvaders
         /// </summary>
         public void Run()
         {
+            _grpEnemies = new GroupEnemies(5,5);
+            _grpEnemies.SpawnEnemies();
+
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
