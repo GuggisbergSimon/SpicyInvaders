@@ -31,7 +31,11 @@ namespace SpicyInvaders
         private List<Enemy> _enemies = new List<Enemy>();
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
+        private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
+        private long tick = 1;
+        private Menu _menu;
+        private Menu _settingsMenu;
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
@@ -70,11 +74,6 @@ namespace SpicyInvaders
             set { _currentMenu = value; }
         }
 
-        public Vector2D WindowSize
-        {
-            get { return windowSize; }
-        }
-
         public ConsoleKeyInfo Input
         {
             get { return _input; }
@@ -99,8 +98,6 @@ namespace SpicyInvaders
             {
                 Instance = this;
             }
-
-            _player = new Player(1, 1);
         }
 
         /// <summary>
@@ -124,6 +121,7 @@ namespace SpicyInvaders
             Menus.Add(new Menu(stringMenuNames2, "About"));
 
             _currentMenu = Menus[0];
+            _player = new Player(1, 1);
         }
 
         /// <summary>
@@ -132,6 +130,8 @@ namespace SpicyInvaders
         public void Run()
         {
             Console.Clear();
+            _grpEnemies = new GroupEnemies(5,5);
+            _grpEnemies.SpawnEnemies();
 
             while (true)
             {
