@@ -22,6 +22,10 @@ namespace SpicyInvaders
             Score
         }
 
+        /// <summary>
+        /// ATTRIBUTES
+        /// </summary>
+
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
         private List<Enemy> _enemies = new List<Enemy>();
@@ -32,55 +36,45 @@ namespace SpicyInvaders
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
         private readonly Vector2D windowSize = new Vector2D(200, 60);
-
-        // List of all the menus available in Spicy Invaders
         private List<Menu> _menus = new List<Menu>();
-        private Menu _settingsMenu;
+        private Menu _currentMenu;
 
         /// <summary>
-        /// Gets the player
+        /// PROPERTIES
         /// </summary>
         public Player Player
         {
             get { return _player; }
         }
 
-        /// <summary>
-        /// Gets the list of enemies
-        /// </summary>
         public List<Enemy> Enemies
         {
             get { return _enemies; }
         }
 
-        /// <summary>
-        /// Gets-Sets the menus
-        /// </summary>
+        public List<Bullet> Bullets
+        {
+            get { return _bullets; }
+            set { _bullets = value; }
+        }
+
         public List<Menu> Menus
         {
             get { return _menus; }
             set { _menus = value; }
         }
 
-        /// <summary>
-        /// Gets the random source of the game
-        /// </summary>
-        public Random Random
+        public Menu CurrentMenu
         {
-            get { return _random; }
+            get { return _currentMenu; }
+            set { _currentMenu = value; }
         }
 
-        /// <summary>
-        /// Gets the WindowSize
-        /// </summary>
         public Vector2D WindowSize
         {
             get { return windowSize; }
         }
 
-        /// <summary>
-        /// Gets the current input
-        /// </summary>
         public ConsoleKeyInfo Input
         {
             get { return _input; }
@@ -118,8 +112,14 @@ namespace SpicyInvaders
             Console.SetWindowSize(windowSize.X, windowSize.Y);
 
             // Create the main menu object
-            string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};
-            Menus.Add(new Menu(stringMenuNames));
+            string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            Menus.Add(new Menu(stringMenuNames, ""));
+            string[] stringMenuNames1 = { "Sound", "Mute", "Back" };
+            Menus.Add(new Menu(stringMenuNames1, "Settings"));
+            string[] stringMenuNames2 = { "Back" };
+            Menus.Add(new Menu(stringMenuNames2, "Highscore"));
+            Menus.Add(new Menu(stringMenuNames2, "About"));
+            _currentMenu = Menus[0];
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace SpicyInvaders
                 {
                     case GameManagerState.MainMenu:
                     {
-                        MainMenu();
+                        LoadMenu();
                         break;
                     }
                     case GameManagerState.MainGame:
@@ -201,12 +201,12 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// Load the main menu
+        /// Load a menu
         /// </summary>
-        private void MainMenu()
+        private void LoadMenu()
         {
-            // Draw the main menu without title
-            Menus[0].LoadPage("");
+            // Draw the main menu with his title
+            _currentMenu.LoadPage(_currentMenu.Name.ToUpper());
         }
     }
 }
