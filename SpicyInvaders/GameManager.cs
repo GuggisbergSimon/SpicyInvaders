@@ -70,11 +70,6 @@ namespace SpicyInvaders
             set { _currentMenu = value; }
         }
 
-        public Vector2D WindowSize
-        {
-            get { return windowSize; }
-        }
-
         public ConsoleKeyInfo Input
         {
             get { return _input; }
@@ -99,8 +94,6 @@ namespace SpicyInvaders
             {
                 Instance = this;
             }
-
-            _player = new Player(1, 1);
         }
 
         /// <summary>
@@ -120,6 +113,7 @@ namespace SpicyInvaders
             Menus.Add(new Menu(stringMenuNames2, "Highscore"));
             Menus.Add(new Menu(stringMenuNames2, "About"));
             _currentMenu = Menus[0];
+            _player = new Player(1, 1);
         }
 
         /// <summary>
@@ -127,8 +121,6 @@ namespace SpicyInvaders
         /// </summary>
         public void Run()
         {
-            Console.Clear();
-
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();

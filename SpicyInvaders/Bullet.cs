@@ -17,14 +17,6 @@ namespace SpicyInvaders
         /// <summary>
         /// 
         /// </summary>
-        public override void Draw()
-        {
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public override void Update()
         {
 
