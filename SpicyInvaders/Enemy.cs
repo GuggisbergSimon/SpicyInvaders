@@ -52,6 +52,11 @@ namespace SpicyInvaders
             _y = y;
         }
 
+        public void Kill()
+        {
+
+        }
+
         public void Spawn()
         {
             Console.SetCursorPosition(_x, _y);

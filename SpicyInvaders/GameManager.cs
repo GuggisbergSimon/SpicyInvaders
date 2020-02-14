@@ -21,6 +21,7 @@ namespace SpicyInvaders
         private Player _player;
         private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
+        private long tick = 1;
         private Menu _menu;
         private Menu _settingsMenu;
         private Random _random = new Random();
@@ -74,13 +75,18 @@ namespace SpicyInvaders
         /// </summary>
         public void MainGame()
         {
-            _grpEnemies = new GroupEnemies();
+            _grpEnemies = new GroupEnemies(5,5);
             _grpEnemies.SpawnEnemies();
 
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
                 // main loop of the game
+
+                //if(tick % 100 == 0)
+                //{
+                //    _grpEnemies.Update();
+                //}
 
                 foreach (var bullet in _bullets)
                 {
@@ -106,8 +112,10 @@ namespace SpicyInvaders
                 }
 
                 // todo remove
-                Console.SetCursorPosition(80, 10);
+                Console.SetCursorPosition(80, 40);
                 Console.WriteLine(_random.Next(0,1001));
+                Console.SetCursorPosition(80, 41);
+                Console.WriteLine(tick += 1);
                 Console.SetCursorPosition(_player.X + 1, _player.Y);
 
                 stopWatch.Stop();

@@ -4,38 +4,72 @@
 //Description   : Enemy Class of Spicy Invaders
 
 
+using System;
+
 namespace SpicyInvaders
 {
     public class GroupEnemies
     {
-        private int _posX;
-        private int _posY;
+        /// <summary>
+        /// Attributes
+        /// </summary>
+        private readonly int _spaceX;
+        private readonly int _spaceY;
 
+        private int _sizeX;
+        private int _sizeY;
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public GroupEnemies()
+        {
+            _spaceX = 3;
+            _spaceY = 2;
+        }
+
+        /// <summary>
+        /// Custom Constructor
+        /// </summary>
+        public GroupEnemies(int sizeX, int sizeY)
+        {
+            _sizeX = sizeX;
+            _sizeY = sizeY;
+            _spaceX = 3;
+            _spaceY = 2;
+        }
+
+        /// <summary>
+        /// Spawn all the enemies in an array form
+        /// </summary>
         public void SpawnEnemies()
         {
-            for (int i = 0; i < 90; i++)
+            //Add enemies to the list
+            for (int i = 0; i < _sizeX * _sizeY; i++)
             {
                 GameManager.Instance.Enemies.Add(new Enemy());
             }
 
+            //Spawn enemies
             foreach (Enemy enemy in GameManager.Instance.Enemies)
             {
-                _posX += 3;
-                enemy.X = _posX;
-                enemy.Y = _posY;
-
-                if (_posX % 30 == 0)
-                {
-                    _posX = 0;
-                    _posY += 3;
-                }
+                enemy.X += _spaceX;
                 enemy.Spawn();
             }
         }
 
-        public GroupEnemies()
+        /// <summary>
+        /// Enemy Movement
+        /// </summary>
+        public void Update()
         {
-
+            foreach (Enemy enemy in GameManager.Instance.Enemies)
+            {
+                Console.SetCursorPosition(enemy.X, enemy.Y);
+                Console.Write((char)32);
+                enemy.X += 2;
+                enemy.Spawn();
+            }
         }
     }
 }
