@@ -260,7 +260,6 @@ namespace SpicyInvaders
                 Console.Write(line);
             }
             Console.Write("\n\n\n");
-            
 
             // Write a line under the title
             for (int i = 0; i < Console.WindowWidth; i++)

@@ -10,6 +10,13 @@ namespace SpicyInvaders
         protected Vector2D _position;
         protected char[,] _visual;
 
+        public Vector2D Position
+        {
+            get { return _position; }
+        }
+
+        public abstract void Draw();
+        
         public abstract void Update();
     }
 }

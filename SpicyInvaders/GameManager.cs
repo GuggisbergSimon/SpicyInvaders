@@ -121,7 +121,7 @@ namespace SpicyInvaders
             Menus.Add(new Menu(stringMenuNames2, "About"));
 
             _currentMenu = Menus[0];
-            _player = new Player(1, 1);
+            _player = new Player(35, 35);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace SpicyInvaders
 
             foreach (var bullet in _bullets)
             {
-                // todo update here
+                bullet.Update();
             }
 
             _player.Update();

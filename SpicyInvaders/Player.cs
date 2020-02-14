@@ -26,6 +26,12 @@ namespace SpicyInvaders
             Console.Write(PLAYER_CHR);
         }
 
+        public override void Draw()
+        {
+            Console.SetCursorPosition(_position.X, _position.Y);
+            Console.Write(PLAYER_CHR);
+        }
+
         /// <summary>
         /// You can update the position of the player using this method.
         /// </summary>
@@ -56,7 +62,7 @@ namespace SpicyInvaders
                 {
                     if (canShoot)
                     {
-                        //todo shoot a bullet
+                        GameManager.Instance.Bullets.Add(new Bullet(_position,Direction.Top,ConsoleColor.DarkMagenta,2));
                     }
 
                     break;
@@ -73,8 +79,7 @@ namespace SpicyInvaders
             Console.SetCursorPosition(_position.X, _position.Y);
             Console.Write(" ");
             _position.X += move;
-            Console.SetCursorPosition(_position.X, _position.Y);
-            Console.Write(PLAYER_CHR);
+            Draw();
         }
     }
 }
