@@ -10,6 +10,26 @@ namespace SpicyInvaders
         private int _x;
         private int _y;
 
+        public static Vector2D Right
+        {
+            get { return new Vector2D(1, 0); }
+        }
+
+        public static Vector2D Up
+        {
+            get { return new Vector2D(0, 1); }
+        }
+
+        public static Vector2D Identity
+        {
+            get { return new Vector2D(1, 1); }
+        }
+
+        public static Vector2D Zero
+        {
+            get { return new Vector2D(0, 0); }
+        }
+
         /// <summary>
         /// get-set the X-axis
         /// </summary>
@@ -37,7 +57,6 @@ namespace SpicyInvaders
         {
             _x = x;
             _y = y;
-
         }
 
         /// <summary>
@@ -74,9 +93,8 @@ namespace SpicyInvaders
                 return false;
             }
 
-            Vector2D objAsVector2D = (Vector2D)v;
+            Vector2D objAsVector2D = (Vector2D) v;
             return objAsVector2D.X == _x && objAsVector2D.Y == _y;
-
         }
 
         /// <summary>
