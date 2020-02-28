@@ -39,51 +39,65 @@ namespace SpicyInvaders
             switch (_direction)
             {
                 case Direction.Down:
-                {
-                    if (_position.Y <= Console.WindowHeight)
                     {
-                        // todo create basic vector2D 1,0 etc
-                        //UpdatePos();
-                    }
+                        if (_position.Y <= Console.WindowHeight)
+                        {
+                            UpdatePos(Vector2D.Up);
+                        }
+                        else
+                        {
+                            Destroy();
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case Direction.Left:
-                {
-                    if (_position.X > 0)
                     {
-                        _position.X--;
-                    }
+                        if (_position.X > 0)
+                        {
+                            UpdatePos(-Vector2D.Right);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case Direction.Right:
-                {
-                    if (_position.X <= Console.WindowWidth)
                     {
-                        _position.X++;
-                    }
+                        if (_position.X <= Console.WindowWidth)
+                        {
+                            UpdatePos(Vector2D.Right);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case Direction.Top:
-                {
-                    if (_position.Y > 0)
                     {
-                        _position.Y--;
-                    }
+                        if (_position.Y > 0)
+                        {
+                            UpdatePos(-Vector2D.Up);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
 
-            Draw();
+        }
+
+        public void Destroy()
+        {
+            ErasePicture();
+            GameManager.Instance.Bullets[GameManager.Instance.Bullets.IndexOf(this)] = null;
+        }
+
+        private void ErasePicture()
+        {
+
+            Console.SetCursorPosition(_position.X, Position.Y);
+            Console.Write(" ");
         }
 
         public void UpdatePos(Vector2D move)
         {
-            Console.SetCursorPosition(_position.X, _position.Y);
-            Console.Write(" ");
+            ErasePicture();
             _position += move;
             Draw();
         }

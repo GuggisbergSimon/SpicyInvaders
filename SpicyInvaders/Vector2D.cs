@@ -97,6 +97,11 @@ namespace SpicyInvaders
             return objAsVector2D.X == _x && objAsVector2D.Y == _y;
         }
 
+        public static Vector2D operator -(Vector2D v1)
+        {
+            return v1 * -1;
+        }
+
         /// <summary>
         /// addition operation
         /// </summary>
