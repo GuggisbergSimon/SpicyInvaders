@@ -4,14 +4,13 @@
 //Description   : Player Class of Spicy Invaders
 
 using System;
-using System.Threading;
 
 namespace SpicyInvaders
 {
     public class Player : SimpleObject
     {
         //Representation of the player.
-        private const char PLAYER_CHR = 'A';
+        private Vector2D barrelOffset = new Vector2D(0, 1);
 
         private bool canShoot = true;
 
@@ -20,10 +19,11 @@ namespace SpicyInvaders
         /// </summary>
         public Player(int playerX, int playerY)
         {
+            _visual = 'A';
             _position.X = playerX;
             _position.Y = playerY;
             Console.SetCursorPosition(playerX, playerY);
-            Console.Write(PLAYER_CHR);
+            Console.Write(_visual);
         }
 
         /// <summary>
@@ -56,7 +56,8 @@ namespace SpicyInvaders
                 {
                     if (canShoot)
                     {
-                        //todo shoot a bullet
+                        GameManager.Instance.Objects.Add(new Bullet(_position + barrelOffset, Direction.Up,
+                            ConsoleColor.DarkMagenta, 2));
                     }
 
                     break;
@@ -73,8 +74,7 @@ namespace SpicyInvaders
             Console.SetCursorPosition(_position.X, _position.Y);
             Console.Write(" ");
             _position.X += move;
-            Console.SetCursorPosition(_position.X, _position.Y);
-            Console.Write(PLAYER_CHR);
+            Draw();
         }
     }
 }

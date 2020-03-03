@@ -28,8 +28,8 @@ namespace SpicyInvaders
 
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
-        private List<Enemy> _enemies = new List<Enemy>();
-        private List<Bullet> _bullets = new List<Bullet>();
+
+        private List<SimpleObject> _objects = new List<SimpleObject>();
         private Player _player;
         private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
@@ -39,9 +39,10 @@ namespace SpicyInvaders
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
-        private readonly Vector2D windowSize = new Vector2D(200, 60);
+        private readonly Vector2D _windowSize = new Vector2D(200, 60);
         private List<Menu> _menus = new List<Menu>();
         private Menu _currentMenu;
+        private List<SimpleObject> _objectsToDestroy = new List<SimpleObject>();
 
         /// <summary>
         /// PROPERTIES
@@ -51,15 +52,9 @@ namespace SpicyInvaders
             get { return _player; }
         }
 
-        public List<Enemy> Enemies
+        public List<SimpleObject> Objects
         {
-            get { return _enemies; }
-        }
-
-        public List<Bullet> Bullets
-        {
-            get { return _bullets; }
-            set { _bullets = value; }
+            get { return _objects; }
         }
 
         public List<Menu> Menus
@@ -106,22 +101,22 @@ namespace SpicyInvaders
         public void Start()
         {
             Console.CursorVisible = false;
-            Console.SetWindowSize(windowSize.X, windowSize.Y);
+            Console.SetWindowSize(_windowSize.X, _windowSize.Y);
 
             // Create all the menu objects
-            string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};
             // Name of the buttons and the name of the menu
             Menus.Add(new Menu(stringMenuNames, ""));
 
-            string[] stringMenuNames1 = { "Sound", "Mute", "Back" };
+            string[] stringMenuNames1 = {"Sound", "Mute", "Back"};
             Menus.Add(new Menu(stringMenuNames1, "Settings"));
 
-            string[] stringMenuNames2 = { "Back" };
+            string[] stringMenuNames2 = {"Back"};
             Menus.Add(new Menu(stringMenuNames2, "Highscore"));
             Menus.Add(new Menu(stringMenuNames2, "About"));
 
             _currentMenu = Menus[0];
-            _player = new Player(1, 1);
+            _player = new Player(35, 35);
         }
 
         /// <summary>
@@ -130,7 +125,7 @@ namespace SpicyInvaders
         public void Run()
         {
             Console.Clear();
-            _grpEnemies = new GroupEnemies(5,5);
+            _grpEnemies = new GroupEnemies(5, 5);
             _grpEnemies.SpawnEnemies();
 
             while (true)
@@ -178,6 +173,14 @@ namespace SpicyInvaders
                     }
                 }
 
+                //Clean the destroyed objects
+                foreach (var enemyToDestroy in _objectsToDestroy)
+                {
+                    _objects.Remove(enemyToDestroy);
+                }
+
+                _objectsToDestroy.Clear();
+
                 stopWatch.Stop();
                 if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
                 {
@@ -191,13 +194,9 @@ namespace SpicyInvaders
         /// </summary>
         private void MainGame()
         {
-            foreach (var enemy in _enemies)
+            foreach (var obj in _objects)
             {
-                // todo update here
-            }
-
-            foreach (var bullet in _bullets)
-            {
+                obj.Update();
                 // todo update here
             }
 
@@ -211,6 +210,11 @@ namespace SpicyInvaders
         {
             // Draw the main menu with his title
             _currentMenu.LoadPage(_currentMenu.Name.ToUpper());
+        }
+
+        public void RemoveItem(SimpleObject objectToDestroy)
+        {
+            _objectsToDestroy.Add(objectToDestroy);
         }
     }
 }
