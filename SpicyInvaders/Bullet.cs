@@ -3,6 +3,8 @@
 //Location      : ETML
 //Description   : Bullet Class of Spicy Invaders
 
+using System;
+
 namespace SpicyInvaders
 {
     /// <summary>
@@ -13,6 +15,11 @@ namespace SpicyInvaders
         private System.ConsoleColor _color;
         private Direction _direction;
         private int _speed;
+
+        public override void Draw()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// 

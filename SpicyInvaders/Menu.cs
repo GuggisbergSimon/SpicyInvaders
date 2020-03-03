@@ -348,7 +348,11 @@ namespace SpicyInvaders
                                     case "PLAY":
                                         {
                                             // Run the game
-                                            // todo resize window
+                                            Console.SetWindowSize(70, 40);
+                                            Console.SetBufferSize(70, 40);
+                                            GameManager.Instance.Player.Draw();
+                                            GameManager.Instance.GrpEnemies = new GroupEnemies(7, 7);
+                                            GameManager.Instance.GrpEnemies.SpawnEnemies();
                                             GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             break;
                                         }

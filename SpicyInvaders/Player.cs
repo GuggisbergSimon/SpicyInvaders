@@ -12,7 +12,6 @@ namespace SpicyInvaders
     {
         //Representation of the player.
         private const char PLAYER_CHR = 'A';
-
         private bool canShoot = true;
 
         /// <summary>
@@ -22,7 +21,11 @@ namespace SpicyInvaders
         {
             _position.X = playerX;
             _position.Y = playerY;
-            Console.SetCursorPosition(playerX, playerY);
+        }
+
+        public override void Draw()
+        {
+            Console.SetCursorPosition(_position.X, _position.Y);
             Console.Write(PLAYER_CHR);
         }
 
@@ -35,7 +38,7 @@ namespace SpicyInvaders
             switch (GameManager.Instance.Input.Key)
             {
                 case ConsoleKey.LeftArrow:
-                {
+                {   
                     if (_position.X > 0)
                     {
                         UpdatePos(-1);
@@ -73,8 +76,7 @@ namespace SpicyInvaders
             Console.SetCursorPosition(_position.X, _position.Y);
             Console.Write(" ");
             _position.X += move;
-            Console.SetCursorPosition(_position.X, _position.Y);
-            Console.Write(PLAYER_CHR);
+            Draw();
         }
     }
 }

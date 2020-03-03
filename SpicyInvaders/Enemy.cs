@@ -15,6 +15,8 @@ namespace SpicyInvaders
         //Coordinates of the enemy in the Console.
         private int _x;
         private int _y;
+        private int _lastSpawnX;
+        private int _lastSpawnY;
 
         //Properties
         public int X
@@ -59,6 +61,12 @@ namespace SpicyInvaders
 
         public void Spawn()
         {
+            Console.SetCursorPosition(_lastSpawnX, _lastSpawnY);
+            Console.Write(" ");
+
+            _lastSpawnX = _x;
+            _lastSpawnY = _y;
+
             Console.SetCursorPosition(_x, _y);
             Console.Write(_enemyChar);
         }

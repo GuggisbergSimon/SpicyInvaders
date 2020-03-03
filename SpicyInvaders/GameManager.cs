@@ -29,6 +29,7 @@ namespace SpicyInvaders
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
         private List<Enemy> _enemies = new List<Enemy>();
+        private Enemy[,] _enemyArray = new Enemy[0, 0];
         private List<Bullet> _bullets = new List<Bullet>();
         private Player _player;
         private GroupEnemies _grpEnemies;
@@ -68,10 +69,22 @@ namespace SpicyInvaders
             set { _menus = value; }
         }
 
+        public Enemy[,] EnemyArray
+        {
+            get { return _enemyArray; }
+            set { _enemyArray = value; }
+        }
+
         public Menu CurrentMenu
         {
             get { return _currentMenu; }
             set { _currentMenu = value; }
+        }
+
+        public GroupEnemies GrpEnemies
+        {
+            get { return _grpEnemies; }
+            set { _grpEnemies = value; }
         }
 
         public ConsoleKeyInfo Input
@@ -98,6 +111,8 @@ namespace SpicyInvaders
             {
                 Instance = this;
             }
+
+            _player = new Player(35, 35);
         }
 
         /// <summary>
@@ -121,7 +136,6 @@ namespace SpicyInvaders
             Menus.Add(new Menu(stringMenuNames2, "About"));
 
             _currentMenu = Menus[0];
-            _player = new Player(1, 1);
         }
 
         /// <summary>
@@ -129,10 +143,6 @@ namespace SpicyInvaders
         /// </summary>
         public void Run()
         {
-            Console.Clear();
-            _grpEnemies = new GroupEnemies(5,5);
-            _grpEnemies.SpawnEnemies();
-
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
@@ -150,6 +160,7 @@ namespace SpicyInvaders
                 // Console.SetCursorPosition(10, 10);
                 // Console.WriteLine(_random.Next(0,101));
                 // Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
+
                 switch (_state)
                 {
                     case GameManagerState.MainMenu:
@@ -191,6 +202,13 @@ namespace SpicyInvaders
         /// </summary>
         private void MainGame()
         {
+            tick += 1;
+
+            if (tick % 100 == 0)
+            {
+                _grpEnemies.Update();
+            }
+
             foreach (var enemy in _enemies)
             {
                 // todo update here
