@@ -7,9 +7,6 @@ using System;
 
 namespace SpicyInvaders
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Bullet : SimpleObject
     {
         private Direction _direction;
@@ -19,68 +16,39 @@ namespace SpicyInvaders
 
         public Bullet(Vector2D pos, Direction dir, ConsoleColor color, int speed)
         {
+            _visual = '!';
             _position = pos;
             _direction = dir;
             _color = color;
             _speed = speed;
         }
 
-        public override void Draw()
-        {
-            Console.SetCursorPosition(_position.X, _position.Y);
-            Console.Write("!");
-        }
-
         public override void Update()
         {
             if (_isMoving)
             {
-                switch (_direction)
+                if (_direction == Direction.Up && _position.Y > 0)
                 {
-                    case Direction.Down:
-                    {
-                        if (_position.Y <= Console.WindowHeight)
-                        {
-                            UpdatePos(Vector2D.Up);
-                        }
-
-                        break;
-                    }
-                    case Direction.Left:
-                    {
-                        if (_position.X > 0)
-                        {
-                            UpdatePos(-Vector2D.Right);
-                        }
-
-                        break;
-                    }
-                    case Direction.Right:
-                    {
-                        if (_position.X <= Console.WindowWidth)
-                        {
-                            UpdatePos(Vector2D.Right);
-                        }
-
-                        break;
-                    }
-                    case Direction.Top:
-                    {
-                        if (_position.Y > 0)
-                        {
-                            UpdatePos(-Vector2D.Up);
-                        }
-                        else
-                        {
-                            _isMoving = false;
-                            Destroy();
-                        }
-
-                        break;
-                    }
+                    UpdatePos(-Vector2D.Up);
+                }
+                else if (_direction == Direction.Down && _position.Y <= Console.WindowHeight)
+                {
+                    UpdatePos(Vector2D.Up);
+                }
+                else if (_direction == Direction.Right && _position.X <= Console.WindowWidth)
+                {
+                    UpdatePos(Vector2D.Right);
+                }
+                else if (_direction == Direction.Left && _position.X > 0)
+                {
+                    UpdatePos(-Vector2D.Right);
+                }
+                else
+                {
+                    _isMoving = false;
+                    Destroy();
                 }
             }
-
         }
 
         public void Destroy()
@@ -97,7 +65,6 @@ namespace SpicyInvaders
 
         public void UpdatePos(Vector2D move)
         {
-
             if (GameManager.Instance.Player.Position == _position)
             {
                 GameManager.Instance.Player.Draw();
@@ -106,6 +73,7 @@ namespace SpicyInvaders
             {
                 ErasePicture();
             }
+
             _position += move;
             Draw();
         }

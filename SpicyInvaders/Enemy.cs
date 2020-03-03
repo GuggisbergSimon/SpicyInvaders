@@ -63,11 +63,6 @@ namespace SpicyInvaders
             Console.Write(_enemyChar);
         }
 
-        public override void Draw()
-        {
-            
-        }
-
         public override void Update()
         {
             

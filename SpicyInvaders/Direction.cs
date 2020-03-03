@@ -10,7 +10,7 @@ namespace SpicyInvaders
     /// </summary>
     public enum Direction
     {
-        Top,
+        Up,
         Right,
         Down,
         Left
