@@ -7,7 +7,7 @@ using System;
 
 namespace SpicyInvaders
 {
-    public class Enemy
+    public class Enemy : SimpleObject
     {
         //Representation of the enemy.
         private readonly char _enemyChar;
@@ -61,6 +61,16 @@ namespace SpicyInvaders
         {
             Console.SetCursorPosition(_x, _y);
             Console.Write(_enemyChar);
+        }
+
+        public override void Draw()
+        {
+            
+        }
+
+        public override void Update()
+        {
+            
         }
     }
 }

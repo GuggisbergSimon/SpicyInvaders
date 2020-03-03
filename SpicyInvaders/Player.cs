@@ -4,7 +4,6 @@
 //Description   : Player Class of Spicy Invaders
 
 using System;
-using System.Threading;
 
 namespace SpicyInvaders
 {
@@ -12,6 +11,7 @@ namespace SpicyInvaders
     {
         //Representation of the player.
         private const char PLAYER_CHR = 'A';
+        private Vector2D barrelOffset = new Vector2D(0, 1);
 
         private bool canShoot = true;
 
@@ -62,7 +62,8 @@ namespace SpicyInvaders
                 {
                     if (canShoot)
                     {
-                        GameManager.Instance.Bullets.Add(new Bullet(_position,Direction.Top,ConsoleColor.DarkMagenta,2));
+                        GameManager.Instance.Objects.Add(new Bullet(_position + barrelOffset, Direction.Top,
+                            ConsoleColor.DarkMagenta, 2));
                     }
 
                     break;
