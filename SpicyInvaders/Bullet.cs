@@ -51,18 +51,6 @@ namespace SpicyInvaders
             }
         }
 
-        public void Destroy()
-        {
-            ErasePicture();
-            GameManager.Instance.RemoveItem(this);
-        }
-
-        private void ErasePicture()
-        {
-            Console.SetCursorPosition(_position.X, Position.Y);
-            Console.Write(" ");
-        }
-
         public void UpdatePos(Vector2D move)
         {
             if (GameManager.Instance.Player.Position == _position)
@@ -75,6 +63,16 @@ namespace SpicyInvaders
             }
 
             _position += move;
+            
+            foreach (var obj in GameManager.Instance.Objects)
+            {
+                if (obj.Position == _position && obj != this)
+                {
+                    obj.Destroy();
+                    Destroy();
+                    //todo code other interactions here
+                }
+            }
             Draw();
         }
     }

@@ -14,6 +14,7 @@ namespace SpicyInvaders
         /// Attributes
         /// </summary>
         private readonly int _spaceX;
+
         private readonly int _spaceY;
 
         private int _sizeX;
@@ -47,14 +48,13 @@ namespace SpicyInvaders
             //Add enemies to the list
             for (int i = 0; i < _sizeX * _sizeY; i++)
             {
-                GameManager.Instance.Objects.Add(new Enemy());
+                GameManager.Instance.Objects.Add(new Enemy(Vector2D.Zero));
             }
 
             //Spawn enemies
-            foreach (Enemy enemy in GameManager.Instance.Objects)
+            foreach (var enemy in GameManager.Instance.Objects)
             {
-                enemy.X += _spaceX;
-                enemy.Spawn();
+                enemy.Position += Vector2D.Right * _spaceX;
             }
         }
 
@@ -63,12 +63,11 @@ namespace SpicyInvaders
         /// </summary>
         public void Update()
         {
-            foreach (Enemy enemy in GameManager.Instance.Objects)
+            foreach (var enemy in GameManager.Instance.Objects)
             {
-                Console.SetCursorPosition(enemy.X, enemy.Y);
-                Console.Write((char)32);
-                enemy.X += 2;
-                enemy.Spawn();
+                Console.SetCursorPosition(enemy.Position.X, enemy.Position.Y);
+                Console.Write((char) 32);
+                enemy.Position += Vector2D.Right * 2;
             }
         }
     }

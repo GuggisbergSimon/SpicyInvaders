@@ -117,6 +117,7 @@ namespace SpicyInvaders
 
             _currentMenu = Menus[0];
             _player = new Player(35, 35);
+            _objects.Add(new Enemy(new Vector2D(35, 10)));
         }
 
         /// <summary>
@@ -141,9 +142,9 @@ namespace SpicyInvaders
                     _input = new ConsoleKeyInfo();
                 }
 
-                // todo remove 3 next lines (test for fps purposes
+                // todo remove 3 next lines (test for fps purposes)
                 // Console.SetCursorPosition(10, 10);
-                // Console.WriteLine(_random.Next(0,101));
+                // Console.WriteLine(_random.Next(10,100));
                 // Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
                 switch (_state)
                 {
@@ -174,9 +175,9 @@ namespace SpicyInvaders
                 }
 
                 //Clean the destroyed objects
-                foreach (var enemyToDestroy in _objectsToDestroy)
+                foreach (var objToDestroy in _objectsToDestroy)
                 {
-                    _objects.Remove(enemyToDestroy);
+                    _objects.Remove(objToDestroy);
                 }
 
                 _objectsToDestroy.Clear();
