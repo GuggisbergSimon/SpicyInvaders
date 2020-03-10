@@ -3,23 +3,79 @@
 //Location      : ETML
 //Description   : Bullet Class of Spicy Invaders
 
+using System;
+
 namespace SpicyInvaders
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Bullet : SimpleObject
     {
-        private System.ConsoleColor _color;
         private Direction _direction;
+        private ConsoleColor _color;
         private int _speed;
+        private bool _isMoving = true;
 
-        /// <summary>
-        /// 
-        /// </summary>
+        public Bullet(Vector2D pos, Direction dir, ConsoleColor color, int speed)
+        {
+            _visual = '!';
+            _position = pos;
+            _direction = dir;
+            _color = color;
+            _speed = speed;
+        }
+
         public override void Update()
         {
+            if (_isMoving)
+            {
+                if (_direction == Direction.Up && _position.Y > 0)
+                {
+                    UpdatePos(-Vector2D.Up);
+                }
+                else if (_direction == Direction.Down && _position.Y <= Console.WindowHeight)
+                {
+                    UpdatePos(Vector2D.Up);
+                }
+                else if (_direction == Direction.Right && _position.X <= Console.WindowWidth)
+                {
+                    UpdatePos(Vector2D.Right);
+                }
+                else if (_direction == Direction.Left && _position.X > 0)
+                {
+                    UpdatePos(-Vector2D.Right);
+                }
+                else
+                {
+                    _isMoving = false;
+                    Destroy();
+                }
+            }
+        }
 
+        public void Destroy()
+        {
+            ErasePicture();
+            GameManager.Instance.RemoveItem(this);
+        }
+
+        private void ErasePicture()
+        {
+            Console.SetCursorPosition(_position.X, Position.Y);
+            Console.Write(" ");
+        }
+
+        public void UpdatePos(Vector2D move)
+        {
+            if (GameManager.Instance.Player.Position == _position)
+            {
+                GameManager.Instance.Player.Draw();
+            }
+            else
+            {
+                ErasePicture();
+            }
+
+            _position += move;
+            Draw();
         }
     }
 }

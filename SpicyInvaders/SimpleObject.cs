@@ -3,13 +3,25 @@
 //Location      : ETML
 //Description   : Simple object Class of Spicy Invaders
 
+using System;
+
 namespace SpicyInvaders
 {
     public abstract class SimpleObject
     {
         protected Vector2D _position;
-        protected char[,] _visual;
+        protected char _visual;
+        public Vector2D Position
+        {
+            get { return _position; }
+        }
 
+        public void Draw()
+        {
+            Console.SetCursorPosition(_position.X, _position.Y);
+            Console.Write(_visual);
+        }
+        
         public abstract void Update();
     }
 }
