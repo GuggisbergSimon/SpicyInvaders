@@ -122,6 +122,19 @@ namespace SpicyInvaders
                 DrawText(_ABOUT_TITLE_1, _ABOUT_1);
                 DrawText(_ABOUT_TITLE_2, _ABOUT_2);
             }
+            else if (this == GameManager.Instance.Menus[2])
+            {
+                string scoreTable = "";
+                int rank = 1;
+
+                foreach (KeyValuePair<string, int> keyPair in GameManager.Instance.Highscore.SortedHighscore())
+                {
+                    scoreTable += rank + ". " + keyPair.Key + " : " + keyPair.Value + "\n";
+                    rank++;
+                }
+
+                DrawText("", scoreTable);
+            }
 
             // Draw each option button
             for (int j = 0; j < _menuButtons.Count; j++)
