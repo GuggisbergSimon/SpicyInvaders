@@ -14,6 +14,9 @@ namespace SpicyInvaders
     /// </summary>
     public class GameManager
     {
+        /// <summary>
+        /// enum for the current GameManagerState
+        /// </summary>
         public enum GameManagerState
         {
             MainMenu,
@@ -29,7 +32,7 @@ namespace SpicyInvaders
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
 
-        private List<SimpleObject> _objects = new List<SimpleObject>();
+        private List<SimpleObject> enemiesAndBullets = new List<SimpleObject>();
         private Player _player;
         private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
@@ -45,30 +48,42 @@ namespace SpicyInvaders
         private List<SimpleObject> _objectsToDestroy = new List<SimpleObject>();
 
         /// <summary>
-        /// PROPERTIES
+        /// Getter of Player
         /// </summary>
         public Player Player
         {
             get { return _player; }
         }
 
-        public List<SimpleObject> Objects
+        /// <summary>
+        /// Getter of EnemiesAndBullets
+        /// </summary>
+        public List<SimpleObject> EnemiesAndBullets
         {
-            get { return _objects; }
+            get { return enemiesAndBullets; }
         }
 
+        /// <summary>
+        /// Getter-Setter of Menus
+        /// </summary>
         public List<Menu> Menus
         {
             get { return _menus; }
             set { _menus = value; }
         }
 
+        /// <summary>
+        /// Getter-Setter of CurrentMenu
+        /// </summary>
         public Menu CurrentMenu
         {
             get { return _currentMenu; }
             set { _currentMenu = value; }
         }
 
+        /// <summary>
+        /// Getter of current Input
+        /// </summary>
         public ConsoleKeyInfo Input
         {
             get { return _input; }
@@ -117,7 +132,7 @@ namespace SpicyInvaders
 
             _currentMenu = Menus[0];
             _player = new Player(35, 35);
-            _objects.Add(new Enemy(new Vector2D(35, 10)));
+            enemiesAndBullets.Add(new Enemy(new Vector2D(35, 10)));
         }
 
         /// <summary>
@@ -177,7 +192,7 @@ namespace SpicyInvaders
                 //Clean the destroyed objects
                 foreach (var objToDestroy in _objectsToDestroy)
                 {
-                    _objects.Remove(objToDestroy);
+                    enemiesAndBullets.Remove(objToDestroy);
                 }
 
                 _objectsToDestroy.Clear();
@@ -195,10 +210,9 @@ namespace SpicyInvaders
         /// </summary>
         private void MainGame()
         {
-            foreach (var obj in _objects)
+            foreach (var obj in enemiesAndBullets)
             {
                 obj.Update();
-                // todo update here
             }
 
             _player.Update();
@@ -213,6 +227,10 @@ namespace SpicyInvaders
             _currentMenu.LoadPage(_currentMenu.Name.ToUpper());
         }
 
+        /// <summary>
+        /// Adds an object to be destroyed
+        /// </summary>
+        /// <param name="objectToDestroy"></param>
         public void RemoveItem(SimpleObject objectToDestroy)
         {
             _objectsToDestroy.Add(objectToDestroy);

@@ -54,7 +54,7 @@ namespace SpicyInvaders
         private bool _redraw = true;
 
         /// <summary>
-        /// PROPERTIES
+        /// Getter-Setter of SelectedIndex
         /// </summary>
         public int SelectedIndex
         {
@@ -62,16 +62,25 @@ namespace SpicyInvaders
             set { _selectedIndex = value; }
         }
 
+        /// <summary>
+        /// Getter of MenuButtons
+        /// </summary>
         public List<MenuButton> MenuButtons
         {
             get { return _menuButtons; }
         }
 
+        /// <summary>
+        /// Getter of MenuNames
+        /// </summary>
         public List<string> MenuNames
         {
             get { return _menuNames; }
         }
 
+        /// <summary>
+        /// Getter of Name
+        /// </summary>
         public string Name
         {
             get { return _name; }

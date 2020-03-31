@@ -5,26 +5,41 @@
 
 namespace SpicyInvaders
 {
+    /// <summary>
+    /// Vector2D Class
+    /// </summary>
     public struct Vector2D
     {
         private int _x;
         private int _y;
 
+        /// <summary>
+        /// Returns a Vector facing Right
+        /// </summary>
         public static Vector2D Right
         {
             get { return new Vector2D(1, 0); }
         }
 
+        /// <summary>
+        /// Returns a Vector facing Up
+        /// </summary>
         public static Vector2D Up
         {
             get { return new Vector2D(0, 1); }
         }
 
+        /// <summary>
+        /// Returns an Identity Vector
+        /// </summary>
         public static Vector2D Identity
         {
             get { return new Vector2D(1, 1); }
         }
 
+        /// <summary>
+        /// Returns a Zero Vector
+        /// </summary>
         public static Vector2D Zero
         {
             get { return new Vector2D(0, 0); }
@@ -97,6 +112,11 @@ namespace SpicyInvaders
             return objAsVector2D.X == _x && objAsVector2D.Y == _y;
         }
 
+        /// <summary>
+        /// minus operation
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <returns></returns>
         public static Vector2D operator -(Vector2D v1)
         {
             return v1 * -1;

@@ -7,6 +7,9 @@ using System;
 
 namespace SpicyInvaders
 {
+    /// <summary>
+    /// Enemy class
+    /// </summary>
     public class Enemy : SimpleObject
     {
 
@@ -19,6 +22,9 @@ namespace SpicyInvaders
             _position = pos;
         }
 
+        /// <summary>
+        /// Update Enemy
+        /// </summary>
         public override void Update()
         {
             Draw();
