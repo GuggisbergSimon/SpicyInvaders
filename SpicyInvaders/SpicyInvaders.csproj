@@ -47,6 +47,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="GroupEnemies.cs" />
+    <Compile Include="HighscoreDB.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuButton.cs" />

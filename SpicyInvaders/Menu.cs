@@ -54,8 +54,13 @@ namespace SpicyInvaders
         private bool _redraw = true;
 
         /// <summary>
+        /// END ATTRIBUTES
+        /// </summary>
+
+        /// <summary>
         /// PROPERTIES
         /// </summary>
+
         public int SelectedIndex
         {
             get { return _selectedIndex; }
@@ -76,6 +81,10 @@ namespace SpicyInvaders
         {
             get { return _name; }
         }
+
+        /// <summary>
+        /// END PROPERTIES
+        /// </summary>
 
         /// <summary>
         /// Custom constructor
@@ -112,6 +121,18 @@ namespace SpicyInvaders
             {
                 DrawText(_ABOUT_TITLE_1, _ABOUT_1);
                 DrawText(_ABOUT_TITLE_2, _ABOUT_2);
+            }
+            else if (this == GameManager.Instance.Menus[2])
+            {
+                string[,] firstFive = HighscoreDB.SortFirstFive();
+
+                for (int i = 0; i < firstFive.GetLength(0); i++)
+                {
+                    if (firstFive[i, 0] != "")
+                    {
+                        DrawText((i + 1) + ". " + firstFive[i, 0], "   " + firstFive[i, 1]);
+                    }
+                }
             }
 
             // Draw each option button
@@ -152,25 +173,27 @@ namespace SpicyInvaders
         public void DrawText(string title, string paragraph)
         {
             int counter = 0;
+            int startParagraph = Console.WindowWidth / 5;
+            int endParagraph = _menuButtons[0].X - 20;
 
             // Draw the white title
-            Console.CursorLeft = Console.WindowWidth / 5;
-            Console.CursorTop += 3;
             Console.ForegroundColor = ConsoleColor.White;
+            Console.CursorLeft = startParagraph;
+            Console.CursorTop += 3;
             Console.Write(title + "\n\n");
-
-            Console.CursorLeft = Console.WindowWidth / 5;
+            Console.CursorLeft = startParagraph;
 
             // Draw the green paragraph
             Console.ForegroundColor = ConsoleColor.Green;
+
             foreach (char chara in paragraph)
             {
                 // test at each space if it's at the end of the paragraph
-                if (Console.CursorLeft + 20 >= _menuButtons[0].X && chara == (char)32)
+                if (Console.CursorLeft >= endParagraph && chara == (char)32)
                 {
                     // line break
                     Console.Write("\n");
-                    Console.CursorLeft = Console.WindowWidth / 5;
+                    Console.CursorLeft = startParagraph;
                 }
                 else
                 {
@@ -178,7 +201,7 @@ namespace SpicyInvaders
                     counter++;
                 }
 
-                // quit the foreach if the string is completed
+                // quit the foreach loop if the text is completed
                 if (counter >= paragraph.Length)
                 {
                     break;
