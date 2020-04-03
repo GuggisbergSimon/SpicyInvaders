@@ -36,7 +36,6 @@ namespace SpicyInvaders
         private long tick = 1;
         private Menu _menu;
         private Menu _settingsMenu;
-        private Highscore _highscore;
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
@@ -62,12 +61,6 @@ namespace SpicyInvaders
         {
             get { return _menus; }
             set { _menus = value; }
-        }
-
-        public Highscore Highscore
-        {
-            get { return _highscore; }
-            set { _highscore = value; }
         }
 
         public Menu CurrentMenu
@@ -109,13 +102,6 @@ namespace SpicyInvaders
         {
             Console.CursorVisible = false;
             Console.SetWindowSize(_windowSize.X, _windowSize.Y);
-
-            _highscore = new Highscore();
-            _highscore.AddHighscore("Ylli", 600);
-            _highscore.AddHighscore("Ylli", 800);
-            _highscore.AddHighscore("Simon", 300);
-            _highscore.AddHighscore("Hugo", 100);
-
 
             // Create all the menu objects
             string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};

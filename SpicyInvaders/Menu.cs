@@ -124,16 +124,15 @@ namespace SpicyInvaders
             }
             else if (this == GameManager.Instance.Menus[2])
             {
-                string scoreTable = "";
-                int rank = 1;
+                string[,] firstFive = HighscoreDB.SortFirstFive();
 
-                foreach (KeyValuePair<string, int> keyPair in GameManager.Instance.Highscore.SortedHighscore())
+                for (int i = 0; i < firstFive.GetLength(0); i++)
                 {
-                    scoreTable += rank + ". " + keyPair.Key + " : " + keyPair.Value + "\n";
-                    rank++;
+                    if (firstFive[i, 0] != "")
+                    {
+                        DrawText((i + 1) + ". " + firstFive[i, 0], "   " + firstFive[i, 1]);
+                    }
                 }
-
-                DrawText("", scoreTable);
             }
 
             // Draw each option button
