@@ -4,6 +4,7 @@
 //Description   : GameManager Class of Spicy Invaders
 
 using System;
+using System.Media;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -20,6 +21,13 @@ namespace SpicyInvaders
             MainGame,
             Pause,
             Score
+        }
+
+        public enum GameDifficulty
+        {
+            Easy,
+            Normal,
+            Hard
         }
 
         /// <summary>
@@ -39,9 +47,13 @@ namespace SpicyInvaders
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
+        private GameDifficulty _difficulty = GameDifficulty.Easy;
         private readonly Vector2D _windowSize = new Vector2D(200, 60);
         private List<Menu> _menus = new List<Menu>();
         private Menu _currentMenu;
+        private SoundPlayer _musicSound;
+        private SoundPlayer _shootSound;
+        private SoundPlayer _destroySound;
         private List<SimpleObject> _objectsToDestroy = new List<SimpleObject>();
 
         /// <summary>
@@ -61,6 +73,12 @@ namespace SpicyInvaders
         {
             get { return _menus; }
             set { _menus = value; }
+        }
+
+        public SoundPlayer Sound
+        {
+            get { return _musicSound; }
+            set { _musicSound = value; }
         }
 
         public Menu CurrentMenu
@@ -84,6 +102,15 @@ namespace SpicyInvaders
         }
 
         /// <summary>
+        /// Gets-Sets the difficulty of the game
+        /// </summary>
+        public GameDifficulty Difficulty
+        {
+            get { return _difficulty; }
+            set { _difficulty = value; }
+        }
+
+        /// <summary>
         /// Default constructor of GameManager
         /// </summary>
         public GameManager()
@@ -103,12 +130,18 @@ namespace SpicyInvaders
             Console.CursorVisible = false;
             Console.SetWindowSize(_windowSize.X, _windowSize.Y);
 
+            // Set the sound
+            _shootSound = new SoundPlayer(@"..\..\Sound\fire.wav");
+            _destroySound = new SoundPlayer(@"..\..\Sound\destroy.wav");
+            _musicSound = new SoundPlayer(@"..\..\Sound\music.wav");
+            _musicSound.PlayLooping();
+
             // Create all the menu objects
             string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};
             // Name of the buttons and the name of the menu
             Menus.Add(new Menu(stringMenuNames, ""));
 
-            string[] stringMenuNames1 = {"Sound", "Mute", "Back"};
+            string[] stringMenuNames1 = {"Difficulty :    Easy", "Mute :          disabled", "Back"};
             Menus.Add(new Menu(stringMenuNames1, "Settings"));
 
             string[] stringMenuNames2 = {"Back"};
