@@ -27,7 +27,7 @@ namespace SpicyInvaders
             XmlDocument doc = new XmlDocument();
             try
             {
-                doc.Load("highscores.xml");
+                doc.Load(@"..\..\Database\highscores.xml");
 
                 foreach (XmlNode node in doc.DocumentElement)
                 {
@@ -62,7 +62,7 @@ namespace SpicyInvaders
         private static void AddNewPlayer(string playerName, int score)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("highscores.xml");
+            doc.Load(@"..\..\Database\highscores.xml");
 
             // Create the player node
             XmlNode playerElement = doc.CreateElement("player");
@@ -78,7 +78,7 @@ namespace SpicyInvaders
             playerElement.AppendChild(scoreElement);
 
             doc.DocumentElement.AppendChild(playerElement);
-            doc.Save("highscores.xml");
+            doc.Save(@"..\..\Database\highscores.xml");
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace SpicyInvaders
         /// <param name="score"></param>
         private static void CreateNewXML(string playerName, int score)
         {
-            XmlTextWriter writer = new XmlTextWriter("highscores.xml", Encoding.UTF8);
+            XmlTextWriter writer = new XmlTextWriter(@"..\..\Database\highscores.xml", Encoding.UTF8);
             writer.WriteStartDocument(true);
             writer.Formatting = Formatting.Indented;
             writer.Indentation = 2;
@@ -113,7 +113,7 @@ namespace SpicyInvaders
             Dictionary<string, int> scores = new Dictionary<string, int>();
 
             XmlDocument doc = new XmlDocument();
-            doc.Load("highscores.xml");
+            doc.Load(@"..\..\Database\highscores.xml");
 
             foreach (XmlNode node in doc.DocumentElement)
             {
