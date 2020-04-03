@@ -368,6 +368,7 @@ namespace SpicyInvaders
                                             break;
                                         }
                                     case "PLAY":
+                                    case "RESUME":
                                         {
                                             // Run the game
                                             // todo resize window
@@ -375,7 +376,7 @@ namespace SpicyInvaders
                                             break;
                                         }
                                     case "BACK":
-                                    case "BACK TO THE MAIN MENU":
+                                    case "BACK TO MAIN MENU":
                                         {
                                             // Get back to the main menu
                                             GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[0];
@@ -425,12 +426,6 @@ namespace SpicyInvaders
                                             // Set the difficulty to easy
                                             GameManager.Instance.Difficulty = GameManager.GameDifficulty.Easy;
                                             _menuButtons[i].Name = "DIFFICULTY :    EASY";
-                                            break;
-                                        }
-                                    case "RESUME":
-                                        {
-                                            // Resume the current game
-                                            GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             break;
                                         }
                                     default:
