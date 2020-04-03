@@ -17,6 +17,8 @@ namespace SpicyInvaders
     /// </summary>
     public static class HighscoreDB
     {
+        public static string xmlPath = @"..\..\Database\highscores.xml";
+
         /// <summary>
         /// Verify if the score can be written as the best score of the player, if yes, write it
         /// </summary>
@@ -27,7 +29,7 @@ namespace SpicyInvaders
             XmlDocument doc = new XmlDocument();
             try
             {
-                doc.Load(@"..\..\Database\highscores.xml");
+                doc.Load(xmlPath);
 
                 foreach (XmlNode node in doc.DocumentElement)
                 {
@@ -38,7 +40,7 @@ namespace SpicyInvaders
                         if (Int32.Parse(node.ChildNodes[0].InnerText) < score)
                         {
                             node.ChildNodes[0].InnerText = Convert.ToString(score);
-                            doc.Save("highscores.xml");
+                            doc.Save(xmlPath);
                         }
                         return;
                     }
@@ -62,7 +64,7 @@ namespace SpicyInvaders
         private static void AddNewPlayer(string playerName, int score)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"..\..\Database\highscores.xml");
+            doc.Load(xmlPath);
 
             // Create the player node
             XmlNode playerElement = doc.CreateElement("player");
@@ -78,7 +80,7 @@ namespace SpicyInvaders
             playerElement.AppendChild(scoreElement);
 
             doc.DocumentElement.AppendChild(playerElement);
-            doc.Save(@"..\..\Database\highscores.xml");
+            doc.Save(xmlPath);
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace SpicyInvaders
         /// <param name="score"></param>
         private static void CreateNewXML(string playerName, int score)
         {
-            XmlTextWriter writer = new XmlTextWriter(@"..\..\Database\highscores.xml", Encoding.UTF8);
+            XmlTextWriter writer = new XmlTextWriter(xmlPath, Encoding.UTF8);
             writer.WriteStartDocument(true);
             writer.Formatting = Formatting.Indented;
             writer.Indentation = 2;
@@ -104,16 +106,15 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// Return the five first highscore of the DB
+        /// Get a pair of the name and the best score of each player registered
         /// </summary>
         /// <returns></returns>
-        public static string[,] SortFirstFive()
+        public static Dictionary<string, int> GetScores()
         {
-            string[,] highscores = new string[5, 2];
             Dictionary<string, int> scores = new Dictionary<string, int>();
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"..\..\Database\highscores.xml");
+            doc.Load(xmlPath);
 
             foreach (XmlNode node in doc.DocumentElement)
             {
@@ -126,6 +127,17 @@ namespace SpicyInvaders
                     scores.Add(currentName, currentScore);
                 }
             }
+
+            return scores;
+        }
+
+        /// <summary>
+        /// Return the five first highscore of the DB
+        /// </summary>
+        /// <returns></returns>
+        public static string[,] SortFirstFive(Dictionary<string, int> scores)
+        {
+            string[,] highscores = new string[5, 2];
 
             int i = 0;
             foreach(KeyValuePair<string, int> keyValuePair in scores.OrderByDescending(key => key.Value))

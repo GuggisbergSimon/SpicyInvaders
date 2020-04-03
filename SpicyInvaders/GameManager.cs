@@ -15,6 +15,9 @@ namespace SpicyInvaders
     /// </summary>
     public class GameManager
     {
+        /// <summary>
+        /// Enum to know the state of the game manager
+        /// </summary>
         public enum GameManagerState
         {
             MainMenu,
@@ -42,18 +45,14 @@ namespace SpicyInvaders
         private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
         private long tick = 1;
-        private Menu _menu;
-        private Menu _settingsMenu;
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
         private GameDifficulty _difficulty = GameDifficulty.Easy;
         private readonly Vector2D _windowSize = new Vector2D(200, 60);
-        private List<Menu> _menus = new List<Menu>();
+        private List<Menu> _menus = new List<Menu>(); // 0 : Main menu, 1 : Settings menu, 2 : Highscore menu, 3 : About menu, 4 : Pause menu
         private Menu _currentMenu;
         private SoundPlayer _musicSound;
-        private SoundPlayer _shootSound;
-        private SoundPlayer _destroySound;
         private List<SimpleObject> _objectsToDestroy = new List<SimpleObject>();
 
         /// <summary>
@@ -130,25 +129,31 @@ namespace SpicyInvaders
             Console.CursorVisible = false;
             Console.SetWindowSize(_windowSize.X, _windowSize.Y);
 
-            // Set the sound
-            _shootSound = new SoundPlayer(@"..\..\Sound\fire.wav");
-            _destroySound = new SoundPlayer(@"..\..\Sound\destroy.wav");
+            // SOUND
             _musicSound = new SoundPlayer(@"..\..\Sound\music.wav");
             _musicSound.PlayLooping();
 
-            // Create all the menu objects
+            // MAIN MENU
             string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};
-            // Name of the buttons and the name of the menu
-            Menus.Add(new Menu(stringMenuNames, ""));
+            Menus.Add(new Menu(stringMenuNames, "Main menu", _windowSize.X, _windowSize.Y));
 
+            // SETTINGS MENU
             string[] stringMenuNames1 = {"Difficulty :    Easy", "Mute :          disabled", "Back"};
-            Menus.Add(new Menu(stringMenuNames1, "Settings"));
+            Menus.Add(new Menu(stringMenuNames1, "Settings", _windowSize.X, _windowSize.Y));
 
+            // HIGHSCORE AND ABOUT MENU
             string[] stringMenuNames2 = {"Back"};
-            Menus.Add(new Menu(stringMenuNames2, "Highscore"));
-            Menus.Add(new Menu(stringMenuNames2, "About"));
+            Menus.Add(new Menu(stringMenuNames2, "Highscore", _windowSize.X, _windowSize.Y));
+            Menus.Add(new Menu(stringMenuNames2, "About", _windowSize.X, _windowSize.Y));
 
+            // PAUSE MENU
+            string[] stringMenuNames3 = { "Resume", "Back to main menu" };
+            Menus.Add(new Menu(stringMenuNames3, "Pause", _windowSize.X, _windowSize.Y));
+
+            // Set the default menu onto the main menu
             _currentMenu = Menus[0];
+
+            // Creation of the player
             _player = new Player(35, 35);
         }
 
@@ -181,6 +186,7 @@ namespace SpicyInvaders
                 switch (_state)
                 {
                     case GameManagerState.MainMenu:
+                    case GameManagerState.Pause:
                     {
                         LoadMenu();
                         break;
@@ -188,11 +194,6 @@ namespace SpicyInvaders
                     case GameManagerState.MainGame:
                     {
                         MainGame();
-                        break;
-                    }
-                    case GameManagerState.Pause:
-                    {
-                        // todo pause menu here
                         break;
                     }
                     case GameManagerState.Score:
@@ -223,7 +224,7 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// loop of the game
+        /// Loop of the game
         /// </summary>
         private void MainGame()
         {
@@ -237,11 +238,11 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// Load a menu
+        /// Load the current menu
         /// </summary>
         private void LoadMenu()
         {
-            // Draw the main menu with his title
+            // Draw the main menu with a full capital name
             _currentMenu.LoadPage(_currentMenu.Name.ToUpper());
         }
 

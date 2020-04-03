@@ -45,19 +45,5 @@ namespace SpicyInvaders
         {
 
         }
-
-        /// <summary>
-        /// Custom constructor
-        /// </summary>
-        /// <param name="x">X position</param>
-        /// <param name="y">Y position</param>
-        /// <param name="name">Name of the setting</param>
-        public MenuButton(int x, int y, string name)
-        {
-            _x = x;
-            _y = y;
-            _name = name;
-        }
-
     }
 }
