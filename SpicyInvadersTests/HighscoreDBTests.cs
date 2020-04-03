@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpicyInvaders;
+using System.Collections.Generic;
 
 namespace SpicyInvadersTests
 {
@@ -14,13 +13,19 @@ namespace SpicyInvadersTests
             // Arrange
             string[,] highscores = new string[5, 2];
             Dictionary<string, int> scores = new Dictionary<string, int>();
-            string[,] realHighscores = { { "Hugo", "20"}, { "Julien", "15" }, { "Simon", "10"}, { "Ylli", "5"}, {"Bob", "1"}};
+            string[,] expectedResult = { { "Hugo", "20"}, { "Julien", "15" }, { "Simon", "10"}, { "Ylli", "5"}, {"Bob", "1"}};
+            string[,] result;
 
             // Act
-
+            scores.Add("Hugo", 20);
+            scores.Add("Julien", 15);
+            scores.Add("Ylli", 5);
+            scores.Add("Bob", 1);
+            scores.Add("Simon", 10);
+            result = HighscoreDB.SortFirstFive(scores);
 
             // Assert
-            Assert.IsNotNull(HighscoreDB.SortFirstFive());
+            CollectionAssert.AreEqual(expectedResult, result, "Error, the function SortFive is broken.");
 
         }
     }
