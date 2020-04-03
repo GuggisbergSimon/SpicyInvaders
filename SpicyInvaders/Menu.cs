@@ -92,7 +92,6 @@ namespace SpicyInvaders
         public Menu(string[] buttonNames, string aName)
         {
             _name = aName;
-
             int i = 0;
             foreach (string name in buttonNames)
             {
@@ -395,14 +394,28 @@ namespace SpicyInvaders
                                             GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[3];
                                             break;
                                         }
-                                    case "MUTE":
+                                    case "MUTE :          ENABLED":
                                         {
-                                            // TODO
+                                            GameManager.Instance.Sound.PlayLooping();
+                                            _menuButtons[i].Name = "MUTE :          DISABLED";
                                             break;
                                         }
-                                    case "SOUND":
+                                    case "MUTE :          DISABLED":
                                         {
-                                            // TODO
+                                            GameManager.Instance.Sound.Stop();
+                                            _menuButtons[i].Name = "MUTE :          ENABLED";
+                                            break;
+                                        }
+                                    case "DIFFICULTY :    EASY":
+                                        {
+                                            GameManager.Instance.Difficulty = GameManager.GameDifficulty.Hard;
+                                            _menuButtons[i].Name = "DIFFICULTY :    HARD";
+                                            break;
+                                        }
+                                    case "DIFFICULTY :    HARD":
+                                        {
+                                            GameManager.Instance.Difficulty = GameManager.GameDifficulty.Easy;
+                                            _menuButtons[i].Name = "DIFFICULTY :    EASY";
                                             break;
                                         }
                                 }
