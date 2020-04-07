@@ -14,6 +14,7 @@ namespace SpicyInvaders
     {
         private Vector2D barrelOffset = new Vector2D(0, 1);
         private bool canShoot = true;
+        private int _lives = 3;
 
         /// <summary>
         /// Player Constructor
@@ -27,6 +28,9 @@ namespace SpicyInvaders
             Console.Write(_visual);
         }
 
+        /// <summary>
+        /// Destroys the Player
+        /// </summary>
         public override void Destroy()
         {
             ErasePicture();
@@ -72,6 +76,15 @@ namespace SpicyInvaders
             }
             
             Draw();
+        }
+
+        public void LoseLife(int nbrLife)
+        {
+            _lives -= nbrLife;
+            if (_lives < 0)
+            {
+                //todo gameover
+            }
         }
 
         private void UpdatePos(int move)

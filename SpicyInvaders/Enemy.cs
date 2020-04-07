@@ -22,6 +22,9 @@ namespace SpicyInvaders
             _position = pos;
         }
 
+        /// <summary>
+        /// Destroys the Enemy
+        /// </summary>
         public override void Destroy()
         {
             ErasePicture();

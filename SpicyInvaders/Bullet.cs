@@ -15,8 +15,11 @@ namespace SpicyInvaders
         private Direction _direction;
         private ConsoleColor _color;
         private int _speed;
+        private int strength = 1;
         private bool _isMoving = true;
 
+        public Direction Direction => _direction;
+        
         /// <summary>
         /// Bullet Constructor
         /// </summary>
@@ -33,6 +36,9 @@ namespace SpicyInvaders
             _speed = speed;
         }
 
+        /// <summary>
+        /// Destroys the Bullet
+        /// </summary>
         public override void Destroy()
         {
             ErasePicture();
@@ -74,16 +80,22 @@ namespace SpicyInvaders
             
             foreach (var bullet in GameManager.Instance.Bullets)
             {
-                if (bullet.Position != _position || bullet == this) continue;
+                if (bullet.Position != _position || _direction == bullet.Direction || bullet == this) continue;
                 bullet.Destroy();
                 Destroy();
             }
 
             foreach (var enemy in GameManager.Instance.Enemies)
             {
-                if (enemy.Position != _position) continue;
+                if (enemy.Position != _position || _direction != Direction.Up) continue;
                 enemy.Destroy();
                 Destroy();
+            }
+
+            if (GameManager.Instance.Player.Position == _position && _direction == Direction.Down)
+            {
+                Destroy();
+                GameManager.Instance.Player.LoseLife(strength);
             }
             
             //todo code other interactions here
