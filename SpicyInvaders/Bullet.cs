@@ -33,6 +33,12 @@ namespace SpicyInvaders
             _speed = speed;
         }
 
+        public override void Destroy()
+        {
+            ErasePicture();
+            GameManager.Instance.RemoveItem(this);
+        }
+
         /// <summary>
         /// Update Bullet
         /// </summary>
@@ -66,13 +72,21 @@ namespace SpicyInvaders
             _position += move;
             Draw();
             
-            foreach (var obj in GameManager.Instance.EnemiesAndBullets)
+            foreach (var bullet in GameManager.Instance.Bullets)
             {
-                if (obj.Position != _position || obj == this) continue;
-                obj.Destroy();
+                if (bullet.Position != _position || bullet == this) continue;
+                bullet.Destroy();
                 Destroy();
-                //todo code other interactions here
             }
+
+            foreach (var enemy in GameManager.Instance.Enemies)
+            {
+                if (enemy.Position != _position) continue;
+                enemy.Destroy();
+                Destroy();
+            }
+            
+            //todo code other interactions here
         }
     }
 }

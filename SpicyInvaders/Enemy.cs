@@ -12,14 +12,20 @@ namespace SpicyInvaders
     /// </summary>
     public class Enemy : SimpleObject
     {
-
         /// <summary>
         /// Custom Constructor for the object Enemy
         /// </summary>
+        /// 
         public Enemy(Vector2D pos)
         {
             _visual = 'O';
             _position = pos;
+        }
+
+        public override void Destroy()
+        {
+            ErasePicture();
+            GameManager.Instance.RemoveItem(this);
         }
 
         /// <summary>

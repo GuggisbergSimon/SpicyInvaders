@@ -27,6 +27,12 @@ namespace SpicyInvaders
             Console.Write(_visual);
         }
 
+        public override void Destroy()
+        {
+            ErasePicture();
+            GameManager.Instance.RemoveItem(this);
+        }
+
         /// <summary>
         /// Update Player
         /// </summary>
@@ -57,7 +63,7 @@ namespace SpicyInvaders
                 {
                     if (canShoot)
                     {
-                        GameManager.Instance.EnemiesAndBullets.Add(new Bullet(_position + barrelOffset, Direction.Up,
+                        GameManager.Instance.Bullets.Add(new Bullet(_position + barrelOffset, Direction.Up,
                             ConsoleColor.DarkMagenta, 2));
                     }
 

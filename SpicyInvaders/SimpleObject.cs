@@ -45,11 +45,7 @@ namespace SpicyInvaders
         /// <summary>
         /// Destroy the object
         /// </summary>
-        public void Destroy()
-        {
-            ErasePicture();
-            GameManager.Instance.RemoveItem(this);
-        }
+        public abstract void Destroy();
         
         /// <summary>
         /// Update method
