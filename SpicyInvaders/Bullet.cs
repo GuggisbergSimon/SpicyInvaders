@@ -7,6 +7,9 @@ using System;
 
 namespace SpicyInvaders
 {
+    /// <summary>
+    /// Bullet Class
+    /// </summary>
     public class Bullet : SimpleObject
     {
         private Direction _direction;
@@ -14,6 +17,13 @@ namespace SpicyInvaders
         private int _speed;
         private bool _isMoving = true;
 
+        /// <summary>
+        /// Bullet Constructor
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="dir"></param>
+        /// <param name="color"></param>
+        /// <param name="speed"></param>
         public Bullet(Vector2D pos, Direction dir, ConsoleColor color, int speed)
         {
             _visual = '!';
@@ -23,6 +33,9 @@ namespace SpicyInvaders
             _speed = speed;
         }
 
+        /// <summary>
+        /// Update Bullet
+        /// </summary>
         public override void Update()
         {
             if (_isMoving)
@@ -51,31 +64,21 @@ namespace SpicyInvaders
             }
         }
 
-        public void Destroy()
+        private void UpdatePos(Vector2D move)
         {
             ErasePicture();
-            GameManager.Instance.RemoveItem(this);
-        }
-
-        private void ErasePicture()
-        {
-            Console.SetCursorPosition(_position.X, Position.Y);
-            Console.Write(" ");
-        }
-
-        public void UpdatePos(Vector2D move)
-        {
-            if (GameManager.Instance.Player.Position == _position)
-            {
-                GameManager.Instance.Player.Draw();
-            }
-            else
-            {
-                ErasePicture();
-            }
-
             _position += move;
             Draw();
+            
+            foreach (var obj in GameManager.Instance.EnemiesAndBullets)
+            {
+                if (obj.Position == _position && obj != this)
+                {
+                    obj.Destroy();
+                    Destroy();
+                    //todo code other interactions here
+                }
+            }
         }
     }
 }
