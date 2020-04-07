@@ -20,14 +20,14 @@ namespace SpicyInvaders
         /// </summary>
         public Vector2D Position
         {
-            get { return _position; }
-            set { _position = value; }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>
         /// Draw the simpleObject
         /// </summary>
-        public void Draw()
+        protected void Draw()
         {
             Console.SetCursorPosition(_position.X, _position.Y);
             Console.Write(_visual);
@@ -45,11 +45,7 @@ namespace SpicyInvaders
         /// <summary>
         /// Destroy the object
         /// </summary>
-        public void Destroy()
-        {
-            ErasePicture();
-            GameManager.Instance.RemoveItem(this);
-        }
+        public abstract void Destroy();
         
         /// <summary>
         /// Update method
