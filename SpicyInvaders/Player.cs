@@ -7,15 +7,16 @@ using System;
 
 namespace SpicyInvaders
 {
+    /// <summary>
+    /// Player Class
+    /// </summary>
     public class Player : SimpleObject
     {
-        //Representation of the player.
         private Vector2D barrelOffset = new Vector2D(0, 1);
-
         private bool canShoot = true;
 
         /// <summary>
-        /// Constructor of the class
+        /// Player Constructor
         /// </summary>
         public Player(int playerX, int playerY)
         {
@@ -27,7 +28,7 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// You can update the position of the player using this method.
+        /// Update Player
         /// </summary>
         /// <param name="direction"></param>
         public override void Update()
@@ -56,25 +57,21 @@ namespace SpicyInvaders
                 {
                     if (canShoot)
                     {
-                        GameManager.Instance.Objects.Add(new Bullet(_position + barrelOffset, Direction.Up,
+                        GameManager.Instance.EnemiesAndBullets.Add(new Bullet(_position + barrelOffset, Direction.Up,
                             ConsoleColor.DarkMagenta, 2));
                     }
 
                     break;
                 }
-                default:
-                {
-                    break;
-                }
             }
+            
+            Draw();
         }
 
         private void UpdatePos(int move)
         {
-            Console.SetCursorPosition(_position.X, _position.Y);
-            Console.Write(" ");
+            ErasePicture();
             _position.X += move;
-            Draw();
         }
     }
 }

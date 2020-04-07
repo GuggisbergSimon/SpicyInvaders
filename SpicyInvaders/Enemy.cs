@@ -7,73 +7,27 @@ using System;
 
 namespace SpicyInvaders
 {
+    /// <summary>
+    /// Enemy class
+    /// </summary>
     public class Enemy : SimpleObject
     {
-        //Representation of the enemy.
-        private readonly char _enemyChar;
-
-        //Coordinates of the enemy in the Console.
-        private int _x;
-        private int _y;
-        private int _lastSpawnX;
-        private int _lastSpawnY;
-
-        //Properties
-        public int X
-        {
-            get { return _x; }
-            set { _x = value; }
-        }
-
-        public int Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
-
-        public char EnemyChar
-        {
-            get { return _enemyChar; }
-        }
-
-        /// <summary>
-        /// Default Constructor for the object Enemy
-        /// </summary>
-        public Enemy()
-        {
-            _enemyChar = 'O';
-        }
 
         /// <summary>
         /// Custom Constructor for the object Enemy
         /// </summary>
-        public Enemy(int x, int y)
+        public Enemy(Vector2D pos)
         {
-            _enemyChar = 'O';
-            _x = x;
-            _y = y;
+            _visual = 'O';
+            _position = pos;
         }
 
-        public void Kill()
-        {
-
-        }
-
-        public void Spawn()
-        {
-            Console.SetCursorPosition(_lastSpawnX, _lastSpawnY);
-            Console.Write(" ");
-
-            _lastSpawnX = _x;
-            _lastSpawnY = _y;
-
-            Console.SetCursorPosition(_x, _y);
-            Console.Write(_enemyChar);
-        }
-
+        /// <summary>
+        /// Update Enemy
+        /// </summary>
         public override void Update()
         {
-            
+            Draw();
         }
     }
 }
