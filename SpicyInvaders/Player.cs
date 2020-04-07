@@ -14,6 +14,7 @@ namespace SpicyInvaders
     {
         private Vector2D barrelOffset = new Vector2D(0, 1);
         private bool canShoot = true;
+        private int _lives = 3;
 
         /// <summary>
         /// Player Constructor
@@ -25,6 +26,15 @@ namespace SpicyInvaders
             _position.Y = playerY;
             Console.SetCursorPosition(playerX, playerY);
             Console.Write(_visual);
+        }
+
+        /// <summary>
+        /// Destroys the Player
+        /// </summary>
+        public override void Destroy()
+        {
+            ErasePicture();
+            GameManager.Instance.RemoveItem(this);
         }
 
         /// <summary>
@@ -57,7 +67,7 @@ namespace SpicyInvaders
                 {
                     if (canShoot)
                     {
-                        GameManager.Instance.EnemiesAndBullets.Add(new Bullet(_position + barrelOffset, Direction.Up,
+                        GameManager.Instance.Bullets.Add(new Bullet(_position + barrelOffset, Direction.Up,
                             ConsoleColor.DarkMagenta, 2));
                     }
 
@@ -66,6 +76,15 @@ namespace SpicyInvaders
             }
             
             Draw();
+        }
+
+        public void LoseLife(int nbrLife)
+        {
+            _lives -= nbrLife;
+            if (_lives < 0)
+            {
+                //todo gameover
+            }
         }
 
         private void UpdatePos(int move)

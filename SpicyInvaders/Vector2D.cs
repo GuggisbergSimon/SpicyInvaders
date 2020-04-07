@@ -16,42 +16,30 @@ namespace SpicyInvaders
         /// <summary>
         /// Returns a Vector facing Right
         /// </summary>
-        public static Vector2D Right
-        {
-            get { return new Vector2D(1, 0); }
-        }
+        public static Vector2D Right => new Vector2D(1, 0);
 
         /// <summary>
         /// Returns a Vector facing Up
         /// </summary>
-        public static Vector2D Up
-        {
-            get { return new Vector2D(0, 1); }
-        }
+        public static Vector2D Up => new Vector2D(0, 1);
 
         /// <summary>
         /// Returns an Identity Vector
         /// </summary>
-        public static Vector2D Identity
-        {
-            get { return new Vector2D(1, 1); }
-        }
+        public static Vector2D Identity => new Vector2D(1, 1);
 
         /// <summary>
         /// Returns a Zero Vector
         /// </summary>
-        public static Vector2D Zero
-        {
-            get { return new Vector2D(0, 0); }
-        }
+        public static Vector2D Zero => new Vector2D(0, 0);
 
         /// <summary>
         /// get-set the X-axis
         /// </summary>
         public int X
         {
-            get { return _x; }
-            set { _x = value; }
+            get => _x;
+            set => _x = value;
         }
 
         /// <summary>
@@ -59,8 +47,8 @@ namespace SpicyInvaders
         /// </summary>
         public int Y
         {
-            get { return _y; }
-            set { _y = value; }
+            get => _y;
+            set => _y = value;
         }
 
         /// <summary>
@@ -103,13 +91,12 @@ namespace SpicyInvaders
         /// <returns></returns>
         public override bool Equals(object v)
         {
-            if (!(v is Vector2D))
-            {
-                return false;
-            }
-
-            Vector2D objAsVector2D = (Vector2D) v;
-            return objAsVector2D.X == _x && objAsVector2D.Y == _y;
+            return v is Vector2D vector2D && this.Equals(vector2D);
+        }
+        
+        private bool Equals(Vector2D other)
+        {
+            return _x == other._x && _y == other._y;
         }
 
         /// <summary>
@@ -134,7 +121,7 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// substraction operation
+        /// subtraction operation
         /// </summary>
         /// <param name="v1"></param>
         /// <param name="v2"></param>

@@ -15,8 +15,11 @@ namespace SpicyInvaders
         private Direction _direction;
         private ConsoleColor _color;
         private int _speed;
+        private int strength = 1;
         private bool _isMoving = true;
 
+        public Direction Direction => _direction;
+        
         /// <summary>
         /// Bullet Constructor
         /// </summary>
@@ -34,33 +37,38 @@ namespace SpicyInvaders
         }
 
         /// <summary>
+        /// Destroys the Bullet
+        /// </summary>
+        public override void Destroy()
+        {
+            ErasePicture();
+            GameManager.Instance.RemoveItem(this);
+        }
+
+        /// <summary>
         /// Update Bullet
         /// </summary>
         public override void Update()
         {
-            if (_isMoving)
+            if (!_isMoving) return;
+            switch (_direction)
             {
-                if (_direction == Direction.Up && _position.Y > 0)
-                {
+                case Direction.Up when _position.Y > 0:
                     UpdatePos(-Vector2D.Up);
-                }
-                else if (_direction == Direction.Down && _position.Y <= Console.WindowHeight)
-                {
+                    break;
+                case Direction.Down when _position.Y <= Console.WindowHeight:
                     UpdatePos(Vector2D.Up);
-                }
-                else if (_direction == Direction.Right && _position.X <= Console.WindowWidth)
-                {
+                    break;
+                case Direction.Right when _position.X <= Console.WindowWidth:
                     UpdatePos(Vector2D.Right);
-                }
-                else if (_direction == Direction.Left && _position.X > 0)
-                {
+                    break;
+                case Direction.Left when _position.X > 0:
                     UpdatePos(-Vector2D.Right);
-                }
-                else
-                {
+                    break;
+                default:
                     _isMoving = false;
                     Destroy();
-                }
+                    break;
             }
         }
 
@@ -70,15 +78,27 @@ namespace SpicyInvaders
             _position += move;
             Draw();
             
-            foreach (var obj in GameManager.Instance.EnemiesAndBullets)
+            foreach (var bullet in GameManager.Instance.Bullets)
             {
-                if (obj.Position == _position && obj != this)
-                {
-                    obj.Destroy();
-                    Destroy();
-                    //todo code other interactions here
-                }
+                if (bullet.Position != _position || _direction == bullet.Direction || bullet == this) continue;
+                bullet.Destroy();
+                Destroy();
             }
+
+            foreach (var enemy in GameManager.Instance.Enemies)
+            {
+                if (enemy.Position != _position || _direction != Direction.Up) continue;
+                enemy.Destroy();
+                Destroy();
+            }
+
+            if (GameManager.Instance.Player.Position == _position && _direction == Direction.Down)
+            {
+                Destroy();
+                GameManager.Instance.Player.LoseLife(strength);
+            }
+            
+            //todo code other interactions here
         }
     }
 }
