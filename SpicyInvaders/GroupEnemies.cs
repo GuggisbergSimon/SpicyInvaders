@@ -48,15 +48,14 @@ namespace SpicyInvaders
             //Add enemies to the list
             for (int i = 0; i < _sizeX; i++)
             {
-                for (int j = 0; j < _sizeY; j++)
-                {
-                    GameManager.Instance.EnemyArray[i, j] = new Enemy()
-                    {
-                        X = _spaceX * (i + 1),
-                        Y = _spaceY * (j + 1)
-                    };
-                    GameManager.Instance.EnemyArray[i, j].Spawn();
-                }
+                GameManager.Instance.Objects.Add(new Enemy());
+            }
+
+            //Spawn enemies
+            foreach (Enemy enemy in GameManager.Instance.Objects)
+            {
+                enemy.X += _spaceX;
+                enemy.Spawn();
             }
         }
 
@@ -65,7 +64,7 @@ namespace SpicyInvaders
         /// </summary>
         public void Update()
         {
-            foreach (Enemy enemy in GameManager.Instance.EnemyArray)
+            foreach (Enemy enemy in GameManager.Instance.Objects)
             {
                 enemy.X += _spaceX - 2;
                 enemy.Spawn();

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<players>
+  <player name="Ylli">
+    <score>300</score>
+  </player>
+  <player name="Hugo">
+    <score>350</score>
+  </player>
+  <player name="Simon">
+    <score>1000</score>
+  </player>
+  <player name="Julien">
+    <score>2000</score>
+  </player>
+  <player name="Adrian">
+    <score>20</score>
+  </player>
+  <player name="Laetitia">
+    <score>10</score>
+  </player>
+</players>

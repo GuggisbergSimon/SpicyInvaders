@@ -4,6 +4,7 @@
 //Description   : GameManager Class of Spicy Invaders
 
 using System;
+using System.Media;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -14,6 +15,9 @@ namespace SpicyInvaders
     /// </summary>
     public class GameManager
     {
+        /// <summary>
+        /// Enum to know the state of the game manager
+        /// </summary>
         public enum GameManagerState
         {
             MainMenu,
@@ -22,27 +26,34 @@ namespace SpicyInvaders
             Score
         }
 
+        public enum GameDifficulty
+        {
+            Easy,
+            Normal,
+            Hard
+        }
+
         /// <summary>
         /// ATTRIBUTES
         /// </summary>
 
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
-        private List<Enemy> _enemies = new List<Enemy>();
-        private Enemy[,] _enemyArray = new Enemy[0, 0];
-        private List<Bullet> _bullets = new List<Bullet>();
+
+        private List<SimpleObject> _objects = new List<SimpleObject>();
         private Player _player;
         private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
         private long tick = 1;
-        private Menu _menu;
-        private Menu _settingsMenu;
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
-        private readonly Vector2D windowSize = new Vector2D(200, 60);
-        private List<Menu> _menus = new List<Menu>();
+        private GameDifficulty _difficulty = GameDifficulty.Easy;
+        private readonly Vector2D _windowSize = new Vector2D(200, 60);
+        private List<Menu> _menus = new List<Menu>(); // 0 : Main menu, 1 : Settings menu, 2 : Highscore menu, 3 : About menu, 4 : Pause menu
         private Menu _currentMenu;
+        private SoundPlayer _musicSound;
+        private List<SimpleObject> _objectsToDestroy = new List<SimpleObject>();
 
         /// <summary>
         /// PROPERTIES
@@ -52,15 +63,9 @@ namespace SpicyInvaders
             get { return _player; }
         }
 
-        public List<Enemy> Enemies
+        public List<SimpleObject> Objects
         {
-            get { return _enemies; }
-        }
-
-        public List<Bullet> Bullets
-        {
-            get { return _bullets; }
-            set { _bullets = value; }
+            get { return _objects; }
         }
 
         public List<Menu> Menus
@@ -69,10 +74,10 @@ namespace SpicyInvaders
             set { _menus = value; }
         }
 
-        public Enemy[,] EnemyArray
+        public SoundPlayer Sound
         {
-            get { return _enemyArray; }
-            set { _enemyArray = value; }
+            get { return _musicSound; }
+            set { _musicSound = value; }
         }
 
         public Menu CurrentMenu
@@ -102,6 +107,15 @@ namespace SpicyInvaders
         }
 
         /// <summary>
+        /// Gets-Sets the difficulty of the game
+        /// </summary>
+        public GameDifficulty Difficulty
+        {
+            get { return _difficulty; }
+            set { _difficulty = value; }
+        }
+
+        /// <summary>
         /// Default constructor of GameManager
         /// </summary>
         public GameManager()
@@ -121,21 +135,34 @@ namespace SpicyInvaders
         public void Start()
         {
             Console.CursorVisible = false;
-            Console.SetWindowSize(windowSize.X, windowSize.Y);
+            Console.SetWindowSize(_windowSize.X, _windowSize.Y);
 
-            // Create all the menu objects
-            string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
-            // Name of the buttons and the name of the menu
-            Menus.Add(new Menu(stringMenuNames, ""));
+            // SOUND
+            _musicSound = new SoundPlayer(@"..\..\Sound\music.wav");
+            _musicSound.PlayLooping();
 
-            string[] stringMenuNames1 = { "Sound", "Mute", "Back" };
-            Menus.Add(new Menu(stringMenuNames1, "Settings"));
+            // MAIN MENU
+            string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};
+            Menus.Add(new Menu(stringMenuNames, "Main menu", _windowSize.X, _windowSize.Y));
 
-            string[] stringMenuNames2 = { "Back" };
-            Menus.Add(new Menu(stringMenuNames2, "Highscore"));
-            Menus.Add(new Menu(stringMenuNames2, "About"));
+            // SETTINGS MENU
+            string[] stringMenuNames1 = {"Difficulty :    Easy", "Mute :          disabled", "Back"};
+            Menus.Add(new Menu(stringMenuNames1, "Settings", _windowSize.X, _windowSize.Y));
 
+            // HIGHSCORE AND ABOUT MENU
+            string[] stringMenuNames2 = {"Back"};
+            Menus.Add(new Menu(stringMenuNames2, "Highscore", _windowSize.X, _windowSize.Y));
+            Menus.Add(new Menu(stringMenuNames2, "About", _windowSize.X, _windowSize.Y));
+
+            // PAUSE MENU
+            string[] stringMenuNames3 = { "Resume", "Back to main menu" };
+            Menus.Add(new Menu(stringMenuNames3, "Pause", _windowSize.X, _windowSize.Y));
+
+            // Set the default menu onto the main menu
             _currentMenu = Menus[0];
+
+            // Creation of the player
+            _player = new Player(35, 35);
         }
 
         /// <summary>
@@ -143,6 +170,10 @@ namespace SpicyInvaders
         /// </summary>
         public void Run()
         {
+            Console.Clear();
+            _grpEnemies = new GroupEnemies(5, 5);
+            _grpEnemies.SpawnEnemies();
+
             while (true)
             {
                 var stopWatch = System.Diagnostics.Stopwatch.StartNew();
@@ -164,6 +195,7 @@ namespace SpicyInvaders
                 switch (_state)
                 {
                     case GameManagerState.MainMenu:
+                    case GameManagerState.Pause:
                     {
                         LoadMenu();
                         break;
@@ -171,11 +203,6 @@ namespace SpicyInvaders
                     case GameManagerState.MainGame:
                     {
                         MainGame();
-                        break;
-                    }
-                    case GameManagerState.Pause:
-                    {
-                        // todo pause menu here
                         break;
                     }
                     case GameManagerState.Score:
@@ -189,6 +216,14 @@ namespace SpicyInvaders
                     }
                 }
 
+                //Clean the destroyed objects
+                foreach (var enemyToDestroy in _objectsToDestroy)
+                {
+                    _objects.Remove(enemyToDestroy);
+                }
+
+                _objectsToDestroy.Clear();
+
                 stopWatch.Stop();
                 if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
                 {
@@ -198,24 +233,13 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// loop of the game
+        /// Loop of the game
         /// </summary>
         private void MainGame()
         {
-            tick += 1;
-
-            if (tick % 100 == 0)
+            foreach (var obj in _objects)
             {
-                _grpEnemies.Update();
-            }
-
-            foreach (var enemy in _enemies)
-            {
-                // todo update here
-            }
-
-            foreach (var bullet in _bullets)
-            {
+                obj.Update();
                 // todo update here
             }
 
@@ -223,12 +247,17 @@ namespace SpicyInvaders
         }
 
         /// <summary>
-        /// Load a menu
+        /// Load the current menu
         /// </summary>
         private void LoadMenu()
         {
-            // Draw the main menu with his title
+            // Draw the main menu with a full capital name
             _currentMenu.LoadPage(_currentMenu.Name.ToUpper());
+        }
+
+        public void RemoveItem(SimpleObject objectToDestroy)
+        {
+            _objectsToDestroy.Add(objectToDestroy);
         }
     }
 }

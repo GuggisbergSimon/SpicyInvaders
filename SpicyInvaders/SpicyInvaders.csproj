@@ -47,6 +47,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="GroupEnemies.cs" />
+    <Compile Include="HighscoreDB.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="MenuButton.cs" />
@@ -57,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sound\music.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Database\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
