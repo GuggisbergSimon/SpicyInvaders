@@ -38,29 +38,25 @@ namespace SpicyInvaders
         /// </summary>
         public override void Update()
         {
-            if (_isMoving)
+            if (!_isMoving) return;
+            switch (_direction)
             {
-                if (_direction == Direction.Up && _position.Y > 0)
-                {
+                case Direction.Up when _position.Y > 0:
                     UpdatePos(-Vector2D.Up);
-                }
-                else if (_direction == Direction.Down && _position.Y <= Console.WindowHeight)
-                {
+                    break;
+                case Direction.Down when _position.Y <= Console.WindowHeight:
                     UpdatePos(Vector2D.Up);
-                }
-                else if (_direction == Direction.Right && _position.X <= Console.WindowWidth)
-                {
+                    break;
+                case Direction.Right when _position.X <= Console.WindowWidth:
                     UpdatePos(Vector2D.Right);
-                }
-                else if (_direction == Direction.Left && _position.X > 0)
-                {
+                    break;
+                case Direction.Left when _position.X > 0:
                     UpdatePos(-Vector2D.Right);
-                }
-                else
-                {
+                    break;
+                default:
                     _isMoving = false;
                     Destroy();
-                }
+                    break;
             }
         }
 
@@ -72,12 +68,10 @@ namespace SpicyInvaders
             
             foreach (var obj in GameManager.Instance.EnemiesAndBullets)
             {
-                if (obj.Position == _position && obj != this)
-                {
-                    obj.Destroy();
-                    Destroy();
-                    //todo code other interactions here
-                }
+                if (obj.Position != _position || obj == this) continue;
+                obj.Destroy();
+                Destroy();
+                //todo code other interactions here
             }
         }
     }
