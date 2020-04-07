@@ -7,9 +7,16 @@ using System;
 
 namespace SpicyInvaders
 {
-    class Program
+    /// <summary>
+    /// Program class
+    /// </summary>
+    public class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Main function of the game
+        /// </summary>
+        /// <param name="args"></param>
+        public static void Main(string[] args)
         {
             GameManager gameManager = new GameManager();
             gameManager.Start();
