@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="UML-Diagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sound\music.wav" />

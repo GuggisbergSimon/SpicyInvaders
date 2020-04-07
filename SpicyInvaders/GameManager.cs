@@ -23,7 +23,7 @@ namespace SpicyInvaders
             MainMenu,
             MainGame,
             Pause,
-            Score
+            GameOver
         }
 
         public enum GameDifficulty
@@ -51,7 +51,7 @@ namespace SpicyInvaders
         private GameManagerState _state = GameManagerState.MainMenu;
         private GameDifficulty _difficulty = GameDifficulty.Easy;
         private readonly Vector2D _windowSize = new Vector2D(200, 58);
-        private List<Menu> _menus = new List<Menu>(); // 0 : Main menu, 1 : Settings menu, 2 : Highscore menu, 3 : About menu, 4 : Pause menu
+        private List<Menu> _menus = new List<Menu>(); // 0 : Main menu, 1 : Settings menu, 2 : Highscore menu, 3 : About menu, 4 : Pause menu, 5 : Game over menu
         private Menu _currentMenu;
         private SoundPlayer _musicSound;
         private List<Bullet> _bulletsToDestroy = new List<Bullet>();
@@ -81,7 +81,7 @@ namespace SpicyInvaders
             set { _menus = value; }
         }
 
-        public SoundPlayer Sound
+        public SoundPlayer MusicSound
         {
             get { return _musicSound; }
             set { _musicSound = value; }
@@ -146,25 +146,7 @@ namespace SpicyInvaders
             _musicSound = new SoundPlayer(@"..\..\Sound\music.wav");
             _musicSound.PlayLooping();
 
-            // MAIN MENU
-            string[] stringMenuNames = {"Play", "Settings", "Highscore", "About", "Quit"};
-            Menus.Add(new Menu(stringMenuNames, "Main menu", _windowSize.X, _windowSize.Y));
-
-            // SETTINGS MENU
-            string[] stringMenuNames1 = {"Difficulty :    Easy", "Mute :          disabled", "Back"};
-            Menus.Add(new Menu(stringMenuNames1, "Settings", _windowSize.X, _windowSize.Y));
-
-            // HIGHSCORE AND ABOUT MENU
-            string[] stringMenuNames2 = {"Back"};
-            Menus.Add(new Menu(stringMenuNames2, "Highscore", _windowSize.X, _windowSize.Y));
-            Menus.Add(new Menu(stringMenuNames2, "About", _windowSize.X, _windowSize.Y));
-
-            // PAUSE MENU
-            string[] stringMenuNames3 = { "Resume", "Back to main menu" };
-            Menus.Add(new Menu(stringMenuNames3, "Pause", _windowSize.X, _windowSize.Y));
-
-            // Set the default menu onto the main menu
-            _currentMenu = Menus[0];
+            SetupMenu();
 
             // Creation of the player
             _player = new Player(35, 35);
@@ -210,7 +192,7 @@ namespace SpicyInvaders
                         MainGame();
                         break;
                     }
-                    case GameManagerState.Score:
+                    case GameManagerState.GameOver:
                     {
                         // todo score menu here
                         break;
@@ -259,6 +241,33 @@ namespace SpicyInvaders
             }
 
             _player.Update();
+        }
+
+        /// <summary>
+        /// Called one time in the Start method and setup the main menus
+        /// </summary>
+        private void SetupMenu()
+        {
+            // MAIN MENU
+            string[] stringMenuNames = { "Play", "Settings", "Highscore", "About", "Quit" };
+            Menus.Add(new Menu(stringMenuNames, "Main menu", _windowSize.X, _windowSize.Y));
+
+            // SETTINGS MENU
+            string[] stringMenuNames1 = { "Difficulty :    Easy", "Mute :          disabled", "Back" };
+            Menus.Add(new Menu(stringMenuNames1, "Settings", _windowSize.X, _windowSize.Y));
+
+            // HIGHSCORE AND ABOUT MENU
+            string[] stringMenuNames2 = { "Back" };
+            Menus.Add(new Menu(stringMenuNames2, "Highscore", _windowSize.X, _windowSize.Y));
+            Menus.Add(new Menu(stringMenuNames2, "About", _windowSize.X, _windowSize.Y));
+
+            // PAUSE MENU
+            string[] stringMenuNames3 = { "Resume", "Mute :          disabled", "Back to main menu" };
+            Menus.Add(new Menu(stringMenuNames3, "Pause", _windowSize.X, _windowSize.Y));
+
+            // Set the default menu onto the main menu
+            _currentMenu = Menus[0];
+            Menu._muteState = MuteState.Disabled;
         }
 
         /// <summary>

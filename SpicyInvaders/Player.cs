@@ -4,6 +4,7 @@
 //Description   : Player Class of Spicy Invaders
 
 using System;
+using System.Media;
 
 namespace SpicyInvaders
 {
@@ -73,8 +74,16 @@ namespace SpicyInvaders
 
                     break;
                 }
+                case ConsoleKey.Escape:
+                {
+                    // Pause
+                    Console.Clear();
+                    GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[4];
+                    GameManager.Instance.State = GameManager.GameManagerState.Pause;
+                    return;
+                }
             }
-            
+
             Draw();
         }
 
@@ -83,7 +92,9 @@ namespace SpicyInvaders
             _lives -= nbrLife;
             if (_lives < 0)
             {
-                //todo gameover
+                // Game over
+                Console.Clear();
+                GameManager.Instance.State = GameManager.GameManagerState.GameOver;
             }
         }
 

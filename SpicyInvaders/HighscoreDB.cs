@@ -17,7 +17,7 @@ namespace SpicyInvaders
     /// </summary>
     public static class HighscoreDB
     {
-        public static string xmlPath = @"..\..\Database\highscores.xml";
+        private static string xmlPath = @"..\..\Database\highscores.xml";
 
         /// <summary>
         /// Verify if the score can be written as the best score of the player, if yes, write it

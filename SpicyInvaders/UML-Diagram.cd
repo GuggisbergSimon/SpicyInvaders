@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="SpicyInvaders.Bullet">
+    <Position X="5.25" Y="4" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAIAAAAAAAAAAAAAACAAACABAAIAAAAAAA=</HashCode>
+      <FileName>Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.Enemy">
+    <Position X="13.25" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.GameManager">
+    <Position X="9.75" Y="9.5" Width="3.5" />
+    <NestedTypes>
+      <Enum Name="SpicyInvaders.GameManager.GameManagerState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GameManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="SpicyInvaders.GameManager.GameDifficulty" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GameManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QABAAAAAADIAgQAAAACACAAAEACBAAAkRAEQBaQDAAM=</HashCode>
+      <FileName>GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.GroupEnemies">
+    <Position X="13.25" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAwAAAAAAAAAAAAACAAAAIAAAA=</HashCode>
+      <FileName>GroupEnemies.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.HighscoreDB">
+    <Position X="19" Y="8.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAARAAAAAAgAQAAAAAAAAAAAACAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>HighscoreDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.Menu">
+    <Position X="16.5" Y="11" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>IQACoIQAAAAAAAAAAAAACATEAACAAAAAAIBABEAAAIE=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.MenuButton">
+    <Position X="22" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAIAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>MenuButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.Player">
+    <Position X="10.25" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAIAQAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpicyInvaders.SimpleObject">
+    <Position X="10.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAgAAAAAAAAAABAAAAABAAAgAAAAAA=</HashCode>
+      <FileName>SimpleObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="SpicyInvaders.Vector2D">
+    <Position X="3.75" Y="9.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAQAAAAA4AUAAAAAAQAAAAAAAECAAAAAYiI=</HashCode>
+      <FileName>Vector2D.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="SpicyInvaders.Direction">
+    <Position X="2" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAAAAI=</HashCode>
+      <FileName>Direction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SpicyInvaders.ArrowDirection">
+    <Position X="2" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

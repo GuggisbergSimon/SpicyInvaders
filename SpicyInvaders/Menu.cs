@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace SpicyInvaders
 {
@@ -18,6 +17,12 @@ namespace SpicyInvaders
         Down
     }
 
+    public enum MuteState
+    {
+        Enabled,
+        Disabled
+    }
+
     /// <summary>
     /// Main menu class. Manage the menu selection and interactions
     /// </summary>
@@ -26,6 +31,8 @@ namespace SpicyInvaders
         /// <summary>
         /// ATTRIBUTES
         /// </summary>
+        public static MuteState _muteState;
+
         // Title of the game on the screen (generated with https://www.kammerl.de/ascii/AsciiSignature.php)
         private readonly string[] _TITLE = {".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.",
                                             "88'  YP 88  `8D   `88'   d8P  Y8 `8b  d8'     `88'   888o  88 88    88 d8' `8b 88  `8D 88'     88  `8D 88'  YP",
@@ -35,7 +42,6 @@ namespace SpicyInvaders
                                             "`8888Y' 88      Y888888P  `Y88P'    YP      Y888888P VP   V8P    YP    YP   YP Y8888D' Y88888P 88   YD `8888Y'" };
 
         private const string _ABOUT_TITLE_1 = "Spicy Invaders";
-        //private const string _ABOUT_1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce fringilla quis nisl nec ornare. Vivamus posuere sapien quis justo aliquet, a pharetra ligula.";
         private const string _ABOUT_1 = "The project Spicy Invaders is a true copy of the famous game Space Invaders. The goal wasn't to steal the concept, " +
                                         "because we're not gonna sell this game, but rather to create an entire oriented object game by ourself.";
 
@@ -81,6 +87,7 @@ namespace SpicyInvaders
         {
             get { return _name; }
         }
+
         /// <summary>
         /// END PROPERTIES
         /// </summary>
@@ -151,6 +158,12 @@ namespace SpicyInvaders
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.BackgroundColor = ConsoleColor.Black;
+
+                // If it's the mute button (keep his state)
+                if (_menuButtons[j].Name == "MUTE :          DISABLED" || _menuButtons[j].Name == "MUTE :          ENABLED")
+                {
+                    _menuButtons[j].Name = "MUTE :          " + _muteState.ToString().ToUpper();
+                }
 
                 // If the option is selected
                 if (j == SelectedIndex)
@@ -411,18 +424,23 @@ namespace SpicyInvaders
                                             GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[3];
                                             break;
                                         }
+                                    case "MUTE :          DISABLED":
                                     case "MUTE :          ENABLED":
                                         {
-                                            // Activate the sound
-                                            GameManager.Instance.Sound.PlayLooping();
-                                            _menuButtons[i].Name = "MUTE :          DISABLED";
-                                            break;
-                                        }
-                                    case "MUTE :          DISABLED":
-                                        {
-                                            // Stop the sound
-                                            GameManager.Instance.Sound.Stop();
-                                            _menuButtons[i].Name = "MUTE :          ENABLED";
+                                            if (_muteState == MuteState.Disabled)
+                                            {
+                                                // Stop the sound
+                                                _muteState = MuteState.Enabled;
+                                                GameManager.Instance.MusicSound.Stop();
+                                                _menuButtons[i].Name = "MUTE :          ENABLED";
+                                            }
+                                            else
+                                            {
+                                                // Activate the sound
+                                                _muteState = MuteState.Disabled;
+                                                GameManager.Instance.MusicSound.PlayLooping();
+                                                _menuButtons[i].Name = "MUTE :          DISABLED";
+                                            }
                                             break;
                                         }
                                     case "DIFFICULTY :    EASY":
