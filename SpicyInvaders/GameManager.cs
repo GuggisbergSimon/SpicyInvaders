@@ -40,7 +40,8 @@ namespace SpicyInvaders
         // singleton for easier access to the instance of the GameManager
         public static GameManager Instance { get; private set; }
 
-        private List<SimpleObject> enemiesAndBullets = new List<SimpleObject>();
+        private List<Bullet> _bullets = new List<Bullet>();
+        private List<Enemy> _enemies = new List<Enemy>();
         private Player _player;
         private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
@@ -53,23 +54,23 @@ namespace SpicyInvaders
         private List<Menu> _menus = new List<Menu>(); // 0 : Main menu, 1 : Settings menu, 2 : Highscore menu, 3 : About menu, 4 : Pause menu
         private Menu _currentMenu;
         private SoundPlayer _musicSound;
-        private List<SimpleObject> _objectsToDestroy = new List<SimpleObject>();
+        private List<Bullet> _bulletsToDestroy = new List<Bullet>();
+        private List<Enemy> _enemiesToDestroy = new List<Enemy>();
 
         /// <summary>
         /// Getter of Player
         /// </summary>
-        public Player Player
-        {
-            get { return _player; }
-        }
+        public Player Player => _player;
 
         /// <summary>
-        /// Getter of EnemiesAndBullets
+        /// Getter of Enemies
         /// </summary>
-        public List<SimpleObject> EnemiesAndBullets
-        {
-            get { return enemiesAndBullets; }
-        }
+        public List<Enemy> Enemies => _enemies;
+
+        /// <summary>
+        /// Getter of Bullets
+        /// </summary>
+        public List<Bullet> Bullets => _bullets;
 
         /// <summary>
         /// Getter-Setter of Menus
@@ -167,7 +168,7 @@ namespace SpicyInvaders
 
             // Creation of the player
             _player = new Player(35, 35);
-            enemiesAndBullets.Add(new Enemy(new Vector2D(35, 10)));
+            _enemies.Add(new Enemy(new Vector2D(35, 10)));
         }
 
         /// <summary>
@@ -221,13 +222,19 @@ namespace SpicyInvaders
                 }
 
                 //Clean the destroyed objects
-                foreach (var objToDestroy in _objectsToDestroy)
+                foreach (var enemy in _enemiesToDestroy)
                 {
-                    enemiesAndBullets.Remove(objToDestroy);
+                    _enemies.Remove(enemy);
                 }
 
-                _objectsToDestroy.Clear();
+                foreach (var bullet in _bulletsToDestroy)
+                {
+                    _bullets.Remove(bullet);
+                }
 
+                _enemiesToDestroy.Clear();
+                _bulletsToDestroy.Clear();
+                
                 stopWatch.Stop();
                 if (Convert.ToInt32(stopWatch.ElapsedMilliseconds) < DELTA_TIME)
                 {
@@ -241,9 +248,14 @@ namespace SpicyInvaders
         /// </summary>
         private void MainGame()
         {
-            foreach (var obj in enemiesAndBullets)
+            foreach (var enemy in _enemies)
             {
-                obj.Update();
+                enemy.Update();
+            }
+
+            foreach (var bullet in _bullets)
+            {
+                bullet.Update();
             }
 
             _player.Update();
@@ -262,9 +274,16 @@ namespace SpicyInvaders
         /// Adds an object to be destroyed
         /// </summary>
         /// <param name="objectToDestroy"></param>
-        public void RemoveItem(SimpleObject objectToDestroy)
+        public void RemoveItem<T>(T objectToDestroy)
         {
-            _objectsToDestroy.Add(objectToDestroy);
+            if (typeof(T) == typeof(Bullet))
+            {
+                _bulletsToDestroy.Add(objectToDestroy as Bullet);
+            }
+            else if (typeof(T) == typeof(Enemy))
+            {
+                _enemiesToDestroy.Add(objectToDestroy as Enemy);
+            }
         }
     }
 }
