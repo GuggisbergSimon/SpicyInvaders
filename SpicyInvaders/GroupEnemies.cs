@@ -8,67 +8,43 @@ using System;
 
 namespace SpicyInvaders
 {
-    public class GroupEnemies
-    {
-        /// <summary>
-        /// Attributes
-        /// </summary>
-        private readonly int _spaceX;
+	public class GroupEnemies
+	{
+		private int _speed;
+		/// <summary>
+		/// GroupEnemies Constructor
+		/// </summary>
+		/// <param name="startPos">the top left position of the group</param>
+		/// <param name="size">the size of the group</param>
+		/// <param name="padding">the padding between each member of the group</param>
+		public GroupEnemies(Vector2D startPos, Vector2D size, Vector2D padding, int speed)
+		{
+			_speed = speed;
+			for (int i = 0; i < size.X; i++)
+			{
+				for (int j = 0; j < size.Y; j++)
+				{
+					GameManager.Instance.Enemies.Add(new Enemy(new Vector2D(startPos.X + i + i * padding.X,
+						startPos.Y + j + j * padding.Y)));
+				}
+			}
+		}
 
-        private readonly int _spaceY;
+		/// <summary>
+		/// Handles the movement of the enemies
+		/// </summary>
+		public void Update(int tick)
+		{
+			foreach (var enemy in GameManager.Instance.Enemies)
+			{
+				if (tick % _speed == 0)
+				{
+					enemy.ErasePicture();
+					enemy.Position += Vector2D.Right * 2;
+				}
 
-        private int _sizeX;
-        private int _sizeY;
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public GroupEnemies()
-        {
-            _spaceX = 3;
-            _spaceY = 2;
-        }
-
-        /// <summary>
-        /// Custom Constructor
-        /// </summary>
-        public GroupEnemies(int sizeX, int sizeY)
-        {
-            _sizeX = sizeX;
-            _sizeY = sizeY;
-            _spaceX = 3;
-            _spaceY = 2;
-        }
-
-        /// <summary>
-        /// Spawn all the enemies in an array form
-        /// </summary>
-        public void SpawnEnemies()
-        {
-            //Add enemies to the list
-            for (int i = 0; i < _sizeX * _sizeY; i++)
-            {
-                GameManager.Instance.Enemies.Add(new Enemy(Vector2D.Zero));
-            }
-
-            //Spawn enemies
-            foreach (var enemy in GameManager.Instance.Enemies)
-            {
-                enemy.Position += Vector2D.Right * _spaceX;
-            }
-        }
-
-        /// <summary>
-        /// Enemy Movement
-        /// </summary>
-        public void Update()
-        {
-            foreach (var enemy in GameManager.Instance.Enemies)
-            {
-                Console.SetCursorPosition(enemy.Position.X, enemy.Position.Y);
-                Console.Write((char) 32);
-                enemy.Position += Vector2D.Right * 2;
-            }
-        }
-    }
+				enemy.Update(tick);
+			}
+		}
+	}
 }

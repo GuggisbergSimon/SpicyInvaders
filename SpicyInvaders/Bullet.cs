@@ -46,9 +46,9 @@ namespace SpicyInvaders
         /// <summary>
         /// Update Bullet
         /// </summary>
-        public override void Update()
+        public override void Update(int tick)
         {
-            if (!_isMoving) return;
+            if (!_isMoving || tick % _speed != 0) return;
             switch (_direction)
             {
                 case Direction.Up when _position.Y > 0:

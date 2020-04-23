@@ -33,7 +33,7 @@ namespace SpicyInvaders
         /// <summary>
         /// Update Enemy
         /// </summary>
-        public override void Update()
+        public override void Update(int tick)
         {
             Draw();
         }

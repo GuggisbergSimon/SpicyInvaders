@@ -37,7 +37,7 @@ namespace SpicyInvaders
         /// Update Player
         /// </summary>
         /// <param name="direction"></param>
-        public override void Update()
+        public override void Update(int tick)
         {
             switch (GameManager.Instance.Input.Key)
             {

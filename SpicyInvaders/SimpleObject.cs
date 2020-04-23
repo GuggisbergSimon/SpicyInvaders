@@ -42,7 +42,7 @@ namespace SpicyInvaders
         /// <summary>
         /// Reverts the pixels drawn on the position of the object
         /// </summary>
-        protected void ErasePicture()
+        public void ErasePicture()
         {
             Console.SetCursorPosition(_position.X, Position.Y);
             Console.Write(" ");
@@ -56,6 +56,6 @@ namespace SpicyInvaders
         /// <summary>
         /// Update method
         /// </summary>
-        public abstract void Update();
+        public abstract void Update(int tick);
     }
 }
