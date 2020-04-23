@@ -294,6 +294,7 @@ namespace SpicyInvaders
         {
             // Draw title
             Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
             int j = 0;
             foreach(string line in _TITLE)
             {

@@ -14,6 +14,12 @@ namespace SpicyInvaders
     {
         protected Vector2D _position;
         protected char _visual;
+
+        protected SimpleObject(Vector2D position, char visual)
+        {
+            _position = position;
+            _visual = visual;
+        }
         
         /// <summary>
         /// Getter-Setter for Position

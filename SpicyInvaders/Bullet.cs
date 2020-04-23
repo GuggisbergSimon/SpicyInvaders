@@ -27,10 +27,8 @@ namespace SpicyInvaders
         /// <param name="dir"></param>
         /// <param name="color"></param>
         /// <param name="speed"></param>
-        public Bullet(Vector2D pos, Direction dir, ConsoleColor color, int speed)
+        public Bullet(Vector2D pos, Direction dir, ConsoleColor color, int speed): base(pos,'!')
         {
-            _visual = '!';
-            _position = pos;
             _direction = dir;
             _color = color;
             _speed = speed;
@@ -78,6 +76,7 @@ namespace SpicyInvaders
             _position += move;
             Draw();
             
+            //When a bullet meets a bullet
             foreach (var bullet in GameManager.Instance.Bullets)
             {
                 if (bullet.Position != _position || _direction == bullet.Direction || bullet == this) continue;
@@ -85,20 +84,21 @@ namespace SpicyInvaders
                 Destroy();
             }
 
+            //When a bullet meets an enemy
             foreach (var enemy in GameManager.Instance.Enemies)
             {
                 if (enemy.Position != _position || _direction != Direction.Up) continue;
+                enemy.LoseLife(strength);
                 enemy.Destroy();
                 Destroy();
             }
 
+            //When a bullets meet the player
             if (GameManager.Instance.Player.Position == _position && _direction == Direction.Down)
             {
                 Destroy();
                 GameManager.Instance.Player.LoseLife(strength);
             }
-            
-            //todo code other interactions here
         }
     }
 }

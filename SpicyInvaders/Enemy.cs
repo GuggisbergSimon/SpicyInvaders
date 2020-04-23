@@ -10,15 +10,14 @@ namespace SpicyInvaders
     /// <summary>
     /// Enemy class
     /// </summary>
-    public class Enemy : SimpleObject
+    public class Enemy : Character
     {
         /// <summary>
         /// Custom Constructor for the object Enemy
         /// </summary>
         /// 
-        public Enemy(Vector2D pos)
+        public Enemy(Vector2D pos): base(pos, 'O', 1)
         {
-            _visual = 'O';
             _position = pos;
         }
 
@@ -37,6 +36,18 @@ namespace SpicyInvaders
         public override void Update()
         {
             Draw();
+        }
+
+        public override bool LoseLife(int loss)
+        {
+            _life -= loss;
+            if (_life < 0)
+            {
+                Destroy();
+                return true;
+            }
+
+            return false;
         }
     }
 }

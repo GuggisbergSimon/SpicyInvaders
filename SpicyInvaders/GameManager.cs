@@ -28,9 +28,9 @@ namespace SpicyInvaders
 
         public enum GameDifficulty
         {
-            Easy,
-            Normal,
-            Hard
+            Easy = 3,
+            Normal = 2,
+            Hard = 1
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace SpicyInvaders
             _currentMenu = Menus[0];
 
             // Creation of the player
-            _player = new Player(35, 35);
+            _player = new Player(new Vector2D(35, 35));
             _enemies.Add(new Enemy(new Vector2D(35, 10)));
         }
 
@@ -193,10 +193,7 @@ namespace SpicyInvaders
                     _input = new ConsoleKeyInfo();
                 }
 
-                // todo remove 3 next lines (test for fps purposes)
-                // Console.SetCursorPosition(10, 10);
-                // Console.WriteLine(_random.Next(10,100));
-                // Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
+
                 switch (_state)
                 {
                     case GameManagerState.MainMenu:
