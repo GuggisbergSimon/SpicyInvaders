@@ -69,8 +69,16 @@ namespace SpicyInvaders
 
                     break;
                 }
+                case ConsoleKey.Escape:
+                {
+                    // Pause
+                    Console.Clear();
+                    GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[4];
+                    GameManager.Instance.State = GameManager.GameManagerState.Pause;
+                    return;
+                }
             }
-            
+
             Draw();
         }
 
@@ -84,8 +92,13 @@ namespace SpicyInvaders
             _life -= loss;
             if (_life < 0)
             {
+                // Game over
+                Console.Clear();
+                GameOver gameOverMenu = (GameOver)GameManager.Instance.Menus[5];
+                gameOverMenu.Score = 200;
+                GameManager.Instance.CurrentMenu = gameOverMenu;
+                GameManager.Instance.State = GameManager.GameManagerState.GameOver;
                 return true;
-                //todo gameover
             }
 
             return false;
