@@ -14,6 +14,12 @@ namespace SpicyInvaders
     {
         protected Vector2D _position;
         protected char _visual;
+
+        protected SimpleObject(Vector2D position, char visual)
+        {
+            _position = position;
+            _visual = visual;
+        }
         
         /// <summary>
         /// Getter-Setter for Position
@@ -36,7 +42,7 @@ namespace SpicyInvaders
         /// <summary>
         /// Reverts the pixels drawn on the position of the object
         /// </summary>
-        protected void ErasePicture()
+        public void ErasePicture()
         {
             Console.SetCursorPosition(_position.X, Position.Y);
             Console.Write(" ");
@@ -50,6 +56,6 @@ namespace SpicyInvaders
         /// <summary>
         /// Update method
         /// </summary>
-        public abstract void Update();
+        public abstract void Update(int tick);
     }
 }
