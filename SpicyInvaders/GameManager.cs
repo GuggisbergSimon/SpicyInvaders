@@ -102,6 +102,7 @@ namespace SpicyInvaders
         public ConsoleKeyInfo Input
         {
             get { return _input; }
+            set { _input = value; }
         }
 
         /// <summary>
@@ -179,6 +180,7 @@ namespace SpicyInvaders
                 {
                     case GameManagerState.MainMenu:
                     case GameManagerState.Pause:
+                    case GameManagerState.GameOver:
                     {
                         LoadMenu();
                         break;
@@ -186,11 +188,6 @@ namespace SpicyInvaders
                     case GameManagerState.MainGame:
                     {
                         MainGame();
-                        break;
-                    }
-                    case GameManagerState.GameOver:
-                    {
-                        // todo score menu here
                         break;
                     }
                     default:
@@ -265,6 +262,10 @@ namespace SpicyInvaders
             // PAUSE MENU
             string[] stringMenuNames3 = { "Resume", "Mute :          disabled", "Back to main menu" };
             Menus.Add(new Menu(stringMenuNames3, "Pause", _windowSize.X, _windowSize.Y));
+
+            // GAME OVER MENU
+            string[] stringMenuNames4 = new string[] { };
+            Menus.Add(new GameOver(stringMenuNames4, "", _windowSize.X, _windowSize.Y));
 
             // Set the default menu onto the main menu
             _currentMenu = Menus[0];
