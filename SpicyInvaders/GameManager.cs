@@ -145,13 +145,13 @@ namespace SpicyInvaders
 
             // SOUND
             _musicSound = new SoundPlayer(@"..\..\Sound\music.wav");
-            _musicSound.PlayLooping();
+            //_musicSound.PlayLooping();
 
             SetupMenu();
 
             // Creation of the player
             _player = new Player(new Vector2D(35, 35));
-            _enemies.Add(new Enemy(new Vector2D(35, 10)));
+            //_enemies.Add(new Enemy(new Vector2D(35, 10)));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace SpicyInvaders
         public void Run()
         {
             Console.Clear();
-            _grpEnemies = new GroupEnemies(new Vector2D(2, 2), new Vector2D(5, 5), new Vector2D(1, 0), 10);
+            _grpEnemies = new GroupEnemies(new Vector2D(2, 2), new Vector2D(5, 5), new Vector2D(1, 0), Direction.Right, 2);
 
             while (true)
             {
