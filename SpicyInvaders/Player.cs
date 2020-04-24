@@ -10,22 +10,18 @@ namespace SpicyInvaders
     /// <summary>
     /// Player Class
     /// </summary>
-    public class Player : SimpleObject
+    public class Player : Character
     {
         private Vector2D barrelOffset = new Vector2D(0, 1);
         private bool canShoot = true;
-        private int _lives = 3;
 
         /// <summary>
         /// Player Constructor
         /// </summary>
-        public Player(int playerX, int playerY)
+        public Player(Vector2D position): base(position, 'A', (int) GameManager.Instance.Difficulty)
         {
-            _visual = 'A';
-            _position.X = playerX;
-            _position.Y = playerY;
-            Console.SetCursorPosition(playerX, playerY);
-            Console.Write(_visual);
+            Console.SetCursorPosition(position.X,position.Y);
+            Draw();
         }
 
         /// <summary>
@@ -41,7 +37,7 @@ namespace SpicyInvaders
         /// Update Player
         /// </summary>
         /// <param name="direction"></param>
-        public override void Update()
+        public override void Update(int tick)
         {
             switch (GameManager.Instance.Input.Key)
             {
@@ -78,13 +74,21 @@ namespace SpicyInvaders
             Draw();
         }
 
-        public void LoseLife(int nbrLife)
+        /// <summary>
+        /// Makes the player lose some life
+        /// </summary>
+        /// <param name="loss">the number of life to remove</param>
+        /// <returns>true if dead</returns>
+        public override bool LoseLife(int loss)
         {
-            _lives -= nbrLife;
-            if (_lives < 0)
+            _life -= loss;
+            if (_life < 0)
             {
+                return true;
                 //todo gameover
             }
+
+            return false;
         }
 
         private void UpdatePos(int move)

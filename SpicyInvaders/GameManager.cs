@@ -28,9 +28,9 @@ namespace SpicyInvaders
 
         public enum GameDifficulty
         {
-            Easy,
-            Normal,
-            Hard
+            Easy = 3,
+            Normal = 2,
+            Hard = 1
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace SpicyInvaders
         private Player _player;
         private GroupEnemies _grpEnemies;
         private const int DELTA_TIME = 10;
-        private long tick = 1;
+        private int tick = 1;
         private Random _random = new Random();
         private ConsoleKeyInfo _input;
         private GameManagerState _state = GameManagerState.MainMenu;
@@ -61,17 +61,17 @@ namespace SpicyInvaders
         /// Getter of Player
         /// </summary>
         public Player Player => _player;
-
+        
         /// <summary>
         /// Getter of Enemies
         /// </summary>
         public List<Enemy> Enemies => _enemies;
-
+        
         /// <summary>
         /// Getter of Bullets
         /// </summary>
         public List<Bullet> Bullets => _bullets;
-
+        
         /// <summary>
         /// Getter-Setter of Menus
         /// </summary>
@@ -167,7 +167,7 @@ namespace SpicyInvaders
             _currentMenu = Menus[0];
 
             // Creation of the player
-            _player = new Player(35, 35);
+            _player = new Player(new Vector2D(35, 35));
             _enemies.Add(new Enemy(new Vector2D(35, 10)));
         }
 
@@ -177,12 +177,11 @@ namespace SpicyInvaders
         public void Run()
         {
             Console.Clear();
-            _grpEnemies = new GroupEnemies(5, 5);
-            _grpEnemies.SpawnEnemies();
+            _grpEnemies = new GroupEnemies(new Vector2D(2, 2), new Vector2D(5, 5), new Vector2D(1, 0), 10);
 
             while (true)
             {
-                var stopWatch = System.Diagnostics.Stopwatch.StartNew();
+                var stopWatch = System.Diagnostics.Stopwatch.StartNew(); 
 
                 if (Console.KeyAvailable)
                 {
@@ -193,10 +192,7 @@ namespace SpicyInvaders
                     _input = new ConsoleKeyInfo();
                 }
 
-                // todo remove 3 next lines (test for fps purposes)
-                // Console.SetCursorPosition(10, 10);
-                // Console.WriteLine(_random.Next(10,100));
-                // Console.SetCursorPosition(_player.PlayerX + 1, _player.PlayerY);
+
                 switch (_state)
                 {
                     case GameManagerState.MainMenu:
@@ -240,6 +236,8 @@ namespace SpicyInvaders
                 {
                     Thread.Sleep(DELTA_TIME - Convert.ToInt32(stopWatch.ElapsedMilliseconds));
                 }
+
+                tick++;
             }
         }
 
@@ -248,17 +246,20 @@ namespace SpicyInvaders
         /// </summary>
         private void MainGame()
         {
+            /*
             foreach (var enemy in _enemies)
             {
                 enemy.Update();
             }
+            */
+            _grpEnemies.Update(tick);
 
             foreach (var bullet in _bullets)
             {
-                bullet.Update();
+                bullet.Update(tick);
             }
 
-            _player.Update();
+            _player.Update(tick);
         }
 
         /// <summary>
