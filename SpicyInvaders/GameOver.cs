@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace SpicyInvaders
 {
@@ -16,8 +15,8 @@ namespace SpicyInvaders
     {
         private const string SCORE_TITLE = "YOUR SCORE";
         private const string NAME_TITLE = "TYPE YOUR NAME THEN PRESS ENTER";
-        private const string NAME_CAUTION = "IT CANNOT BE EMPTY AND UPPER THAN 20 CHARACTERS";
-        private readonly string[] NAME_RECTANGLE = { "╔═════════════════════════╗",
+        private const string NAME_CAUTION = "CANNOT BE EMPTY OR HIGHER THAN 20 CHARACTERS";
+        private readonly string[] nameRectangle = {  "╔═════════════════════════╗",
                                                      "║                         ║",
                                                      "╚═════════════════════════╝"};
         private List<char> _playerName;
@@ -67,7 +66,7 @@ namespace SpicyInvaders
 
             // Name rectangle
             Console.ForegroundColor = ConsoleColor.White;
-            foreach(string line in NAME_RECTANGLE)
+            foreach(string line in nameRectangle)
             {
                 Console.CursorLeft = Console.WindowWidth / 2 - line.Length / 2;
                 Console.WriteLine(line);
@@ -82,7 +81,7 @@ namespace SpicyInvaders
             // Name
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.CursorTop -= 5; // get back in the rectangle
-            Console.CursorLeft = Console.WindowWidth / 2 - NAME_RECTANGLE[0].Length / 2 + 2;
+            Console.CursorLeft = Console.WindowWidth / 2 - nameRectangle[0].Length / 2 + 2;
         }
 
         public override void KeyManager()
@@ -96,7 +95,7 @@ namespace SpicyInvaders
                     {
                         if (_playerName.Count != 0) {
                             Console.CursorVisible = false;
-                            HighscoreDB.WriteScore(new string(_playerName.ToArray()), _score);
+                            HighscoreDB.WriteScore(new string(_playerName.ToArray()).Trim(), _score);
                             _playerName.Clear();
                             _redraw = true;
                             // Clear because we change the menu page
@@ -106,7 +105,7 @@ namespace SpicyInvaders
                         }
                         else
                         {
-                            Console.CursorLeft = Console.WindowWidth / 2 - NAME_RECTANGLE[0].Length / 2 + 2;
+                            Console.CursorLeft = Console.WindowWidth / 2 - nameRectangle[0].Length / 2 + 2;
                         }
 
                         break;
