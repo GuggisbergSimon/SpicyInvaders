@@ -92,18 +92,31 @@ namespace SpicyInvaders
             _life -= loss;
             if (_life < 0)
             {
-                // Game over
-                Console.Clear();
-                GameOver gameOverMenu = (GameOver)GameManager.Instance.Menus[5];
-                gameOverMenu.Score = 200;
-                GameManager.Instance.CurrentMenu = gameOverMenu;
-                GameManager.Instance.State = GameManager.GameManagerState.GameOver;
+                // todo GameOver(score);
                 return true;
             }
 
             return false;
         }
 
+        /// <summary>
+        /// Generate the game over interface
+        /// </summary>
+        /// <param name="score">Player's score</param>
+        public void GameOver(int score)
+        {
+            Console.Clear();
+            GameOver gameOverMenu = (GameOver)GameManager.Instance.Menus[5];
+            // Set the score
+            gameOverMenu.Score = score;
+            GameManager.Instance.CurrentMenu = gameOverMenu;
+            GameManager.Instance.State = GameManager.GameManagerState.GameOver;
+        }
+
+        /// <summary>
+        /// Update player's position
+        /// </summary>
+        /// <param name="move">Movement</param>
         private void UpdatePos(int move)
         {
             ErasePicture();
