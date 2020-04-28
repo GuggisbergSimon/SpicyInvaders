@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace SpicyInvaders
 {
@@ -18,6 +17,12 @@ namespace SpicyInvaders
         Down
     }
 
+    public enum MuteState
+    {
+        Enabled,
+        Disabled
+    }
+
     /// <summary>
     /// Main menu class. Manage the menu selection and interactions
     /// </summary>
@@ -26,16 +31,17 @@ namespace SpicyInvaders
         /// <summary>
         /// ATTRIBUTES
         /// </summary>
+        public static MuteState _muteState;
+
         // Title of the game on the screen (generated with https://www.kammerl.de/ascii/AsciiSignature.php)
-        private readonly string[] _TITLE = {".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.",
-                                            "88'  YP 88  `8D   `88'   d8P  Y8 `8b  d8'     `88'   888o  88 88    88 d8' `8b 88  `8D 88'     88  `8D 88'  YP",
-                                            "`8bo.   88oodD'    88    8P       `8bd8'       88    88V8o 88 Y8    8P 88ooo88 88   88 88ooooo 88oobY' `8bo.",
-                                            "  `Y8b. 88~~~      88    8b         88         88    88 V8o88 `8b  d8' 88~~~88 88   88 88~~~~~ 88`8b     `Y8b.",
-                                            "db   8D 88        .88.   Y8b  d8    88        .88.   88  V888  `8bd8'  88   88 88  .8D 88.     88 `88. db   8D",
-                                            "`8888Y' 88      Y888888P  `Y88P'    YP      Y888888P VP   V8P    YP    YP   YP Y8888D' Y88888P 88   YD `8888Y'" };
+        protected string[] _title = {".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.",
+                                     "88'  YP 88  `8D   `88'   d8P  Y8 `8b  d8'     `88'   888o  88 88    88 d8' `8b 88  `8D 88'     88  `8D 88'  YP",
+                                     "`8bo.   88oodD'    88    8P       `8bd8'       88    88V8o 88 Y8    8P 88ooo88 88   88 88ooooo 88oobY' `8bo.",
+                                     "  `Y8b. 88~~~      88    8b         88         88    88 V8o88 `8b  d8' 88~~~88 88   88 88~~~~~ 88`8b     `Y8b.",
+                                     "db   8D 88        .88.   Y8b  d8    88        .88.   88  V888  `8bd8'  88   88 88  .8D 88.     88 `88. db   8D",
+                                     "`8888Y' 88      Y888888P  `Y88P'    YP      Y888888P VP   V8P    YP    YP   YP Y8888D' Y88888P 88   YD `8888Y'" };
 
         private const string _ABOUT_TITLE_1 = "Spicy Invaders";
-        //private const string _ABOUT_1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce fringilla quis nisl nec ornare. Vivamus posuere sapien quis justo aliquet, a pharetra ligula.";
         private const string _ABOUT_1 = "The project Spicy Invaders is a true copy of the famous game Space Invaders. The goal wasn't to steal the concept, " +
                                         "because we're not gonna sell this game, but rather to create an entire oriented object game by ourself.";
 
@@ -52,7 +58,7 @@ namespace SpicyInvaders
         // Name of the menu
         private readonly string _name;
         // If true, the program refresh the page automatically
-        private bool _redraw = true;
+        protected bool _redraw = true;
         /// <summary>
         /// END ATTRIBUTES
         /// </summary>
@@ -81,6 +87,7 @@ namespace SpicyInvaders
         {
             get { return _name; }
         }
+
         /// <summary>
         /// END PROPERTIES
         /// </summary>
@@ -112,7 +119,7 @@ namespace SpicyInvaders
         /// <summary>
         /// Basic draw of each button with the Play button selected
         /// </summary>
-        private void DrawOptions()
+        public virtual void DrawOptions()
         {
             // Draw some text if it's about page
             if (this == GameManager.Instance.Menus[3])
@@ -151,6 +158,12 @@ namespace SpicyInvaders
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.BackgroundColor = ConsoleColor.Black;
+
+                // If it's the mute button (keep his state)
+                if (_menuButtons[j].Name == "MUTE :          DISABLED" || _menuButtons[j].Name == "MUTE :          ENABLED")
+                {
+                    _menuButtons[j].Name = "MUTE :          " + _muteState.ToString().ToUpper();
+                }
 
                 // If the option is selected
                 if (j == SelectedIndex)
@@ -290,16 +303,15 @@ namespace SpicyInvaders
         /// Draw the 'Spicy Invaders' title
         /// </summary>
         /// <param name="pageTitle">A page subtitle</param>
-        private void DrawSpicyInvadersTitle(string pageTitle)
+        public void DrawBigTitle(string pageTitle)
         {
             // Draw title
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Clear();
             int j = 0;
-            foreach(string line in _TITLE)
+            foreach(string line in _title)
             {
                 j++;
-                Console.SetCursorPosition(Console.WindowWidth / 2 - _TITLE[0].Length / 2, 2 + j);
+                Console.SetCursorPosition(Console.WindowWidth / 2 - _title[0].Length / 2, 2 + j);
                 Console.Write(line);
             }
             Console.Write("\n\n\n");
@@ -318,14 +330,16 @@ namespace SpicyInvaders
             Console.Write("\n\n");
         }
 
+
         /// <summary>
         /// Draw a full page
         /// </summary>
+        /// <param name="title">Page's title</param>
         public void LoadPage(string title)
         {
             if (_redraw)
             {
-                DrawSpicyInvadersTitle(title);
+                DrawBigTitle(title);
                 DrawOptions();
                 _redraw = false;
             }
@@ -335,7 +349,7 @@ namespace SpicyInvaders
         /// <summary>
         /// Manage which key is pressed and what action it activates
         /// </summary>
-        private void KeyManager()
+        public virtual void KeyManager()
         {
             // Loop for the selection of an option by pressing enter
             switch (GameManager.Instance.Input.Key)
@@ -409,21 +423,26 @@ namespace SpicyInvaders
                                     case "ABOUT":
                                         {
                                             // Go to the about menu
-                                            GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[3];
-                                            break;
-                                        }
-                                    case "MUTE :          ENABLED":
-                                        {
-                                            // Activate the sound
-                                            GameManager.Instance.Sound.PlayLooping();
-                                            _menuButtons[i].Name = "MUTE :          DISABLED";
+                                            GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[5];
                                             break;
                                         }
                                     case "MUTE :          DISABLED":
+                                    case "MUTE :          ENABLED":
                                         {
-                                            // Stop the sound
-                                            GameManager.Instance.Sound.Stop();
-                                            _menuButtons[i].Name = "MUTE :          ENABLED";
+                                            if (_muteState == MuteState.Disabled)
+                                            {
+                                                // Stop the sound
+                                                _muteState = MuteState.Enabled;
+                                                GameManager.Instance.MusicSound.Stop();
+                                                _menuButtons[i].Name = "MUTE :          ENABLED";
+                                            }
+                                            else
+                                            {
+                                                // Activate the sound
+                                                _muteState = MuteState.Disabled;
+                                                GameManager.Instance.MusicSound.PlayLooping();
+                                                _menuButtons[i].Name = "MUTE :          DISABLED";
+                                            }
                                             break;
                                         }
                                     case "DIFFICULTY :    EASY":

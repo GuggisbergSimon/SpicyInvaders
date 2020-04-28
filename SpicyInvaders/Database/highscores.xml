@@ -4,7 +4,7 @@
     <score>300</score>
   </player>
   <player name="Hugo">
-    <score>350</score>
+    <score>1500</score>
   </player>
   <player name="Simon">
     <score>1000</score>
@@ -17,5 +17,8 @@
   </player>
   <player name="Laetitia">
     <score>10</score>
+  </player>
+  <player name="hugo">
+    <score>0</score>
   </player>
 </players>

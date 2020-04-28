@@ -12,6 +12,13 @@ namespace SpicyInvaders
     /// </summary>
     public class Enemy : Character
     {
+        private int _score;
+
+        public int Score
+        {
+            get { return _score; }
+        }
+
         /// <summary>
         /// Custom Constructor for the object Enemy
         /// </summary>
