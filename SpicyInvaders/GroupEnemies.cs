@@ -85,6 +85,15 @@ namespace SpicyInvaders
 				enemy.Position += nextPos;
 				enemy.Update(tick);
 			}
+
+			// Display ennemies left in the up corner left
+			Console.SetCursorPosition(3, 3);
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.Write("Ennemies left : ");
+			// Delete the old number
+			Console.Write("  \b\b");
+			Console.Write(GameManager.Instance.Enemies.Count);
+			Console.ResetColor();
 		}
 	}
 }

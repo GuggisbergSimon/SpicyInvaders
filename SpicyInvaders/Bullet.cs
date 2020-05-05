@@ -55,10 +55,10 @@ namespace SpicyInvaders
 				case Direction.Up when _position.Y > 0:
 					UpdatePos(-Vector2D.Up);
 					break;
-				case Direction.Down when _position.Y <= Console.WindowHeight:
+				case Direction.Down when _position.Y < Console.WindowHeight - 1:
 					UpdatePos(Vector2D.Up);
 					break;
-				case Direction.Right when _position.X <= Console.WindowWidth:
+				case Direction.Right when _position.X < Console.WindowWidth - 1:
 					UpdatePos(Vector2D.Right);
 					break;
 				case Direction.Left when _position.X > 0:

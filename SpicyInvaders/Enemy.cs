@@ -44,7 +44,7 @@ namespace SpicyInvaders
 		public override void Update(int tick)
 		{
 			Draw();
-			if (GameManager.Instance.Random.Next(200) != 0)
+			if (GameManager.Instance.Random.Next(100) != 0)
 			{
 				return;
 			}

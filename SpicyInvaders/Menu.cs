@@ -400,7 +400,7 @@ namespace SpicyInvaders
 										GameManager.Instance.SetupMainGame();
 									}
 
-									// todo resize window
+									GameManager.Instance.WindowSize = new Vector2D(100, 50);
 									GameManager.Instance.State = GameManager.GameManagerState.MainGame;
 									break;
 								}

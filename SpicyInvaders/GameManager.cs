@@ -43,12 +43,32 @@ namespace SpicyInvaders
 
 		private GroupEnemies _groupEnemies;
 		private const int DELTA_TIME = 10;
+		private Random _random = new Random();
+		private ConsoleKeyInfo _input;
+		private GameManagerState _state = GameManagerState.MainMenu;
+		private GameDifficulty _difficulty = GameDifficulty.Easy;
+		private Vector2D _windowSize = new Vector2D(200, 50);
 		private int _tick = 1;
-		private readonly Vector2D _windowSize = new Vector2D(200, 58);
 
 		private List<Bullet> _bulletsToDestroy = new List<Bullet>();
 		private List<Enemy> _enemiesToDestroy = new List<Enemy>();
 
+		/// <summary>
+		/// Getter-Setter of the WindowSize
+		/// </summary>
+		public Vector2D WindowSize
+		{
+			get => _windowSize;
+			set
+			{
+				Console.SetWindowSize(value.X, value.Y);
+				_windowSize = value;
+			}
+		}
+
+		/// <summary>
+		/// Getter-Setter of Score
+		/// </summary>
 		public int Score { get; set; } = 0;
 
 		/// <summary>
@@ -221,8 +241,8 @@ namespace SpicyInvaders
 			Player = new Player(new Vector2D(35, 35));
 			Enemies.Clear();
 			Bullets.Clear();
-			_groupEnemies = new GroupEnemies(Vector2D.Identity * 2, Vector2D.Identity * 5, Vector2D.Right,
-				Direction.Right, 4);
+			_groupEnemies = new GroupEnemies(Vector2D.Identity * 5, Vector2D.Identity * 5, Vector2D.Right,
+				Direction.Right, 6);
 		}
 
 		/// <summary>

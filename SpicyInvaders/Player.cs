@@ -15,7 +15,7 @@ namespace SpicyInvaders
 		private Vector2D _barrelOffset = new Vector2D(0, 1);
 		private bool _isAlive = true;
 		private bool _canShoot = true;
-		private const int SHOOT_DELAY = 20;
+		private const int SHOOT_DELAY = 10;
 		private int _nextShoot = 0;
 
 		public bool IsAlive => _isAlive;
@@ -89,6 +89,12 @@ namespace SpicyInvaders
 					return;
 				}
 			}
+
+			// Display life's count
+			Console.SetCursorPosition(GameManager.Instance.WindowSize.X - 20, 3);
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.Write("Life : " + _life);
+			Console.ResetColor();
 
 			Draw();
 		}

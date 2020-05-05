@@ -6,6 +6,12 @@ namespace SpicyInvaders
 	{
 		protected int _life;
 
+		public int Life
+		{
+			get { return _life; }
+		}
+
+
 		/// <summary>
 		/// Character constructor
 		/// </summary>
