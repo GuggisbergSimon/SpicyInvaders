@@ -51,7 +51,7 @@ namespace SpicyInvaders
 		private ConsoleKeyInfo _input;
 		private GameManagerState _state = GameManagerState.MainMenu;
 		private GameDifficulty _difficulty = GameDifficulty.Easy;
-		private readonly Vector2D _windowSize = new Vector2D(200, 58);
+		private Vector2D _windowSize = new Vector2D(200, 58);
 
 		private List<Menu>
 			_menus = new List<Menu>(); // 0 : Main menu, 1 : Settings menu, 2 : Highscore menu, 3 : About menu, 4 : Pause menu, 5 : Game over menu
@@ -60,6 +60,13 @@ namespace SpicyInvaders
 		private SoundPlayer _musicSound;
 		private List<Bullet> _bulletsToDestroy = new List<Bullet>();
 		private List<Enemy> _enemiesToDestroy = new List<Enemy>();
+
+		public Vector2D WindowSize
+		{
+			get { return _windowSize; }
+			set { _windowSize = value; }
+		}
+
 
 		public int Score
 		{
@@ -252,7 +259,7 @@ namespace SpicyInvaders
 			_player = new Player(new Vector2D(35, 35));
 			_enemies.Clear();
 			_bullets.Clear();
-			_groupEnemies = new GroupEnemies(Vector2D.Identity * 2, Vector2D.Identity * 5, Vector2D.Right,
+			_groupEnemies = new GroupEnemies(Vector2D.Identity * 5, Vector2D.Identity * 5, Vector2D.Right,
 				Direction.Right, 2);
 		}
 

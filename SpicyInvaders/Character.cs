@@ -6,6 +6,12 @@ namespace SpicyInvaders
 	{
 		protected int _life;
 
+		public int Life
+		{
+			get { return _life; }
+		}
+
+
 		protected Character(Vector2D position, char visual, ConsoleColor color, int life) : base(position, visual,
 			color)
 		{
