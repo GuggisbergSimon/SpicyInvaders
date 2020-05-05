@@ -231,7 +231,7 @@ namespace SpicyInvaders
 			Enemies.Clear();
 			Bullets.Clear();
 			_groupEnemies = new GroupEnemies(Vector2D.Identity * 5, Vector2D.Identity * 5, Vector2D.Right,
-				Direction.Right, 4);
+				Direction.Right, 6);
 		}
 
 		/// <summary>
