@@ -47,17 +47,28 @@ namespace SpicyInvaders
 		private ConsoleKeyInfo _input;
 		private GameManagerState _state = GameManagerState.MainMenu;
 		private GameDifficulty _difficulty = GameDifficulty.Easy;
-		private Vector2D _windowSize = new Vector2D(200, 58);
+		private Vector2D _windowSize = new Vector2D(200, 50);
 		private int _tick = 1;
 
 		private List<Bullet> _bulletsToDestroy = new List<Bullet>();
 		private List<Enemy> _enemiesToDestroy = new List<Enemy>();
 
+		/// <summary>
+		/// Getter-Setter of the WindowSize
+		/// </summary>
 		public Vector2D WindowSize
 		{
-			get { return _windowSize; }
-			set { _windowSize = value; }
+			get => _windowSize;
+			set
+			{
+				Console.SetWindowSize(value.X, value.Y);
+				_windowSize = value;
+			}
 		}
+
+		/// <summary>
+		/// Getter-Setter of Score
+		/// </summary>
 		public int Score { get; set; } = 0;
 
 		/// <summary>
