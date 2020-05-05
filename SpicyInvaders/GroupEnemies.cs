@@ -9,11 +9,11 @@ using System.Collections.Generic;
 
 namespace SpicyInvaders
 {
-
 	public class GroupEnemies
 	{
 		private Direction _direction;
 		private int _speed;
+
 		/// <summary>
 		/// GroupEnemies Constructor
 		/// </summary>
@@ -29,7 +29,7 @@ namespace SpicyInvaders
 				for (int j = 0; j < size.Y; j++)
 				{
 					GameManager.Instance.Enemies.Add(new Enemy(new Vector2D(startPos.X + i + i * padding.X,
-						startPos.Y + j + j * padding.Y)));
+						startPos.Y + j + j * padding.Y), 100));
 				}
 			}
 		}
@@ -40,7 +40,10 @@ namespace SpicyInvaders
 		public void Update(int tick)
 		{
 			List<Enemy> enemies = GameManager.Instance.Enemies;
-			if (enemies.Count < 1 || tick % _speed != 0) { return; }
+			if (enemies.Count < 1 || tick % _speed != 0)
+			{
+				return;
+			}
 
 			//find rightest/leftest enemy by comparing positions
 			bool goingRight = _direction == Direction.Right;
@@ -57,7 +60,7 @@ namespace SpicyInvaders
 			//checks for borders
 			Vector2D nextPos = Vector2D.Right * (goingRight ? 1 : -1);
 			if (goingRight && enemies[indexMaxMin].Position.X + nextPos.X >= Console.WindowWidth &&
-			    enemies[indexMaxMin].Position.Y + nextPos.Y < Console.WindowHeight || 
+			    enemies[indexMaxMin].Position.Y + nextPos.Y < Console.WindowHeight ||
 			    !goingRight && enemies[indexMaxMin].Position.X + nextPos.X < 0 &&
 			    enemies[indexMaxMin].Position.Y + nextPos.Y < Console.WindowHeight)
 			{
@@ -70,7 +73,7 @@ namespace SpicyInvaders
 				enemy.ErasePicture();
 				if ((enemy.Position + nextPos).Y >= Console.WindowWidth)
 				{
-					//todo gameover player
+					GameManager.Instance.Player.GameOver();
 					nextPos = Vector2D.Zero;
 				}
 
