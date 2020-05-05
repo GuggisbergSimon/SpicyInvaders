@@ -42,11 +42,11 @@ namespace SpicyInvaders
 
 		private List<Bullet> _bullets = new List<Bullet>();
 		private List<Enemy> _enemies = new List<Enemy>();
+		private GroupEnemies _groupEnemies;
 		private Player _player;
-		private GroupEnemies _grpEnemies;
 		private const int DELTA_TIME = 10;
 		private int tick = 1;
-		private int score = 0;
+		private int _score = 0;
 		private Random _random = new Random();
 		private ConsoleKeyInfo _input;
 		private GameManagerState _state = GameManagerState.MainMenu;
@@ -63,8 +63,8 @@ namespace SpicyInvaders
 
 		public int Score
 		{
-			get => score;
-			set => score = value;
+			get => _score;
+			set => _score = value;
 		}
 
 		/// <summary>
@@ -157,13 +157,9 @@ namespace SpicyInvaders
 
 			// SOUND
 			_musicSound = new SoundPlayer(@"..\..\Sound\music.wav");
-			//_musicSound.PlayLooping();
+			_musicSound.PlayLooping();
 
 			SetupMenu();
-
-			// Creation of the player
-			_player = new Player(new Vector2D(35, 35));
-			//_enemies.Add(new Enemy(new Vector2D(35, 10)));
 		}
 
 		/// <summary>
@@ -172,8 +168,6 @@ namespace SpicyInvaders
 		public void Run()
 		{
 			Console.Clear();
-			_grpEnemies = new GroupEnemies(new Vector2D(2, 2), new Vector2D(5, 5), new Vector2D(1, 0), Direction.Right,
-				2);
 
 			while (true)
 			{
@@ -238,13 +232,7 @@ namespace SpicyInvaders
 		/// </summary>
 		private void MainGame()
 		{
-			/*
-			foreach (var enemy in _enemies)
-			{
-			    enemy.Update();
-			}
-			*/
-			_grpEnemies.Update(tick);
+			_groupEnemies.Update(tick);
 
 			foreach (var bullet in _bullets)
 			{
@@ -256,6 +244,16 @@ namespace SpicyInvaders
 			{
 				Console.Clear();
 			}
+		}
+
+		public void SetupMainGame()
+		{
+			_score = 0;
+			_player = new Player(new Vector2D(35, 35));
+			_enemies.Clear();
+			_bullets.Clear();
+			_groupEnemies = new GroupEnemies(Vector2D.Identity * 2, Vector2D.Identity * 5, Vector2D.Right,
+				Direction.Right, 2);
 		}
 
 		/// <summary>

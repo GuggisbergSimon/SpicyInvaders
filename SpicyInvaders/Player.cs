@@ -23,7 +23,7 @@ namespace SpicyInvaders
 		/// <summary>
 		/// Player Constructor
 		/// </summary>
-		public Player(Vector2D position) : base(position, 'A', ConsoleColor.Cyan, (int) GameManager.Instance.Difficulty)
+		public Player(Vector2D position) : base(position, 'A', ConsoleColor.Cyan, GameManager.Instance.Difficulty == GameManager.GameDifficulty.Easy ? 3 : 1)
 		{
 			Console.SetCursorPosition(position.X, position.Y);
 			Draw();
