@@ -44,13 +44,12 @@ namespace SpicyInvaders
 		public override void Update(int tick)
 		{
 			Draw();
-			if (GameManager.Instance.Random.Next(100) != 0)
+			if (GameManager.Instance.Random.Next(60) == 0 || (_position.X == GameManager.Instance.Player.Position.X && GameManager.Instance.Random.Next(2) == 0))
 			{
-				return;
-			}
 
-			GameManager.Instance.Bullets.Add(new Bullet(_position, Direction.Down,
-				(ConsoleColor) (tick % Enum.GetNames(typeof(ConsoleColor)).Length), 6));
+				GameManager.Instance.Bullets.Add(new Bullet(_position, Direction.Down,
+					(ConsoleColor) (tick % Enum.GetNames(typeof(ConsoleColor)).Length), 6));
+			}
 		}
 
 		/// <summary>
@@ -61,13 +60,10 @@ namespace SpicyInvaders
 		public override bool LoseLife(int loss)
 		{
 			_life -= loss;
-			if (_life < 0)
-			{
-				Destroy();
-				return true;
-			}
+			if (_life > 0) return false;
+			Destroy();
+			return true;
 
-			return false;
 		}
 	}
 }

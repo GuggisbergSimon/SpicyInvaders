@@ -78,12 +78,12 @@ namespace SpicyInvaders
 			Draw();
 
 			//When a bullet meets a bullet
-			foreach (var bullet in GameManager.Instance.Bullets)
+			/*foreach (var bullet in GameManager.Instance.Bullets)
 			{
 				if (bullet.Position != _position || Direction == bullet.Direction || bullet == this) continue;
 				bullet.Destroy();
 				Destroy();
-			}
+			}*/
 
 			//When a bullet meets an enemy
 			foreach (var enemy in GameManager.Instance.Enemies)
