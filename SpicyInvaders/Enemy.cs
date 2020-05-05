@@ -7,54 +7,67 @@ using System;
 
 namespace SpicyInvaders
 {
-    /// <summary>
-    /// Enemy class
-    /// </summary>
-    public class Enemy : Character
-    {
-        private int _score;
+	/// <summary>
+	/// Enemy class
+	/// </summary>
+	public class Enemy : Character
+	{
+		private int _score;
 
-        public int Score
-        {
-            get { return _score; }
-        }
+		public int Score
+		{
+			get { return _score; }
+		}
 
-        /// <summary>
-        /// Custom Constructor for the object Enemy
-        /// </summary>
-        /// 
-        public Enemy(Vector2D pos): base(pos, 'O', 1)
-        {
-            _position = pos;
-        }
+		/// <summary>
+		/// Custom Constructor for the object Enemy
+		/// </summary>
+		/// 
+		public Enemy(Vector2D pos, int score) : base(pos, 'O', ConsoleColor.Red, 1)
+		{
+			_position = pos;
+			_score = score;
+		}
 
-        /// <summary>
-        /// Destroys the Enemy
-        /// </summary>
-        public override void Destroy()
-        {
-            ErasePicture();
-            GameManager.Instance.RemoveItem(this);
-        }
+		/// <summary>
+		/// Destroys the Enemy
+		/// </summary>
+		public override void Destroy()
+		{
+			ErasePicture();
+			GameManager.Instance.Score += _score;
+			GameManager.Instance.RemoveItem(this);
+			if (GameManager.Instance.Enemies.Count < 2)
+			{
+				GameManager.Instance.Player.GameOver();
+			}
+		}
 
-        /// <summary>
-        /// Update Enemy
-        /// </summary>
-        public override void Update(int tick)
-        {
-            Draw();
-        }
+		/// <summary>
+		/// Update Enemy
+		/// </summary>
+		public override void Update(int tick)
+		{
+			Draw();
+			if (GameManager.Instance.Random.Next(100) != 0)
+			{
+				return;
+			}
 
-        public override bool LoseLife(int loss)
-        {
-            _life -= loss;
-            if (_life < 0)
-            {
-                Destroy();
-                return true;
-            }
+			GameManager.Instance.Bullets.Add(new Bullet(_position, Direction.Down,
+				(ConsoleColor) (tick % Enum.GetNames(typeof(ConsoleColor)).Length), 6));
+		}
 
-            return false;
-        }
-    }
+		public override bool LoseLife(int loss)
+		{
+			_life -= loss;
+			if (_life < 0)
+			{
+				Destroy();
+				return true;
+			}
+
+			return false;
+		}
+	}
 }

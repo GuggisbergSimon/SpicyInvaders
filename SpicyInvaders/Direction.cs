@@ -5,14 +5,14 @@
 
 namespace SpicyInvaders
 {
-    /// <summary>
-    /// Direction enum, top, right, down left
-    /// </summary>
-    public enum Direction
-    {
-        Up,
-        Right,
-        Down,
-        Left
-    }
+	/// <summary>
+	/// Direction enum, top, right, down left
+	/// </summary>
+	public enum Direction
+	{
+		Up,
+		Right,
+		Down,
+		Left
+	}
 }

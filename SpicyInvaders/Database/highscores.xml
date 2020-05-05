@@ -21,4 +21,13 @@
   <player name="hugo">
     <score>0</score>
   </player>
+  <player name="^">
+    <score>2500</score>
+  </player>
+  <player name="&#x0;^">
+    <score>0</score>
+  </player>
+  <player name="&#x0;as">
+    <score>0</score>
+  </player>
 </players>
