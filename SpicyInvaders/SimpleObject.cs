@@ -16,6 +16,12 @@ namespace SpicyInvaders
 		protected char _visual;
 		protected ConsoleColor _color;
 
+		/// <summary>
+		/// SimpleObject constructor
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="visual"></param>
+		/// <param name="color"></param>
 		protected SimpleObject(Vector2D position, char visual, ConsoleColor color)
 		{
 			_position = position;

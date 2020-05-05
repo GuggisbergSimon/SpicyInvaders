@@ -10,9 +10,6 @@ namespace SpicyInvaders
 	/// </summary>
 	public struct Vector2D
 	{
-		private int _x;
-		private int _y;
-
 		/// <summary>
 		/// Returns a Vector facing Right
 		/// </summary>
@@ -36,20 +33,12 @@ namespace SpicyInvaders
 		/// <summary>
 		/// get-set the X-axis
 		/// </summary>
-		public int X
-		{
-			get => _x;
-			set => _x = value;
-		}
+		public int X { get; set; }
 
 		/// <summary>
 		/// get-set the Y-axis
 		/// </summary>
-		public int Y
-		{
-			get => _y;
-			set => _y = value;
-		}
+		public int Y { get; set; }
 
 		/// <summary>
 		/// Vector2D constructor
@@ -58,8 +47,8 @@ namespace SpicyInvaders
 		/// <param name="y">Y-axis</param>
 		public Vector2D(int x, int y)
 		{
-			_x = x;
-			_y = y;
+			X = x;
+			Y = y;
 		}
 
 		/// <summary>
@@ -96,7 +85,7 @@ namespace SpicyInvaders
 
 		private bool Equals(Vector2D other)
 		{
-			return _x == other._x && _y == other._y;
+			return X == other.X && Y == other.Y;
 		}
 
 		/// <summary>
@@ -117,7 +106,7 @@ namespace SpicyInvaders
 		/// <returns></returns>
 		public static Vector2D operator +(Vector2D v1, Vector2D v2)
 		{
-			return new Vector2D(v1._x + v2._x, v1._y + v2._y);
+			return new Vector2D(v1.X + v2.X, v1.Y + v2.Y);
 		}
 
 		/// <summary>
@@ -128,7 +117,7 @@ namespace SpicyInvaders
 		/// <returns></returns>
 		public static Vector2D operator -(Vector2D v1, Vector2D v2)
 		{
-			return new Vector2D(v1._x - v2.X, v1._y - v2._y);
+			return new Vector2D(v1.X - v2.X, v1.Y - v2.Y);
 		}
 
 		/// <summary>
@@ -139,7 +128,7 @@ namespace SpicyInvaders
 		/// <returns></returns>
 		public static Vector2D operator *(Vector2D v1, int k)
 		{
-			return new Vector2D(v1._x * k, v1._y * k);
+			return new Vector2D(v1.X * k, v1.Y * k);
 		}
 
 		/// <summary>
@@ -150,7 +139,7 @@ namespace SpicyInvaders
 		/// <returns></returns>
 		public static Vector2D operator /(Vector2D v1, int k)
 		{
-			return new Vector2D(v1._x / k, v1._y / k);
+			return new Vector2D(v1.X / k, v1.Y / k);
 		}
 	}
 }

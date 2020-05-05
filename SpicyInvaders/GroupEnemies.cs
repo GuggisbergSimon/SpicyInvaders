@@ -9,6 +9,9 @@ using System.Collections.Generic;
 
 namespace SpicyInvaders
 {
+	/// <summary>
+	/// GroupEnemies class
+	/// </summary>
 	public class GroupEnemies
 	{
 		private Direction _direction;
@@ -20,6 +23,8 @@ namespace SpicyInvaders
 		/// <param name="startPos">the top left position of the group</param>
 		/// <param name="size">the size of the group</param>
 		/// <param name="padding">the padding between each member of the group</param>
+		/// <param name="direction">the direction the group is moving at start</param>
+		/// <param name="speed">the sped the group is moving</param>
 		public GroupEnemies(Vector2D startPos, Vector2D size, Vector2D padding, Direction direction, int speed)
 		{
 			_direction = direction;
@@ -71,7 +76,7 @@ namespace SpicyInvaders
 			foreach (var enemy in GameManager.Instance.Enemies)
 			{
 				enemy.ErasePicture();
-				if ((enemy.Position + nextPos).Y >= Console.WindowWidth)
+				if ((enemy.Position + nextPos).Y >= GameManager.Instance.Player.Position.Y)
 				{
 					GameManager.Instance.Player.GameOver();
 					nextPos = Vector2D.Zero;
