@@ -423,7 +423,7 @@ namespace SpicyInvaders
                                     case "ABOUT":
                                         {
                                             // Go to the about menu
-                                            GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[5];
+                                            GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[3];
                                             break;
                                         }
                                     case "MUTE :          DISABLED":
