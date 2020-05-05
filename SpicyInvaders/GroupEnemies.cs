@@ -9,6 +9,9 @@ using System.Collections.Generic;
 
 namespace SpicyInvaders
 {
+	/// <summary>
+	/// GroupEnemies class
+	/// </summary>
 	public class GroupEnemies
 	{
 		private Direction _direction;

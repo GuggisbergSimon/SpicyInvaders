@@ -12,13 +12,15 @@ namespace SpicyInvaders
 	/// </summary>
 	public class Bullet : SimpleObject
 	{
-		private Direction _direction;
 		private ConsoleColor _color;
-		private int _speed;
-		private int strength = 1;
+		private readonly int _speed;
+		private const int STRENGTH = 1;
 		private bool _isMoving = true;
 
-		public Direction Direction => _direction;
+		/// <summary>
+		/// Direction getter
+		/// </summary>
+		private Direction Direction { get; }
 
 		/// <summary>
 		/// Bullet Constructor
@@ -29,7 +31,7 @@ namespace SpicyInvaders
 		/// <param name="speed"></param>
 		public Bullet(Vector2D pos, Direction dir, ConsoleColor color, int speed) : base(pos, '!', color)
 		{
-			_direction = dir;
+			Direction = dir;
 			_speed = speed;
 		}
 
@@ -48,7 +50,7 @@ namespace SpicyInvaders
 		public override void Update(int tick)
 		{
 			if (!_isMoving || tick % _speed != 0) return;
-			switch (_direction)
+			switch (Direction)
 			{
 				case Direction.Up when _position.Y > 0:
 					UpdatePos(-Vector2D.Up);
@@ -78,7 +80,7 @@ namespace SpicyInvaders
 			//When a bullet meets a bullet
 			foreach (var bullet in GameManager.Instance.Bullets)
 			{
-				if (bullet.Position != _position || _direction == bullet.Direction || bullet == this) continue;
+				if (bullet.Position != _position || Direction == bullet.Direction || bullet == this) continue;
 				bullet.Destroy();
 				Destroy();
 			}
@@ -86,17 +88,17 @@ namespace SpicyInvaders
 			//When a bullet meets an enemy
 			foreach (var enemy in GameManager.Instance.Enemies)
 			{
-				if (enemy.Position != _position || _direction != Direction.Up) continue;
-				enemy.LoseLife(strength);
+				if (enemy.Position != _position || Direction != Direction.Up) continue;
+				enemy.LoseLife(STRENGTH);
 				enemy.Destroy();
 				Destroy();
 			}
 
 			//When a bullets meet the player
-			if (GameManager.Instance.Player.Position == _position && _direction == Direction.Down)
+			if (GameManager.Instance.Player.Position == _position && Direction == Direction.Down)
 			{
 				Destroy();
-				GameManager.Instance.Player.LoseLife(strength);
+				GameManager.Instance.Player.LoseLife(STRENGTH);
 			}
 		}
 	}

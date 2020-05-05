@@ -17,6 +17,9 @@ namespace SpicyInvaders
 		Down
 	}
 
+	/// <summary>
+	/// Enum to know the current mute state
+	/// </summary>
 	public enum MuteState
 	{
 		Enabled,
@@ -59,13 +62,10 @@ namespace SpicyInvaders
 			"you enjoy the game :)";
 
 		// Array containing each menu buttons as objects of the class MenuButton
-		private readonly List<MenuButton> _menuButtons = new List<MenuButton>();
 
 		// Index of the selected button on the menu (0 to (_menuButtons.Length - 1))
-		private int _selectedIndex = 0;
 
 		// Name of the menu
-		private readonly string _name;
 
 		// If true, the program refresh the page automatically
 		protected bool _redraw = true;
@@ -76,27 +76,17 @@ namespace SpicyInvaders
 		/// <summary>
 		/// Getter-Setter of SelectedIndex
 		/// </summary>
-		public int SelectedIndex
-		{
-			get { return _selectedIndex; }
-			set { _selectedIndex = value; }
-		}
+		private int SelectedIndex { get; set; } = 0;
 
 		/// <summary>
 		/// Getter of MenuButtons
 		/// </summary>
-		public List<MenuButton> MenuButtons
-		{
-			get { return _menuButtons; }
-		}
+		private List<MenuButton> MenuButtons { get; } = new List<MenuButton>();
 
 		/// <summary>
 		/// Getter of Name
 		/// </summary>
-		public string Name
-		{
-			get { return _name; }
-		}
+		public string Name { get; }
 
 		/// <summary>
 		/// END PROPERTIES
@@ -106,7 +96,7 @@ namespace SpicyInvaders
 		/// </summary>
 		public Menu(string[] buttonNames, string aName, int consoleWidth, int consoleHeight)
 		{
-			_name = aName;
+			Name = aName;
 
 			int i = 0;
 			foreach (string name in buttonNames)
@@ -114,21 +104,16 @@ namespace SpicyInvaders
 				i++;
 
 				// Creation of the menu options throughout the custom constructor of the MenuButton class
-				MenuButton newBtn = new MenuButton
-				{
-					X = 2 * consoleWidth / 3,
-					Y = consoleHeight / 4 + (5 * i),
-					Name = name.ToUpper()
-				};
-
-				_menuButtons.Add(newBtn);
+				MenuButton newBtn = new MenuButton(new Vector2D(2 * consoleWidth / 3, consoleHeight / 4 + (5 * i)),
+					name.ToUpper());
+				MenuButtons.Add(newBtn);
 			}
 		}
 
 		/// <summary>
 		/// Basic draw of each button with the Play button selected
 		/// </summary>
-		public virtual void DrawOptions()
+		protected virtual void DrawOptions()
 		{
 			// Draw some text if it's about page
 			if (this == GameManager.Instance.Menus[3])
@@ -163,36 +148,36 @@ namespace SpicyInvaders
 		private void DrawButtons()
 		{
 			// Draw each option button
-			for (int j = 0; j < _menuButtons.Count; j++)
+			for (int j = 0; j < MenuButtons.Count; j++)
 			{
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.BackgroundColor = ConsoleColor.Black;
 
 				// If it's the mute button (keep his state)
-				if (_menuButtons[j].Name == "MUTE :          DISABLED" ||
-				    _menuButtons[j].Name == "MUTE :          ENABLED")
+				if (MenuButtons[j].Name == "MUTE :          DISABLED" ||
+				    MenuButtons[j].Name == "MUTE :          ENABLED")
 				{
-					_menuButtons[j].Name = "MUTE :          " + _muteState.ToString().ToUpper();
+					MenuButtons[j].Name = "MUTE :          " + _muteState.ToString().ToUpper();
 				}
 
 				// If the option is selected
 				if (j == SelectedIndex)
 				{
 					// Write the arrow in front of the button
-					Console.SetCursorPosition(_menuButtons[j].X - 3, _menuButtons[j].Y);
+					Console.SetCursorPosition(MenuButtons[j].Position.X - 3, MenuButtons[j].Position.Y);
 					Console.Write((char) 62);
 
 					// Draw the menu button with selected design
-					Console.SetCursorPosition(_menuButtons[j].X, _menuButtons[j].Y);
+					Console.SetCursorPosition(MenuButtons[j].Position.X, MenuButtons[j].Position.Y);
 					Console.ForegroundColor = ConsoleColor.Black;
 					Console.BackgroundColor = ConsoleColor.Green;
-					Console.Write(_menuButtons[j].Name);
+					Console.Write(MenuButtons[j].Name);
 				}
 				else
 				{
 					// Draw the menu button with normal design
-					Console.SetCursorPosition(_menuButtons[j].X, _menuButtons[j].Y);
-					Console.Write(_menuButtons[j].Name);
+					Console.SetCursorPosition(MenuButtons[j].Position.X, MenuButtons[j].Position.Y);
+					Console.Write(MenuButtons[j].Name);
 				}
 			}
 
@@ -257,7 +242,7 @@ namespace SpicyInvaders
 			// Where the paragraphe must start
 			int startParagraph = Console.WindowWidth / 5;
 			// Where the paragraphe must end
-			int endParagraph = _menuButtons[0].X - 20;
+			int endParagraph = MenuButtons[0].Position.X - 20;
 
 			// Draw a white title
 			Console.ForegroundColor = ConsoleColor.White;
@@ -284,7 +269,8 @@ namespace SpicyInvaders
 		private void MoveCursor(ArrowDirection direction)
 		{
 			// Remove old arrow by "hand"
-			Console.SetCursorPosition(_menuButtons[SelectedIndex].X - 2, _menuButtons[SelectedIndex].Y);
+			Console.SetCursorPosition(MenuButtons[SelectedIndex].Position.X - 2,
+				MenuButtons[SelectedIndex].Position.Y);
 			Console.Write("\b \b");
 
 			// If the key pressed is the up arrow button
@@ -293,17 +279,17 @@ namespace SpicyInvaders
 				// Avoid negative numbers
 				if (SelectedIndex == 0)
 				{
-					SelectedIndex = _menuButtons.Count - 1;
+					SelectedIndex = MenuButtons.Count - 1;
 				}
 				else
 				{
-					SelectedIndex = (SelectedIndex - 1) % _menuButtons.Count;
+					SelectedIndex = (SelectedIndex - 1) % MenuButtons.Count;
 				}
 			}
 			// If the key pressed is the down arrow button
 			else
 			{
-				SelectedIndex = (SelectedIndex + 1) % _menuButtons.Count;
+				SelectedIndex = (SelectedIndex + 1) % MenuButtons.Count;
 			}
 
 			DrawButtons();
@@ -313,7 +299,7 @@ namespace SpicyInvaders
 		/// Draw the 'Spicy Invaders' title
 		/// </summary>
 		/// <param name="pageTitle">A page subtitle</param>
-		public void DrawBigTitle(string pageTitle)
+		private void DrawBigTitle(string pageTitle)
 		{
 			// Draw title
 			Console.ForegroundColor = ConsoleColor.White;
@@ -361,7 +347,7 @@ namespace SpicyInvaders
 		/// <summary>
 		/// Manage which key is pressed and what action it activates
 		/// </summary>
-		public virtual void KeyManager()
+		protected virtual void KeyManager()
 		{
 			// Loop for the selection of an option by pressing enter
 			switch (GameManager.Instance.Input.Key)
@@ -393,12 +379,12 @@ namespace SpicyInvaders
 					Console.Clear();
 
 					// Which button is selected
-					for (int i = 0; i < _menuButtons.Count; i++)
+					for (int i = 0; i < MenuButtons.Count; i++)
 					{
 						// If the button is the selected one
 						if (SelectedIndex == i)
 						{
-							switch (_menuButtons[i].Name)
+							switch (MenuButtons[i].Name)
 							{
 								case "QUIT":
 								{
@@ -409,7 +395,7 @@ namespace SpicyInvaders
 								case "RESUME":
 								{
 									// Run the game
-									if (_menuButtons[i].Name.Equals("PLAY"))
+									if (MenuButtons[i].Name.Equals("PLAY"))
 									{
 										GameManager.Instance.SetupMainGame();
 									}
@@ -451,14 +437,14 @@ namespace SpicyInvaders
 										// Stop the sound
 										_muteState = MuteState.Enabled;
 										GameManager.Instance.MusicSound.Stop();
-										_menuButtons[i].Name = "MUTE :          ENABLED";
+										MenuButtons[i].Name = "MUTE :          ENABLED";
 									}
 									else
 									{
 										// Activate the sound
 										_muteState = MuteState.Disabled;
 										GameManager.Instance.MusicSound.PlayLooping();
-										_menuButtons[i].Name = "MUTE :          DISABLED";
+										MenuButtons[i].Name = "MUTE :          DISABLED";
 									}
 
 									break;
@@ -467,14 +453,14 @@ namespace SpicyInvaders
 								{
 									// Set the difficulty to hard
 									GameManager.Instance.Difficulty = GameManager.GameDifficulty.Hard;
-									_menuButtons[i].Name = "DIFFICULTY :    HARD";
+									MenuButtons[i].Name = "DIFFICULTY :    HARD";
 									break;
 								}
 								case "DIFFICULTY :    HARD":
 								{
 									// Set the difficulty to easy
 									GameManager.Instance.Difficulty = GameManager.GameDifficulty.Easy;
-									_menuButtons[i].Name = "DIFFICULTY :    EASY";
+									MenuButtons[i].Name = "DIFFICULTY :    EASY";
 									break;
 								}
 								default:

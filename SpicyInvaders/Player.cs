@@ -101,7 +101,7 @@ namespace SpicyInvaders
 		public override bool LoseLife(int loss)
 		{
 			_life -= loss;
-			if (_life >= 0)
+			if (_life > 0)
 			{
 				return false;
 			}
