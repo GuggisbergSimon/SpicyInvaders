@@ -16,6 +16,7 @@ namespace SpicyInvaders
 	{
 		private Direction _direction;
 		private int _speed;
+		private const int SPEED_MAX = 3;
 
 		/// <summary>
 		/// GroupEnemies Constructor
@@ -48,6 +49,12 @@ namespace SpicyInvaders
 			if (enemies.Count < 1 || tick % _speed != 0)
 			{
 				return;
+			}
+
+			// set the speed in function of left ennemies
+			if (_speed > SPEED_MAX)
+			{
+				_speed = enemies.Count / 5;
 			}
 
 			//find rightest/leftest enemy by comparing positions

@@ -30,4 +30,7 @@
   <player name="&#x0;as">
     <score>0</score>
   </player>
+  <player name="Test">
+    <score>2500</score>
+  </player>
 </players>

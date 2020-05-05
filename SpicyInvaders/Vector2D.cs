@@ -88,6 +88,8 @@ namespace SpicyInvaders
 			return X == other.X && Y == other.Y;
 		}
 
+		// todo : fix GetHashCode
+
 		/// <summary>
 		/// minus operation
 		/// </summary>

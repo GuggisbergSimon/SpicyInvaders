@@ -12,7 +12,6 @@ namespace SpicyInvaders
 	/// </summary>
 	public class Bullet : SimpleObject
 	{
-		private ConsoleColor _color;
 		private readonly int _speed;
 		private const int STRENGTH = 1;
 		private bool _isMoving = true;
