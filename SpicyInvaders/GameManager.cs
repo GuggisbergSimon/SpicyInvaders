@@ -32,7 +32,6 @@ namespace SpicyInvaders
 		public enum GameDifficulty
 		{
 			Easy,
-			Normal,
 			Hard
 		}
 
@@ -44,14 +43,12 @@ namespace SpicyInvaders
 		private GroupEnemies _groupEnemies;
 		private const int DELTA_TIME = 10;
 		private Random _random = new Random();
-		private ConsoleKeyInfo _input;
-		private GameManagerState _state = GameManagerState.MainMenu;
-		private GameDifficulty _difficulty = GameDifficulty.Easy;
 		private Vector2D _windowSize = new Vector2D(200, 50);
 		private int _tick = 1;
 
 		private List<Bullet> _bulletsToDestroy = new List<Bullet>();
 		private List<Enemy> _enemiesToDestroy = new List<Enemy>();
+
 
 		/// <summary>
 		/// Getter-Setter of the WindowSize
