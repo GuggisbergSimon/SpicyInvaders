@@ -31,6 +31,13 @@ namespace SpicyInvaders
 		/// </summary>
 		public int Score { get; set; }
 
+		/// <summary>
+		/// GameOver constructor
+		/// </summary>
+		/// <param name="buttonNames"></param>
+		/// <param name="aName"></param>
+		/// <param name="consoleWidth"></param>
+		/// <param name="consoleHeight"></param>
 		public GameOver(string[] buttonNames, string aName, int consoleWidth, int consoleHeight) : base(buttonNames,
 			aName, consoleWidth, consoleHeight)
 		{
