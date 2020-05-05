@@ -10,40 +10,23 @@ namespace SpicyInvaders
     /// </summary>
     public class MenuButton
     {
-        // X position of the button
-        private int _x;
-        // Y position of the button
-        private int _y;
-        // Name of the menu button
-        private string _name;
+        /// <summary>
+        /// Getter-Setter of Name of the option
+        /// </summary>
+        public string Name { get; set; }
 
-        // Property of the name's option
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        // Property of the x position
-        public int X
-        {
-            get { return _x; }
-            set { _x = value; }
-        }
-
-        // Property of the y position
-        public int Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
+        /// <summary>
+        /// Getter-Setter of the Position of the option
+        /// </summary>
+        public Vector2D Position { get; private set; }
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MenuButton()
+        public MenuButton(Vector2D position, string name)
         {
-
+            Position = position;
+            Name = name;
         }
     }
 }

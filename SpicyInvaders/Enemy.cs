@@ -14,11 +14,6 @@ namespace SpicyInvaders
 	{
 		private int _score;
 
-		public int Score
-		{
-			get { return _score; }
-		}
-
 		/// <summary>
 		/// Custom Constructor for the object Enemy
 		/// </summary>
@@ -49,7 +44,7 @@ namespace SpicyInvaders
 		public override void Update(int tick)
 		{
 			Draw();
-			if (GameManager.Instance.Random.Next(100) != 0)
+			if (GameManager.Instance.Random.Next(200) != 0)
 			{
 				return;
 			}
@@ -58,6 +53,11 @@ namespace SpicyInvaders
 				(ConsoleColor) (tick % Enum.GetNames(typeof(ConsoleColor)).Length), 6));
 		}
 
+		/// <summary>
+		/// Lose a given number of life
+		/// </summary>
+		/// <param name="loss"></param>
+		/// <returns></returns>
 		public override bool LoseLife(int loss)
 		{
 			_life -= loss;

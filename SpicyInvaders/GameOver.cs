@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace SpicyInvaders
 {
 	/// <summary>
-	/// Gameover menu
+	/// GameOver menu
 	/// </summary>
 	public class GameOver : Menu
 	{
@@ -25,14 +25,19 @@ namespace SpicyInvaders
 		};
 
 		private List<char> _playerName;
-		private int _score;
 
-		public int Score
-		{
-			get { return _score; }
-			set { _score = value; }
-		}
+		/// <summary>
+		/// Score Getter-Setter
+		/// </summary>
+		public int Score { get; set; }
 
+		/// <summary>
+		/// GameOver constructor
+		/// </summary>
+		/// <param name="buttonNames"></param>
+		/// <param name="aName"></param>
+		/// <param name="consoleWidth"></param>
+		/// <param name="consoleHeight"></param>
 		public GameOver(string[] buttonNames, string aName, int consoleWidth, int consoleHeight) : base(buttonNames,
 			aName, consoleWidth, consoleHeight)
 		{
@@ -51,9 +56,9 @@ namespace SpicyInvaders
 		/// <summary>
 		/// Draw the score and waiting the player to type his name
 		/// </summary>
-		public override void DrawOptions()
+		protected override void DrawOptions()
 		{
-			string score = Convert.ToString(_score);
+			string score = Convert.ToString(Score);
 
 			Console.CursorTop += 3; // Too close of the menu title
 			Console.CursorVisible = true;
@@ -93,48 +98,34 @@ namespace SpicyInvaders
 			Console.CursorLeft = Console.WindowWidth / 2 - nameRectangle[0].Length / 2 + 2;
 		}
 
-		public override void KeyManager()
+		protected override void KeyManager()
 		{
 			// Can write characters
 			GameManager.Instance.Input = Console.ReadKey(false);
-			// Loop for the selection of an option by pressing enter
 			switch (GameManager.Instance.Input.Key)
 			{
+				// Loop for the selection of an option by pressing enter
+				case ConsoleKey.Enter when _playerName.Count != 0:
+					Console.CursorVisible = false;
+					HighscoreDB.WriteScore(new string(_playerName.ToArray()).Trim(), Score);
+					_playerName.Clear();
+					_redraw = true;
+					// Clear because we change the menu page
+					Console.Clear();
+					GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[0];
+					GameManager.Instance.State = GameManager.GameManagerState.MainMenu;
+					break;
 				case ConsoleKey.Enter:
-				{
-					if (_playerName.Count != 0)
-					{
-						Console.CursorVisible = false;
-						HighscoreDB.WriteScore(new string(_playerName.ToArray()).Trim(), _score);
-						_playerName.Clear();
-						_redraw = true;
-						// Clear because we change the menu page
-						Console.Clear();
-						GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[0];
-						GameManager.Instance.State = GameManager.GameManagerState.MainMenu;
-					}
-					else
-					{
-						Console.CursorLeft = Console.WindowWidth / 2 - nameRectangle[0].Length / 2 + 2;
-					}
-
+					Console.CursorLeft = Console.WindowWidth / 2 - nameRectangle[0].Length / 2 + 2;
 					break;
-				}
+				case ConsoleKey.Backspace when _playerName.Count != 0:
+					_playerName.RemoveAt(_playerName.Count - 1);
+					Console.Write(" \b");
+					break;
 				case ConsoleKey.Backspace:
-				{
-					if (_playerName.Count != 0)
-					{
-						_playerName.RemoveAt(_playerName.Count - 1);
-						Console.Write(" \b");
-					}
-					else
-					{
-						// Stay here
-						Console.Write(" ");
-					}
-
+					// Stay here
+					Console.Write(" ");
 					break;
-				}
 				default:
 				{
 					if (_playerName.Count <= 22)

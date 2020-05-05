@@ -26,38 +26,30 @@ namespace SpicyInvaders
 			GameOver
 		}
 
+		/// <summary>
+		/// Enum for the different difficulties
+		/// </summary>
 		public enum GameDifficulty
 		{
-			Easy = 3,
-			Normal = 2,
-			Hard = 1
+			Easy,
+			Normal,
+			Hard
 		}
 
 		/// <summary>
-		/// ATTRIBUTES
+		/// singleton for GameManager
 		/// </summary>
-
-		// singleton for easier access to the instance of the GameManager
 		public static GameManager Instance { get; private set; }
 
-		private List<Bullet> _bullets = new List<Bullet>();
-		private List<Enemy> _enemies = new List<Enemy>();
 		private GroupEnemies _groupEnemies;
-		private Player _player;
 		private const int DELTA_TIME = 10;
-		private int tick = 1;
-		private int _score = 0;
 		private Random _random = new Random();
 		private ConsoleKeyInfo _input;
 		private GameManagerState _state = GameManagerState.MainMenu;
 		private GameDifficulty _difficulty = GameDifficulty.Easy;
 		private Vector2D _windowSize = new Vector2D(200, 58);
+		private int _tick = 1;
 
-		private List<Menu>
-			_menus = new List<Menu>(); // 0 : Main menu, 1 : Settings menu, 2 : Highscore menu, 3 : About menu, 4 : Pause menu, 5 : Game over menu
-
-		private Menu _currentMenu;
-		private SoundPlayer _musicSound;
 		private List<Bullet> _bulletsToDestroy = new List<Bullet>();
 		private List<Enemy> _enemiesToDestroy = new List<Enemy>();
 
@@ -66,81 +58,57 @@ namespace SpicyInvaders
 			get { return _windowSize; }
 			set { _windowSize = value; }
 		}
-
-
-		public int Score
-		{
-			get => _score;
-			set => _score = value;
-		}
+		public int Score { get; set; } = 0;
 
 		/// <summary>
 		/// Getter of Player
 		/// </summary>
-		public Player Player => _player;
+		public Player Player { get; private set; }
 
-		public Random Random => _random;
+		/// <summary>
+		/// Getter of Random
+		/// </summary>
+		public Random Random { get; } = new Random();
 
 		/// <summary>
 		/// Getter of Enemies
 		/// </summary>
-		public List<Enemy> Enemies => _enemies;
+		public List<Enemy> Enemies { get; } = new List<Enemy>();
 
 		/// <summary>
 		/// Getter of Bullets
 		/// </summary>
-		public List<Bullet> Bullets => _bullets;
+		public List<Bullet> Bullets { get; } = new List<Bullet>();
 
 		/// <summary>
 		/// Getter-Setter of Menus
 		/// </summary>
-		public List<Menu> Menus
-		{
-			get { return _menus; }
-			set { _menus = value; }
-		}
+		public List<Menu> Menus { get; } = new List<Menu>();
 
-		public SoundPlayer MusicSound
-		{
-			get { return _musicSound; }
-			set { _musicSound = value; }
-		}
+		/// <summary>
+		/// Getter-Setter of MusicSound
+		/// </summary>
+		public SoundPlayer MusicSound { get; private set; }
 
 		/// <summary>
 		/// Getter-Setter of CurrentMenu
 		/// </summary>
-		public Menu CurrentMenu
-		{
-			get { return _currentMenu; }
-			set { _currentMenu = value; }
-		}
+		public Menu CurrentMenu { get; set; }
 
 		/// <summary>
 		/// Getter of current Input
 		/// </summary>
-		public ConsoleKeyInfo Input
-		{
-			get { return _input; }
-			set { _input = value; }
-		}
+		public ConsoleKeyInfo Input { get; set; }
 
 		/// <summary>
 		/// Gets-Sets the state of the GameManager
 		/// </summary>
-		public GameManagerState State
-		{
-			get { return _state; }
-			set { _state = value; }
-		}
+		public GameManagerState State { get; set; } = GameManagerState.MainMenu;
 
 		/// <summary>
 		/// Gets-Sets the difficulty of the game
 		/// </summary>
-		public GameDifficulty Difficulty
-		{
-			get { return _difficulty; }
-			set { _difficulty = value; }
-		}
+		public GameDifficulty Difficulty { get; set; } = GameDifficulty.Easy;
 
 		/// <summary>
 		/// Default constructor of GameManager
@@ -163,8 +131,8 @@ namespace SpicyInvaders
 			Console.SetWindowSize(_windowSize.X, _windowSize.Y);
 
 			// SOUND
-			_musicSound = new SoundPlayer(@"..\..\Sound\music.wav");
-			_musicSound.PlayLooping();
+			MusicSound = new SoundPlayer(@"..\..\Sound\music.wav");
+			MusicSound.PlayLooping();
 
 			SetupMenu();
 		}
@@ -182,15 +150,15 @@ namespace SpicyInvaders
 
 				if (Console.KeyAvailable)
 				{
-					_input = Console.ReadKey(true);
+					Input = Console.ReadKey(true);
 				}
 				else
 				{
-					_input = new ConsoleKeyInfo();
+					Input = new ConsoleKeyInfo();
 				}
 
 
-				switch (_state)
+				switch (State)
 				{
 					case GameManagerState.MainMenu:
 					case GameManagerState.Pause:
@@ -213,12 +181,12 @@ namespace SpicyInvaders
 				//Clean the destroyed objects
 				foreach (var enemy in _enemiesToDestroy)
 				{
-					_enemies.Remove(enemy);
+					Enemies.Remove(enemy);
 				}
 
 				foreach (var bullet in _bulletsToDestroy)
 				{
-					_bullets.Remove(bullet);
+					Bullets.Remove(bullet);
 				}
 
 				_enemiesToDestroy.Clear();
@@ -230,7 +198,7 @@ namespace SpicyInvaders
 					Thread.Sleep(DELTA_TIME - Convert.ToInt32(stopWatch.ElapsedMilliseconds));
 				}
 
-				tick++;
+				_tick++;
 			}
 		}
 
@@ -239,28 +207,31 @@ namespace SpicyInvaders
 		/// </summary>
 		private void MainGame()
 		{
-			_groupEnemies.Update(tick);
+			_groupEnemies.Update(_tick);
 
-			foreach (var bullet in _bullets)
+			foreach (var bullet in Bullets)
 			{
-				bullet.Update(tick);
+				bullet.Update(_tick);
 			}
 
-			_player.Update(tick);
-			if (!_player.IsAlive)
+			Player.Update(_tick);
+			if (!Player.IsAlive)
 			{
 				Console.Clear();
 			}
 		}
 
+		/// <summary>
+		/// Setup the main game
+		/// </summary>
 		public void SetupMainGame()
 		{
-			_score = 0;
-			_player = new Player(new Vector2D(35, 35));
-			_enemies.Clear();
-			_bullets.Clear();
+			Score = 0;
+			Player = new Player(new Vector2D(35, 35));
+			Enemies.Clear();
+			Bullets.Clear();
 			_groupEnemies = new GroupEnemies(Vector2D.Identity * 5, Vector2D.Identity * 5, Vector2D.Right,
-				Direction.Right, 2);
+				Direction.Right, 4);
 		}
 
 		/// <summary>
@@ -290,7 +261,7 @@ namespace SpicyInvaders
 			Menus.Add(new GameOver(stringMenuNames4, "", _windowSize.X, _windowSize.Y));
 
 			// Set the default menu onto the main menu
-			_currentMenu = Menus[0];
+			CurrentMenu = Menus[0];
 			Menu._muteState = MuteState.Disabled;
 		}
 
@@ -300,7 +271,7 @@ namespace SpicyInvaders
 		private void LoadMenu()
 		{
 			// Draw the main menu with a full capital name
-			_currentMenu.LoadPage(_currentMenu.Name.ToUpper());
+			CurrentMenu.LoadPage(CurrentMenu.Name.ToUpper());
 		}
 
 		/// <summary>
