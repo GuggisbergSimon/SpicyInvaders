@@ -397,6 +397,10 @@ namespace SpicyInvaders
                                     case "RESUME":
                                         {
                                             // Run the game
+                                            if (_menuButtons[i].Name.Equals("PLAY"))
+                                            {
+                                                GameManager.Instance.SetupMainGame();
+                                            }
                                             // todo resize window
                                             GameManager.Instance.State = GameManager.GameManagerState.MainGame;
                                             break;
