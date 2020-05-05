@@ -94,6 +94,10 @@ namespace SpicyInvaders
 			Console.SetCursorPosition(GameManager.Instance.WindowSize.X - 20, 3);
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.Write("Life : " + _life);
+
+			// Display score in the middle
+			Console.SetCursorPosition(GameManager.Instance.WindowSize.X / 2 - 10, 3);
+			Console.Write("Score : " + GameManager.Instance.Score);
 			Console.ResetColor();
 
 			Draw();
