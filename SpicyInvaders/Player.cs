@@ -23,7 +23,8 @@ namespace SpicyInvaders
 		/// <summary>
 		/// Player Constructor
 		/// </summary>
-		public Player(Vector2D position) : base(position, 'A', ConsoleColor.Cyan, GameManager.Instance.Difficulty == GameManager.GameDifficulty.Easy ? 3 : 1)
+		public Player(Vector2D position) : base(position, 'A', ConsoleColor.Cyan,
+			GameManager.Instance.Difficulty == GameManager.GameDifficulty.Easy ? 3 : 1)
 		{
 			Console.SetCursorPosition(position.X, position.Y);
 			Draw();
@@ -48,6 +49,7 @@ namespace SpicyInvaders
 			{
 				_canShoot = true;
 			}
+
 			switch (GameManager.Instance.Input.Key)
 			{
 				case ConsoleKey.LeftArrow:
@@ -84,6 +86,7 @@ namespace SpicyInvaders
 				{
 					// Pause
 					Console.Clear();
+					GameManager.Instance.WindowSize = new Vector2D(200, 50);
 					GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[4];
 					GameManager.Instance.State = GameManager.GameManagerState.Pause;
 					return;
@@ -112,11 +115,9 @@ namespace SpicyInvaders
 				return false;
 			}
 
-			_isAlive = false;
 			GameOver();
 			return true;
 		}
-
 
 		/// <summary>
 		/// Generate the game over interface
@@ -124,7 +125,9 @@ namespace SpicyInvaders
 		/// <param name="score">Player's score</param>
 		public void GameOver()
 		{
+			_isAlive = false;
 			Console.Clear();
+			GameManager.Instance.WindowSize = new Vector2D(200, 50);
 			GameOver gameOverMenu = (GameOver) GameManager.Instance.Menus[5];
 			// Set the score
 			gameOverMenu.Score = GameManager.Instance.Score;
