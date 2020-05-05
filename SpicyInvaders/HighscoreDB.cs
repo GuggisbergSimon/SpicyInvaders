@@ -41,6 +41,7 @@ namespace SpicyInvaders
                         {
                             node.ChildNodes[0].InnerText = Convert.ToString(score);
                             doc.Save(xmlPath);
+                            doc = null;
                         }
                         return;
                     }
@@ -81,6 +82,12 @@ namespace SpicyInvaders
 
             doc.DocumentElement.AppendChild(playerElement);
             doc.Save(xmlPath);
+
+            // Delete the variables (avoid memory leak)
+            playerElement = null;
+            nameAttribute = null;
+            scoreElement = null;
+            doc = null;
         }
 
         /// <summary>
@@ -125,6 +132,7 @@ namespace SpicyInvaders
                     int currentScore = Int32.Parse(node.ChildNodes[0].InnerText);
 
                     scores.Add(currentName, currentScore);
+                    doc = null;
                 }
             }
 
