@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -27,7 +28,7 @@ namespace SpicyInvaders
 		public static void WriteScore(string playerName, int score)
 		{
 			XmlDocument doc = new XmlDocument();
-			try
+			if (File.Exists(xmlPath))
 			{
 				doc.Load(xmlPath);
 
@@ -51,10 +52,12 @@ namespace SpicyInvaders
 				// If the player is not registered, create him in the DB
 				AddNewPlayer(playerName, score);
 			}
-			catch
+			else
 			{
 				// If the file doesn't exist
-				CreateNewXML(playerName, score);
+				CreateNewXML();
+				// Recall the function
+				WriteScore(playerName, score);
 			}
 		}
 
@@ -96,7 +99,7 @@ namespace SpicyInvaders
 		/// </summary>
 		/// <param name="playerName"></param>
 		/// <param name="score"></param>
-		private static void CreateNewXML(string playerName, int score)
+		private static void CreateNewXML()
 		{
 			XmlTextWriter writer = new XmlTextWriter(xmlPath, Encoding.UTF8);
 			writer.WriteStartDocument(true);
@@ -108,9 +111,6 @@ namespace SpicyInvaders
 
 			writer.WriteEndDocument();
 			writer.Close();
-
-			// Try again after creating the file
-			WriteScore(playerName, score);
 		}
 
 		/// <summary>
@@ -121,20 +121,28 @@ namespace SpicyInvaders
 		{
 			Dictionary<string, int> scores = new Dictionary<string, int>();
 
-			XmlDocument doc = new XmlDocument();
-			doc.Load(xmlPath);
-
-			foreach (XmlNode node in doc.DocumentElement)
+			if (File.Exists(xmlPath))
 			{
-				// Select each player node
-				if (node.Name == "player")
-				{
-					string currentName = node.Attributes[0].InnerText;
-					int currentScore = Int32.Parse(node.ChildNodes[0].InnerText);
+				XmlDocument doc = new XmlDocument();
+				doc.Load(xmlPath);
 
-					scores.Add(currentName, currentScore);
-					doc = null;
+				foreach (XmlNode node in doc.DocumentElement)
+				{
+					// Select each player node
+					if (node.Name == "player")
+					{
+						string currentName = node.Attributes[0].InnerText;
+						int currentScore = Int32.Parse(node.ChildNodes[0].InnerText);
+
+						scores.Add(currentName, currentScore);
+						doc = null;
+					}
 				}
+			}
+			else
+			{
+				CreateNewXML();
+				GetScores();
 			}
 
 			return scores;
