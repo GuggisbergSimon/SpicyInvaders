@@ -136,6 +136,7 @@ namespace SpicyInvaders
 		public void Start()
 		{
 			Console.CursorVisible = false;
+			// todo : change window size after game over
 			Console.SetWindowSize(_windowSize.X, _windowSize.Y);
 
 			// SOUND
