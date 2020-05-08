@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -26,36 +27,34 @@ namespace SpicyInvaders
 		/// <param name="score">New score</param>
 		public static void WriteScore(string playerName, int score)
 		{
-			XmlDocument doc = new XmlDocument();
-			try
-			{
-				doc.Load(xmlPath);
-
-				foreach (XmlNode node in doc.DocumentElement)
-				{
-					// Select the right player
-					if (node.Name == "player" && node.Attributes[0].InnerText == playerName)
-					{
-						// Set his score if it's less than the current score then leave to function to avoid to create a new player with the same name
-						if (Int32.Parse(node.ChildNodes[0].InnerText) < score)
-						{
-							node.ChildNodes[0].InnerText = Convert.ToString(score);
-							doc.Save(xmlPath);
-							doc = null;
-						}
-
-						return;
-					}
-				}
-
-				// If the player is not registered, create him in the DB
-				AddNewPlayer(playerName, score);
-			}
-			catch
+			if (!File.Exists(xmlPath))
 			{
 				// If the file doesn't exist
-				CreateNewXML(playerName, score);
+				CreateNewXML();
 			}
+
+			XmlDocument doc = new XmlDocument();
+			doc.Load(xmlPath);
+
+			foreach (XmlNode node in doc.DocumentElement)
+			{
+				// Select the right player
+				if (node.Name == "player" && node.Attributes[0].InnerText == playerName)
+				{
+					// Set his score if it's less than the current score then leave to function to avoid to create a new player with the same name
+					if (Int32.Parse(node.ChildNodes[0].InnerText) < score)
+					{
+						node.ChildNodes[0].InnerText = Convert.ToString(score);
+						doc.Save(xmlPath);
+						doc = null;
+					}
+
+					return;
+				}
+			}
+
+			// If the player is not registered, create him in the DB
+			AddNewPlayer(playerName, score);
 		}
 
 		/// <summary>
@@ -96,21 +95,25 @@ namespace SpicyInvaders
 		/// </summary>
 		/// <param name="playerName"></param>
 		/// <param name="score"></param>
-		private static void CreateNewXML(string playerName, int score)
+		private static void CreateNewXML()
 		{
-			XmlTextWriter writer = new XmlTextWriter(xmlPath, Encoding.UTF8);
-			writer.WriteStartDocument(true);
-			writer.Formatting = Formatting.Indented;
-			writer.Indentation = 2;
+			XmlTextWriter writer = new XmlTextWriter(xmlPath, Encoding.UTF8)
+			{
+				Formatting = Formatting.Indented,
+				Indentation = 2
+			};
+
+			writer.WriteStartDocument();
 
 			writer.WriteStartElement("players");
+			writer.WriteStartElement("player");
+			writer.WriteAttributeString("name", "BeatMe");
+			writer.WriteElementString("score", "300");
+			writer.WriteEndElement();
 			writer.WriteEndElement();
 
 			writer.WriteEndDocument();
 			writer.Close();
-
-			// Try again after creating the file
-			WriteScore(playerName, score);
 		}
 
 		/// <summary>
@@ -119,8 +122,13 @@ namespace SpicyInvaders
 		/// <returns></returns>
 		public static Dictionary<string, int> GetScores()
 		{
-			Dictionary<string, int> scores = new Dictionary<string, int>();
+			if (!File.Exists(xmlPath))
+			{
+				CreateNewXML();
+			}
 
+
+			Dictionary<string, int> scores = new Dictionary<string, int>();
 			XmlDocument doc = new XmlDocument();
 			doc.Load(xmlPath);
 
