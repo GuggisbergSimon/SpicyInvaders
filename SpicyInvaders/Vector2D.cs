@@ -83,12 +83,22 @@ namespace SpicyInvaders
 			return v is Vector2D vector2D && this.Equals(vector2D);
 		}
 
+		/// <summary>
+		/// returns an hashcode
+		/// </summary>
+		/// <returns></returns>
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (X * 397) ^ Y;
+			}
+		}
+
 		private bool Equals(Vector2D other)
 		{
 			return X == other.X && Y == other.Y;
 		}
-
-		// todo : fix GetHashCode
 
 		/// <summary>
 		/// minus operation
