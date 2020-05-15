@@ -69,8 +69,6 @@
     <Content Include="icon.ico" />
     <Content Include="Sound\music.wav" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Database\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

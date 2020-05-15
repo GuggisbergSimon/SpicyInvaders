@@ -74,6 +74,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -226,17 +234,6 @@
                         {
                         }
                     }
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_A9F8EB1361924FAFBF4D813EA38F8354"
-                    {
-                    "Name" = "8:Database"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_67626395B7504776949292D1657E4613"
-                        "Folders"
-                        {
-                        }
-                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_D604C363FE734955B5C49D0AD8F881B5"
@@ -278,7 +275,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup"
         "ProductCode" = "8:{2A51CC14-CE2C-4C62-B22E-7D10DD6E9685}"
-        "PackageCode" = "8:{7B59288F-D7B2-4975-9D87-9861ABEBBC41}"
+        "PackageCode" = "8:{ECFF5C74-12D1-4341-9382-07614C7D18A1}"
         "UpgradeCode" = "8:{354D4F35-B513-423E-A76E-2F3C90E72D75}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -813,7 +810,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C6F7BF409EA14D528B014761F8FB085F"
             {
-            "SourcePath" = "8:..\\SpicyInvaders\\obj\\Debug\\SpicyInvaders.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_360BAA38A775438ABF5FE5A5F9ACDBCA"
