@@ -26,7 +26,6 @@ namespace SpicyInvadersTests
 
             // Assert
             CollectionAssert.AreEqual(expectedResult, result, "Error, the function SortFive is broken.");
-
         }
     }
 }

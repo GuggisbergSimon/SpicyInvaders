@@ -63,7 +63,6 @@ namespace SpicyInvaders
 			if (_life > 0) return false;
 			Destroy();
 			return true;
-
 		}
 	}
 }

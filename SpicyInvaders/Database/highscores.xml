@@ -1,36 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <players>
-  <player name="Ylli">
+  <player name="BeatMe">
     <score>300</score>
   </player>
   <player name="Hugo">
-    <score>1500</score>
+    <score>300</score>
   </player>
   <player name="Simon">
-    <score>1000</score>
-  </player>
-  <player name="Julien">
-    <score>2000</score>
-  </player>
-  <player name="Adrian">
-    <score>20</score>
-  </player>
-  <player name="Laetitia">
-    <score>10</score>
-  </player>
-  <player name="hugo">
-    <score>0</score>
-  </player>
-  <player name="^">
-    <score>2500</score>
-  </player>
-  <player name="&#x0;^">
-    <score>0</score>
-  </player>
-  <player name="&#x0;as">
-    <score>0</score>
-  </player>
-  <player name="Test">
-    <score>2500</score>
+    <score>300</score>
   </player>
 </players>
