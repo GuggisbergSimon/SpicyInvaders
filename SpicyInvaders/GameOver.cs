@@ -106,6 +106,7 @@ namespace SpicyInvaders
 			{
 				// Loop for the selection of an option by pressing enter
 				case ConsoleKey.Enter when _playerName.Count != 0:
+				{
 					Console.CursorVisible = false;
 					HighscoreDB.WriteScore(new string(_playerName.ToArray()).Trim(), Score);
 					_playerName.Clear();
@@ -115,17 +116,24 @@ namespace SpicyInvaders
 					GameManager.Instance.CurrentMenu = GameManager.Instance.Menus[0];
 					GameManager.Instance.State = GameManager.GameManagerState.MainMenu;
 					break;
+				}
 				case ConsoleKey.Enter:
+				{
 					Console.CursorLeft = Console.WindowWidth / 2 - nameRectangle[0].Length / 2 + 2;
 					break;
+				}
 				case ConsoleKey.Backspace when _playerName.Count != 0:
+				{
 					_playerName.RemoveAt(_playerName.Count - 1);
 					Console.Write(" \b");
 					break;
+				}
 				case ConsoleKey.Backspace:
+				{
 					// Stay here
 					Console.Write(" ");
 					break;
+				}
 				default:
 				{
 					if (_playerName.Count <= 22)

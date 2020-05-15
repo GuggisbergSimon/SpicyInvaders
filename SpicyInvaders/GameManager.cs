@@ -43,7 +43,6 @@ namespace SpicyInvaders
 
 		private GroupEnemies _groupEnemies;
 		private const int DELTA_TIME = 10;
-		private Random _random = new Random();
 		private Vector2D _windowSize = new Vector2D(200, 50);
 		private int _tick = 1;
 
@@ -183,10 +182,6 @@ namespace SpicyInvaders
 					case GameManagerState.MainGame:
 					{
 						MainGame();
-						break;
-					}
-					default:
-					{
 						break;
 					}
 				}

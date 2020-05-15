@@ -1,4 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿//Authors       : HDN, KBY, YFA & SGG
+//Date          : 10.03.2020
+//Location      : ETML
+//Description   : Highscore Class of Spicy Invaders
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpicyInvaders;
 using System.Collections.Generic;
 
