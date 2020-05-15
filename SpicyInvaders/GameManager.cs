@@ -137,6 +137,7 @@ namespace SpicyInvaders
 		{
 			Console.CursorVisible = false;
 			Console.SetWindowSize(_windowSize.X, _windowSize.Y);
+			Console.Title = "Spicy Invaders";
 
 			// SOUND
 			MusicSound = new SoundPlayer(@"..\..\Sound\music.wav");
