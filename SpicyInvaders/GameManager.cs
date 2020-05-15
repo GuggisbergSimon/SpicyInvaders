@@ -140,7 +140,7 @@ namespace SpicyInvaders
 			Console.Title = "Spicy Invaders";
 
 			// SOUND
-			MusicSound = new SoundPlayer(@".\Sound\music.wav");
+			MusicSound = new SoundPlayer(@"..\..\Sound\music.wav");
 			MusicSound.PlayLooping();
 
 			SetupMenu();
