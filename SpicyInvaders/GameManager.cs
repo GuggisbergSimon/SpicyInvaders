@@ -7,6 +7,7 @@ using System;
 using System.Media;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
 
 namespace SpicyInvaders
 {
@@ -140,8 +141,11 @@ namespace SpicyInvaders
 			Console.Title = "Spicy Invaders";
 
 			// SOUND
-			MusicSound = new SoundPlayer(@"..\..\Sound\music.wav");
-			MusicSound.PlayLooping();
+			if (File.Exists(@"..\..\Sound\music.wav"))
+			{
+				MusicSound = new SoundPlayer(@"..\..\Sound\music.wav");
+				MusicSound.PlayLooping();
+			}
 
 			SetupMenu();
 		}
