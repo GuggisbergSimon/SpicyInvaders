@@ -9,9 +9,15 @@ using System.Collections.Generic;
 
 namespace SpicyInvadersTests
 {
+    /// <summary>
+    /// MenuTests class
+    /// </summary>
     [TestClass]
     public class MenuTests
     {
+        /// <summary>
+        /// Prepare text test
+        /// </summary>
         public void PrepareTextTest()
         {
             // Arrange
