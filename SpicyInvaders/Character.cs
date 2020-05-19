@@ -1,11 +1,22 @@
+//Authors       : HDN, KBY, YFA & SGG
+//Date          : 10.03.2020
+//Location      : ETML
+//Description   : Highscore Class of Spicy Invaders
+
 using System;
 
 namespace SpicyInvaders
 {
+	/// <summary>
+	/// Character class
+	/// </summary>
 	public abstract class Character : SimpleObject
 	{
 		protected int _life;
 
+		/// <summary>
+		/// getter-setter of life
+		/// </summary>
 		public int Life
 		{
 			get { return _life; }

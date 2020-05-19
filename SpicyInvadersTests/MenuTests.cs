@@ -12,7 +12,6 @@ namespace SpicyInvadersTests
     [TestClass]
     public class MenuTests
     {
-        [TestMethod]
         public void PrepareTextTest()
         {
             // Arrange

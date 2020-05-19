@@ -52,24 +52,38 @@ namespace SpicyInvaders
 			switch (Direction)
 			{
 				case Direction.Up when _position.Y > 0:
+				{
 					UpdatePos(-Vector2D.Up);
 					break;
+				}
 				case Direction.Down when _position.Y < Console.WindowHeight - 1:
+				{
 					UpdatePos(Vector2D.Up);
 					break;
+				}
 				case Direction.Right when _position.X < Console.WindowWidth - 1:
+				{
 					UpdatePos(Vector2D.Right);
 					break;
+				}
 				case Direction.Left when _position.X > 0:
+				{
 					UpdatePos(-Vector2D.Right);
 					break;
+				}
 				default:
+				{
 					_isMoving = false;
 					Destroy();
 					break;
+				}
 			}
 		}
 
+		/// <summary>
+		/// Update the pos of the bullet, handles collisions
+		/// </summary>
+		/// <param name="move">the direction in which the bullet moves</param>
 		private void UpdatePos(Vector2D move)
 		{
 			ErasePicture();

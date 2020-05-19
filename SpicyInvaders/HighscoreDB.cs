@@ -3,7 +3,6 @@
 //Location      : ETML
 //Description   : Highscore Class of Spicy Invaders
 
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +17,7 @@ namespace SpicyInvaders
 	/// </summary>
 	public static class HighscoreDB
 	{
-		private static string xmlPath = @"highscores.xml";
+		private static readonly string xmlPath = @"highscores.xml";
 
 		/// <summary>
 		/// Verify if the score can be written as the best score of the player, if yes, write it

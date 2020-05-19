@@ -7,6 +7,7 @@ using System;
 using System.Media;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
 
 namespace SpicyInvaders
 {
@@ -42,7 +43,6 @@ namespace SpicyInvaders
 
 		private GroupEnemies _groupEnemies;
 		private const int DELTA_TIME = 10;
-		private Random _random = new Random();
 		private Vector2D _windowSize = new Vector2D(200, 50);
 		private int _tick = 1;
 
@@ -140,8 +140,11 @@ namespace SpicyInvaders
 			Console.Title = "Spicy Invaders";
 
 			// SOUND
-			MusicSound = new SoundPlayer(@".\Sound\music.wav");
-			MusicSound.PlayLooping();
+			if (File.Exists(@"..\..\Sound\music.wav"))
+			{
+				MusicSound = new SoundPlayer(@"..\..\Sound\music.wav");
+				MusicSound.PlayLooping();
+			}
 
 			SetupMenu();
 		}
@@ -179,10 +182,6 @@ namespace SpicyInvaders
 					case GameManagerState.MainGame:
 					{
 						MainGame();
-						break;
-					}
-					default:
-					{
 						break;
 					}
 				}
