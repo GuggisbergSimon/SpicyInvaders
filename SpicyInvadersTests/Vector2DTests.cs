@@ -54,6 +54,9 @@ namespace SpicyInvadersTests
             Assert.AreEqual(expectedVector, vector1 - vector2, "Error, the substract operation doesn't work anymore.");
         }
 
+        /// <summary>
+        /// Inversion test
+        /// </summary>
         [TestMethod]
         public void InversionOperatorTest()
         {
@@ -69,6 +72,9 @@ namespace SpicyInvadersTests
             Assert.AreEqual(expectedVector, -vector, "Error, the inversion doesn't work anymore.");
         }
 
+        /// <summary>
+        /// Multiplication test
+        /// </summary>
         [TestMethod]
         public void MultiplicationOperatorTest()
         {
@@ -86,6 +92,9 @@ namespace SpicyInvadersTests
             Assert.AreEqual(expectedVector, vector * k, "Error, the multiplication doesn't work anymore.");
         }
 
+        /// <summary>
+        /// Division test
+        /// </summary>
         [TestMethod]
         public void DivisionOperatorTest()
         {
@@ -103,6 +112,9 @@ namespace SpicyInvadersTests
             Assert.AreEqual(expectedVector, vector / k, "Error, the divison doesn't work anymore.");
         }
 
+        /// <summary>
+        /// Equals operator test
+        /// </summary>
         [TestMethod]
         public void EqualsOperatorTest()
         {
@@ -118,6 +130,9 @@ namespace SpicyInvadersTests
             Assert.IsTrue(vector1 == vector2, "Error, the equal operation doesn't work anymore.");
         }
 
+        /// <summary>
+        /// Not Equals test
+        /// </summary>
         [TestMethod]
         public void NotEqualOperatorTest()
         {
@@ -133,6 +148,9 @@ namespace SpicyInvadersTests
             Assert.IsTrue(vector1 != vector2, "Error, the not equal operation doesn't work anymore.");
         }
 
+        /// <summary>
+        /// Equals method test
+        /// </summary>
         [TestMethod]
         public void EqualsMethodTest()
         {
