@@ -18,6 +18,9 @@ namespace SpicyInvaders
 		private const int SHOOT_DELAY = 10;
 		private int _nextShoot = 0;
 
+		/// <summary>
+		/// Getter-Setter of isAlive
+		/// </summary>
 		public bool IsAlive => _isAlive;
 
 		/// <summary>
@@ -42,7 +45,7 @@ namespace SpicyInvaders
 		/// <summary>
 		/// Update Player
 		/// </summary>
-		/// <param name="direction"></param>
+		/// <param name="tick"></param>
 		public override void Update(int tick)
 		{
 			if (tick > _nextShoot)
@@ -126,7 +129,6 @@ namespace SpicyInvaders
 		/// <summary>
 		/// Generate the game over interface
 		/// </summary>
-		/// <param name="score">Player's score</param>
 		public void GameOver()
 		{
 			_isAlive = false;

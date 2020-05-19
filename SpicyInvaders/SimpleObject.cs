@@ -12,8 +12,19 @@ namespace SpicyInvaders
 	/// </summary>
 	public abstract class SimpleObject
 	{
+		/// <summary>
+		/// the position of the object
+		/// </summary>
 		protected Vector2D _position;
+		
+		/// <summary>
+		/// the character used to display the object
+		/// </summary>
 		protected char _visual;
+		
+		/// <summary>
+		/// the color used to display the object
+		/// </summary>
 		protected ConsoleColor _color;
 
 		/// <summary>

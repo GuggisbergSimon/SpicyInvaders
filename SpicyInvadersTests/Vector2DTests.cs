@@ -8,9 +8,15 @@ using SpicyInvaders;
 
 namespace SpicyInvadersTests
 {
+    /// <summary>
+    /// Vector2D Tests class
+    /// </summary>
     [TestClass]
     public class Vector2DTests
     {
+        /// <summary>
+        /// Addition test
+        /// </summary>
         [TestMethod]
         public void AdditionOperatorTest()
         {
@@ -28,6 +34,9 @@ namespace SpicyInvadersTests
             Assert.AreEqual(expectedVector, vector1 + vector2, "Error, the addition operation doesn't work anymore.");
         }
 
+        /// <summary>
+        /// Substraction test
+        /// </summary>
         [TestMethod]
         public void SubstractOperatorTest()
         {

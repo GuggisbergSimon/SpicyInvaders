@@ -32,11 +32,13 @@ namespace SpicyInvaders
 	public class Menu
 	{
 		/// <summary>
-		/// ATTRIBUTES
+		/// wether the game is mute or not
 		/// </summary>
 		public static MuteState _muteState;
-
-		// Title of the game on the screen (generated with https://www.kammerl.de/ascii/AsciiSignature.php)
+		
+		/// <summary>
+		/// Title of the game on the screen (generated with https://www.kammerl.de/ascii/AsciiSignature.php) 
+		/// </summary>
 		protected string[] _title =
 		{
 			".d8888. d8888b. d888888b  .o88b. db    db   d888888b d8b   db db    db  .d8b.  d8888b. d88888b d8888b. .d8888.",
@@ -67,12 +69,11 @@ namespace SpicyInvaders
 
 		// Name of the menu
 
-		// If true, the program refresh the page automatically
-		protected bool _redraw = true;
-
 		/// <summary>
-		/// END ATTRIBUTES
+		/// If true, the program refresh the page automatically
 		/// </summary>
+		protected bool _redraw = true;
+		
 		/// <summary>
 		/// Getter-Setter of SelectedIndex
 		/// </summary>

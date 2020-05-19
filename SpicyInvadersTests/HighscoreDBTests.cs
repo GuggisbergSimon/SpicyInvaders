@@ -9,9 +9,15 @@ using System.Collections.Generic;
 
 namespace SpicyInvadersTests
 {
+    /// <summary>
+    /// HighscoreDB Tests class
+    /// </summary>
     [TestClass]
     public class HighscoreDBTests
     {
+        /// <summary>
+        /// Sort test
+        /// </summary>
         [TestMethod]
         public void SortFiveTest()
         {

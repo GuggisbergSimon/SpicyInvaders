@@ -12,6 +12,9 @@ namespace SpicyInvaders
 	/// </summary>
 	public abstract class Character : SimpleObject
 	{
+		/// <summary>
+		/// the number of life the character has
+		/// </summary>
 		protected int _life;
 
 		/// <summary>
