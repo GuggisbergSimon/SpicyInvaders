@@ -24,7 +24,7 @@ namespace SpicyInvaders
 			"╚═════════════════════════╝"
 		};
 
-		private List<char> _playerName;
+		private List<char> _playerNames;
 
 		/// <summary>
 		/// Score Getter-Setter
@@ -41,7 +41,7 @@ namespace SpicyInvaders
 		public GameOver(string[] buttonNames, string aName, int consoleWidth, int consoleHeight) : base(buttonNames,
 			aName, consoleWidth, consoleHeight)
 		{
-			_playerName = new List<char>();
+			_playerNames = new List<char>();
 			_title = new string[]
 			{
 				" d888b   .d8b.  .88b  d88. d88888b    .d88b.  db    db d88888b d8888b.",
@@ -105,11 +105,11 @@ namespace SpicyInvaders
 			switch (GameManager.Instance.Input.Key)
 			{
 				// Loop for the selection of an option by pressing enter
-				case ConsoleKey.Enter when _playerName.Count != 0:
+				case ConsoleKey.Enter when _playerNames.Count != 0:
 				{
 					Console.CursorVisible = false;
-					HighscoreDB.WriteScore(new string(_playerName.ToArray()).Trim(), Score);
-					_playerName.Clear();
+					HighscoreDB.WriteScore(new string(_playerNames.ToArray()).Trim(), Score);
+					_playerNames.Clear();
 					_redraw = true;
 					// Clear because we change the menu page
 					Console.Clear();
@@ -122,9 +122,9 @@ namespace SpicyInvaders
 					Console.CursorLeft = Console.WindowWidth / 2 - nameRectangle[0].Length / 2 + 2;
 					break;
 				}
-				case ConsoleKey.Backspace when _playerName.Count != 0:
+				case ConsoleKey.Backspace when _playerNames.Count != 0:
 				{
-					_playerName.RemoveAt(_playerName.Count - 1);
+					_playerNames.RemoveAt(_playerNames.Count - 1);
 					Console.Write(" \b");
 					break;
 				}
@@ -136,9 +136,9 @@ namespace SpicyInvaders
 				}
 				default:
 				{
-					if (_playerName.Count <= 22)
+					if (_playerNames.Count <= 22)
 					{
-						_playerName.Add(GameManager.Instance.Input.KeyChar);
+						_playerNames.Add(GameManager.Instance.Input.KeyChar);
 						GameManager.Instance.Input.Key.ToString().ToUpper();
 					}
 					else
